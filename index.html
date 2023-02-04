@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>🥇</title>
+
+    <!-- Static  -->
+    <img id="BrickGrey" hidden="hidden" src="./game/static/img/BrickGrey.png" />
+    <img id="goldcoin" hidden="hidden" src="./game/static/img/goldcoin.png" />
+    <img
+      id="silvercoin"
+      hidden="hidden"
+      src="./game/static/img/silvercoin.png"
+    />
+    <img
+      id="BrickLightGrey"
+      hidden="hidden"
+      src="./game/static/img/BrickLightGrey.png"
+    />
+    <img
+      id="zombies_01"
+      hidden="hidden"
+      src="./game/static/img/zombies_01.png"
+    />
+    <img
+      id="deathscreen"
+      hidden="hidden"
+      src="./game/static/img/deathscreen.png"
+    />
+    <img id="door" hidden="hidden" src="./game/static/img/door.png" />
+    <img id="goldbag" hidden="hidden" src="./game/static/img/goldbag.png" />
+    <img id="player" hidden="hidden" src="./game/static/img/player.png" />
+    <img id="menu" hidden="hidden" src="./game/static/img/menu.png" />
+    <img
+      id="key-copper"
+      hidden="hidden"
+      src="./game/static/img/key-copper.png"
+    />
+
+    <!-- Source Code  -->
+
+    <script src="./game/src/config.js"></script>
+    <script src="./game/src/helpers.js"></script>
+
+    <!-- Entities  -->
+    <script src="./game/src/entities/SpriteBase.js"></script>
+    <script src="./game/src/entities/SpriteAnimated.js"></script>
+    <script src="./game/src/entities/Mob.js"></script>
+    <script src="./game/src/entities/Room.js"></script>
+    <script src="./game/src/entities/Player.js"></script>
+  </head>
+
+  <body>
+    <div id="gameArea">
+      <canvas
+        style="
+          display: block;
+          margin-right: auto;
+          margin-left: auto;
+          border: 1px solid black;
+        "
+        id="game"
+        width="544"
+        height="544"
+      ></canvas>
+
+      <div class="tooltip">
+        How To Play
+        <span class="tooltiptext"
+          >get gold, dont die. move: ←↑→↓ pause: esc restart: f5</span
+        >
+      </div>
+    </div>
+    <script src="./game/src/main.js"></script>
+  </body>
+
+  <style>
+    body {
+      background-color: #5a5a5a;
+    }
+    /* Tooltip container */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+    }
+
+    /* Tooltip text */
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+
+      /* Position the tooltip text - see examples below! */
+      position: absolute;
+      z-index: 1;
+    }
+
+    /* Show the tooltip text when you mouse over the tooltip container */
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+    }
+  </style>
+</html>
