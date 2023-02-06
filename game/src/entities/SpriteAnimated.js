@@ -22,13 +22,14 @@ class SpriteAnimated extends SpriteBase {
 
   draw() {
     if (this.moveTo != "IDLE") {
+      if (this.moveTo != "IDLE_N"){
       this.currentFrame %= this.totalFrames;
       this.srcX = this.currentFrame * this.spriteWidth;
-
+      }
       if (this.moveTo == "E") {
         this.srcY = this.spriteDirections[1] * this.spriteHeight;
       }
-      if (this.moveTo == "N") {
+      if (this.moveTo == "N" || this.moveTo == "IDLE_N") {
         this.srcY = this.spriteDirections[0] * this.spriteHeight;
       }
       if (this.moveTo == "W") {

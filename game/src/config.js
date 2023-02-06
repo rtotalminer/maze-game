@@ -17,6 +17,8 @@ const P_Y0 = 32;
 const P_H = 32;
 const P_W = 32;
 
+const VERSION = "0"
+
 const map = {
   maze00: [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

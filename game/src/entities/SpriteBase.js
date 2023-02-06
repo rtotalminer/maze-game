@@ -52,4 +52,8 @@ class SpriteBase {
     ctx.strokeStyle = "red";
     ctx.strokeRect(x0, y0, w0, h0);
   }
+
+  getCentre() {
+    return [this.x + this.w/2 , this.y + this.h/2] 
+  }
 }

@@ -77,12 +77,11 @@ function collisionDetection(c_ent, ent) {
 
   if (x0 + w0 > x1 && x0 < x1 + w1) {
     if (y0 + h0 > y1 && y0 < y1) {
-      console.log("Collision on bottom side.");
+      // Collision on top side
       c_ent.y = y1 - h0;
       return ent.name;
     } else if (y0 > y1 && y0 < y1 + h1) {
       // Collision on bottom side
-      console.log("Collision on top side.");
       c_ent.y = y1 + h1;
       return ent.name;
     }
@@ -90,41 +89,18 @@ function collisionDetection(c_ent, ent) {
 
   if (y0 + h0 > y1 && y0 < y1 + h1) {
     if (x0 + w0 > x1 && x0 < x1) {
-      console.log("Collision on right side.");
       //Collision on left side
       c_ent.x = x1 - c_ent.w + c_ent.xOffset;
       return ent.name;
     } else if (x0 > x1 && x0 < x1 + w1) {
       // Collision on right side
       c_ent.x = x1 + ent.w - c_ent.xOffset;
-      console.log("Collision on left side.");
       return ent.name;
     }
   }
+}
 
-  // if (c_ent.x + c_ent.w > ent.x && c_ent.x < ent.x + ent.w) {
-  //   if (c_ent.y + c_ent.h > ent.y && c_ent.y < ent.y) {
-  //     // Collision on top side
-  //     console.log("Collision on bottom side");
-  //     c_ent.y = ent.y - ent.h;
-  //     return ent.name;
-  //   } else if (c_ent.y > ent.y && c_ent.y < ent.y + ent.h) {
-  //     console.log("Collision on top side");
-  //     // Collision on top side
-  //     c_ent.y = ent.y + ent.h;
-  //     return ent.name;
-  //   }
-  // }
-  // if (c_ent.y + c_ent.h > ent.y && c_ent.y < ent.y + ent.h) {
-  //   if (c_ent.x + c_ent.w > ent.x && c_ent.x < ent.x) {
-  //     console.log("Collision on right side");
-  //     c_ent.x = ent.x - ent.w;
-  //     return ent.name;
-  //   } else if (c_ent.x > ent.x && c_ent.x < ent.x + ent.w) {
-  //     // Collision on left side
-  //     console.log("Collision on left side");
-  //     c_ent.x = ent.x + ent.w;
-  //     return ent.name;
-  //   }
-  // }
+
+function loadImages() {
+  if (--numOfImages > 0) return;
 }

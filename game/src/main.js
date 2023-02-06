@@ -126,11 +126,9 @@ function mainLoop() {
       });
     }
   } else {
+
     currentRoom.update();
-
-    var entities = currentRoom.getEntities();
-
-    player.update(entities);
+    player.update(currentRoom);
 
     spaceBarReleased = false;
 
@@ -138,8 +136,8 @@ function mainLoop() {
       gameOver = true;
     }
 
-    currentRoom.draw();
 
+    currentRoom.draw();
     player.draw();
   }
 }

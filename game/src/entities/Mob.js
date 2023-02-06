@@ -29,7 +29,9 @@ class Mob extends SpriteAnimated {
     this.oy = y;
     this.x = x;
     this.y = y;
-    this.v = 1;
+    this.v = 4;
+
+      this.isDialogue = false;
 
     this.movesTo = new Array();
     this.moving = false;
@@ -41,11 +43,31 @@ class Mob extends SpriteAnimated {
       try {
         this.explore(entities);
       } catch (err) {
-        console.log("mob cant move.");
         this.x = this.ox;
         this.y = this.oy;
       }
     }
+    else {
+      this.moveTo = "IDLE_N"
+      // Get surrounding area
+      // /console.log(this.movesTo)
+    }
+  }
+
+  draw() {
+    if (this.isDialogue){
+      // Find suitable place to draw speech bubble
+
+      // Draw speech bubble
+      colorRect(0, canvas.height-64, canvas.width, 64, "grey");
+
+      // Draw text
+
+      // Get allowed text, chop it up into sequeneces on key press
+
+
+    }
+    super.draw();
   }
 
   playDialogue() {
@@ -53,12 +75,12 @@ class Mob extends SpriteAnimated {
     let x0 = 0;
     let y0 = (canvas.height * 8) / 10;
     let w0 = (canvas.height * 2) / 10;
-    colorRect(x0, y0, canvas.width, w0, "grey");
+    this.isDialogue = true;
   }
 
   explore(entities) {
     var x = Math.floor(this.x / BLOCK_WIDTH);
-    var y = Math.floor(this.y / BLOCK_WIDTH);
+    var y = Math.floor(this.y / BLOCK_WIDTH); // use the center??
 
     //console.log(gameMap[roomCount].map[y + 1][x]);
 
