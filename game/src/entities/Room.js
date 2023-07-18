@@ -182,10 +182,10 @@ class Room {
     let y = this.convertCords(a, b)[1]
 
     const avaialblePositions = [
-      this.map[y - 1][x],  // N
-      this.map[y][x + 1],  // E
-      this.map[y + 1][x],  // S
-      this.map[y][x - 1],  // W
+      true ? this.map[y - 1][x] : [],  // N
+      true ? this.map[y][x + 1] : [],  // E
+      true ? this.map[y + 1][x] : [],  // S
+      true ? this.map[y][x - 1] : [],  // W
     ];
     return avaialblePositions;
   }
@@ -195,12 +195,13 @@ class Room {
     let x = this.convertCords(a, b)[0];
     let y = this.convertCords(a, b)[1]
 
-    const localEntities = [
-      this.entityMap[y - 1][x],  // N
-      this.entityMap[y][x + 1],  // E
-      this.entityMap[y + 1][x],  // S
-      this.entityMap[y][x - 1],  // W
+    var localEntities = [
+      this.entityMap[y - 1][x] != undefined ? this.entityMap[y - 1][x] : [],  // N
+      this.entityMap[y][x + 1] != undefined ? this.entityMap[y][x + 1] : [],  // E
+      this.entityMap[y + 1][x] != undefined ? this.entityMap[y + 1][x] : [],  // S
+      this.entityMap[y][x - 1] != undefined ? this.entityMap[y][x - 1] : [],  // W
     ];
+    console.log(localEntities);
     return localEntities;
   }
 

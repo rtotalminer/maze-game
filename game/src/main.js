@@ -25,6 +25,8 @@ var currentRoom;
 
 // Game functions
 var numOfImages = 0;
+var noClip = true;
+
 
 function loadImages() {
   if (--numOfImages > 0) return;

@@ -53,7 +53,8 @@ class Player extends SpriteAnimated {
 
       var isMobs = false;
       
-      for (let i=0; i<areaEntities.length; i++){
+      for (let i=0; i < areaEntities.length; i++)
+      {
         for (let j=0; j < areaEntities[i].length; j++){
           if (areaEntities[i][j].name == "NPC") {
             if (spaceBarReleased) {
@@ -78,12 +79,11 @@ class Player extends SpriteAnimated {
           }
           //console.log(areaEntities[i][j])
         }
-       }
-
+      }
        if (!isMobs && this.inDialogueWith != undefined) {
         this.inDialogueWith.isDialogue = false;
-       }
-      
+       }   
+
   }
 
   drawHealthbar() {
