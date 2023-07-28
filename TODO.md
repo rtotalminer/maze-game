@@ -1,2 +1,0 @@
-- <s>Create an entity state of the map.</s>
-- Move string constants to config file.

@@ -31,7 +31,12 @@ class Mob extends SpriteAnimated {
     this.y = y;
     this.v = 4;
 
-      this.isDialogue = false;
+    this.isDialogue = false;
+    this.dialogueCount = 0;
+    this.textSequence = new Array();
+
+    // this.npcFace = new Image();
+    // this.npcFace.src = `./game/static/img/${zombie01Face}`; // Move string literals to config
 
     this.movesTo = new Array();
     this.moving = false;
@@ -57,11 +62,35 @@ class Mob extends SpriteAnimated {
   draw() {
     if (this.isDialogue){
       // Find suitable place to draw speech bubble
+      let x0 = 0;
+      let y0 = canvas.height-64;
 
-      // Draw speech bubble
-      colorRect(0, canvas.height-64, canvas.width, 64, "grey");
+      let w = canvas.width;
+      let h = 64;
+
+      // Draw speech bubble and draw mob face
+      colorRect(x0, y0, w, h, "grey");
+      draw_image(ctx, "zombie_01_face", x0+2, y0+2, 60, 60);
 
       // Draw text
+      let currentText = this.textSequence[this.dialogueCount];
+
+      // Set up our font and fill style
+      let fontSize = 16;
+      let border = 64;
+
+      ctx.fillStyle = "#000000"
+      ctx.font = `${fontSize}px serif`;
+      
+      let x = x0 + border;
+      let y = y0 + fontSize;
+      let maxWidth = canvas.height - 60;
+      let lineHeight = 18;
+
+      let wrappedText = wrapText(ctx, currentText, x, y, maxWidth, lineHeight);
+      wrappedText.forEach(function(item) {
+          ctx.fillText(item[0], item[1], item[2]); 
+      })
 
       // Get allowed text, chop it up into sequeneces on key press
 
@@ -71,10 +100,6 @@ class Mob extends SpriteAnimated {
   }
 
   playDialogue() {
-    console.log("Hello");
-    let x0 = 0;
-    let y0 = (canvas.height * 8) / 10;
-    let w0 = (canvas.height * 2) / 10;
     this.isDialogue = true;
   }
 

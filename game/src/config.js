@@ -17,7 +17,14 @@ const P_Y0 = 32;
 const P_H = 32;
 const P_W = 32;
 
-const VERSION = "0"
+const VERSION = "0.1"
+
+zombie01Face = "zombie_01_face.png"
+
+// Dialogue needs to start with blank text because first space bar press sets to 0
+// Each text snippet cannot be longer than 255 characters
+
+const npcDialogue0_0 = ["", "I was once like you but I was banished from my homeland after I betrayed the tyrannical King Alfred. If you find a ring in this godforsaken place, I can return to my former self, to my homeland, to my wife and to my...", "children. Of course, you shall recieve a generous reward, now make haste!"];
 
 const map = {
   maze00: [
@@ -31,7 +38,7 @@ const map = {
     [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0],
     [0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1],
     [0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0],
-    [0, "npc", 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+    [0, ["npc", npcDialogue0_0], 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0],
     [0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0],
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
     [0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0],

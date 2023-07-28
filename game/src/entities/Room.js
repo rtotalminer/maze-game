@@ -25,13 +25,15 @@ class Room {
     const entities = this.mobs.concat(this.items);
 
     // create blank entity map state 
+    
     for (let i = 0; i < this.map.length; i++) {
       let a = new Array();
-      this.entityMap.push(a)
+      this.entityMap.push(a)        
       for (let j = 0; j < this.map[0].length; j++) {
         let b = new Array();
         this.entityMap[i].push(b)
       }
+    
     }
 
     for (let i = 0; i < entities.length; i++) {
@@ -139,7 +141,7 @@ class Room {
             )
           );
         }
-        if (this.map[i][j] == "npc") {
+        if (this.map[i][j][0] == "npc") {
           let q = new Mob(
             "NPC",
             BLOCK_WIDTH * [j],
@@ -153,6 +155,7 @@ class Room {
             false,
             0
           )
+          q.textSequence = this.map[i][j][1];
           this.mobs.push(
             q
           );
@@ -193,16 +196,92 @@ class Room {
   // Gets the surrounding entities of a pair of co-ordinates within the room.
   getSurroundingEntities(a, b) {
     let x = this.convertCords(a, b)[0];
-    let y = this.convertCords(a, b)[1]
+    let y = this.convertCords(a, b)[1];
 
-    var localEntities = [
-      this.entityMap[y - 1][x] != undefined ? this.entityMap[y - 1][x] : [],  // N
-      this.entityMap[y][x + 1] != undefined ? this.entityMap[y][x + 1] : [],  // E
-      this.entityMap[y + 1][x] != undefined ? this.entityMap[y + 1][x] : [],  // S
-      this.entityMap[y][x - 1] != undefined ? this.entityMap[y][x - 1] : [],  // W
-    ];
-    console.log(localEntities);
-    return localEntities;
+
+    //console.log(this.entityMap);
+
+    // var aboveEntity = [];
+    // var belowEntity = [];
+    // var rightEntity = [];
+    // var leftEntity = [];
+
+    // if (roomCount == 3) {
+    //   console.log(x, y);
+    // }
+
+    // if (y > 0) {
+    //   aboveEntity = this.entityMap[y - 1][x]
+    // }
+
+    // if (y > canvas.height) {
+    //   belowEntity = this.entityMap[y + 1][x]
+    // }
+
+    // if (x > 0) {
+    //   leftEntity = this.entityMap[y][x - 1] 
+    // }
+
+    // if (x < canvas.width) {
+    //   rightEntity = this.entityMap[y][x + 1] 
+    // }
+
+    // console.log(belowEntity)
+    
+    
+    // var localEntities = [
+    //   aboveEntity,  // N
+    //   this.entityMap[y][x + 1] != undefined ? this.entityMap[y][x + 1] : [],  // E,  // E
+    //   belowEntity,  // S
+    //   this.entityMap[y][x - 1] != undefined ? this.entityMap[y][x - 1] : [],    // W
+    // ];
+
+  // var localEntities = [
+  //   this.entityMap[y - 1][x],  // N
+  //   this.entityMap[y][x + 1],  // E
+  //   this.entityMap[y + 1][x],  // S
+  //   this.entityMap[y][x - 1]  // W
+  // ];
+
+  console.log(x, y)
+
+  // var n = [];
+  // var s = [];
+  // if (y != 0) {
+  //   n = this.entityMap[y - 1][x];
+  // }
+  // if (y >= canvas.height)
+  // {
+  //   s = this.entityMap[y + 1][x];
+  // }
+
+  // GOING LEFT AND DOWN AND UP IS A PROBLEM, GOING TO THE RIGHT IS FINE!
+
+  
+  // var localEntities = [
+  //   // y == 0 ? [] : this.entityMap[y - 1][x], // THIS IS A FIX BUT IDK WHY // N
+  //   this.entityMap[y - 1][x] != undefined ? this.entityMap[y - 1][x] : [],  // N
+  //   this.entityMap[y][x + 1] != undefined ? this.entityMap[y][x + 1] : [],  // E
+  //   this.entityMap[y + 1][x] != undefined ? this.entityMap[y + 1][x] : [],  // S
+  //   this.entityMap[y][x - 1] == undefined ? [] : this.entityMap[y][x - 1],  // W
+  // ];
+
+  // ORIGINAL
+  var localEntities = [
+    this.entityMap[y - 1][x] != undefined ? this.entityMap[y - 1][x] : [],  // N
+    this.entityMap[y][x + 1] != undefined ? this.entityMap[y][x + 1] : [],  // E
+    this.entityMap[y + 1][x] != undefined ? this.entityMap[y + 1][x] : [],  // S
+    this.entityMap[y][x - 1] != undefined ? this.entityMap[y][x - 1] : [],  // W
+  ];
+
+
+  //var localEntities = [];
+  
+
+  return localEntities;
+    
+
+
   }
 
   update() {

@@ -17,6 +17,7 @@ var spaceBarReleased = false;
 var gameOver = false;
 var gameWon = false;
 var showMenu = true;
+var paused = false;
 
 var player;
 var gameMap;

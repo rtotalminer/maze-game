@@ -1,0 +1,14 @@
+{
+  "name": "maze-game",
+  "version": "1.0.0",
+  "description": "Currently there are 4 entities: walls: 0, floor: 1, mobs: \"e\", silvercoins: \"sc\" and goldcoins \"gc\". This is how they are specified in the map config and are loaded accordingly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

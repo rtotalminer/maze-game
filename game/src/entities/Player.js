@@ -23,6 +23,11 @@ class Player extends SpriteAnimated {
       spriteDirections,
       xOffset
     );
+
+    this.startTime = Date.now();
+    this.elapsed = 0;
+    this.pausedElapsed = 0;
+    this.pausedOn = 0;
     this.v = 4;
     this.hp = 75;
     this.gd = 0;
@@ -33,6 +38,7 @@ class Player extends SpriteAnimated {
 
   draw() {
     this.drawGoldCounter();
+    this.drawClock();
     this.drawHealthbar();
     super.draw();
   }
@@ -61,6 +67,11 @@ class Player extends SpriteAnimated {
               areaEntities[i][j].playDialogue();
               this.inDialogueWith = areaEntities[i][j];
               areaEntities[i][j].isDialogue = true;
+              areaEntities[i][j].dialogueCount += 1;
+              if (areaEntities[i][j].dialogueCount >= areaEntities[i][j].textSequence.length) {
+                areaEntities[i][j].isDialogue = false;
+                areaEntities[i][j].dialogueCount = 0;
+              }
             }
             isMobs = true;
           }
@@ -104,6 +115,25 @@ class Player extends SpriteAnimated {
     ctx.fillStyle = "gold";
     ctx.fillText(`${this.gd}`, canvas.width - 64, 32 - 8);
     draw_image(ctx, "goldbag", x, y, w, h);
+  }
+
+  drawClock() {
+    if (paused) {
+      if (this.pausedOn == 0) {
+        this.pausedOn = Date.now();
+      }
+      else {
+        this.pausedElapsed = (Date.now() - this.pausedOn);
+      }
+    }
+    else if (!paused) {
+      this.elapsed = Date.now() - this.startTime - this.pausedElapsed;
+      this.pausedElapsed = 0;
+      this.pausedOn = 0;
+    }
+    const stringTime = fancyTimeFormat(this.elapsed/1000)
+    ctx.fillStyle = "white";
+    ctx.fillText(`${stringTime}`, canvas.width - 160, 32 - 8);
   }
 
   playerCollision(room) {
@@ -161,6 +191,7 @@ class Player extends SpriteAnimated {
   }
 
   movePlayer(room) {
+    const borderMovement = 16;
     this.playerCollision(room);
     if (!this.mobCollision) {
       this.moveTo = "IDLE";
@@ -171,7 +202,7 @@ class Player extends SpriteAnimated {
         !downKeyPressed
       ) {
         this.moveTo = "W";
-        if (this.x + this.spriteWidth < 0) {
+        if (this.x + this.spriteWidth - borderMovement < 0) {
           roomCount -= 1;
           currentRoom = gameMap[roomCount];
           this.x = MAZE_WIDTH;
@@ -186,7 +217,7 @@ class Player extends SpriteAnimated {
         !downKeyPressed
       ) {
         this.moveTo = "E";
-        if (this.x > MAZE_WIDTH) {
+        if (this.x - this.spriteWidth + borderMovement > MAZE_WIDTH) {
           roomCount += 1;
           currentRoom = gameMap[roomCount];
           this.x = 0;
@@ -201,7 +232,7 @@ class Player extends SpriteAnimated {
         !downKeyPressed
       ) {
         this.moveTo = "N";
-        if (this.y - this.spriteHeight < 0) {
+        if (this.y + this.spriteHeight - borderMovement < 0) {
           roomCount -= 3;
           currentRoom = gameMap[roomCount];
           this.y = MAZE_HEIGHT;
@@ -216,7 +247,7 @@ class Player extends SpriteAnimated {
         !upKeyPressed
       ) {
         this.moveTo = "S";
-        if (this.y > MAZE_HEIGHT) {
+        if (this.y - this.spriteHeight + borderMovement > MAZE_HEIGHT) {
           roomCount += 3;
           currentRoom = gameMap[roomCount];
           this.y = 0;
