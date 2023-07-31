@@ -28,6 +28,8 @@ class Player extends SpriteAnimated {
     this.elapsed = 0;
     this.pausedElapsed = 0;
     this.pausedOn = 0;
+    this.totalPaused = 0;
+
     this.v = 4;
     this.hp = 75;
     this.gd = 0;
@@ -117,21 +119,41 @@ class Player extends SpriteAnimated {
     draw_image(ctx, "goldbag", x, y, w, h);
   }
 
+  // There is surely a cleaner way of doing this!!
   drawClock() {
     if (paused) {
       if (this.pausedOn == 0) {
         this.pausedOn = Date.now();
       }
       else {
-        this.pausedElapsed = (Date.now() - this.pausedOn);
+        this.pausedElapsed = (Date.now() - this.pausedOn) / 1000;
       }
     }
-    else if (!paused) {
-      this.elapsed = Date.now() - this.startTime - this.pausedElapsed;
-      this.pausedElapsed = 0;
+    else {
+      // this.totalPaused += this.pausedElapsed;
+      
+      //console.log(this.totalPaused);
+      console.log("PAUSED FOR ", this.pausedElapsed, " SECONDS" , "\n TIME ELAPSED FOR", this.elapsed, " SECONDS");
+
+      this.elapsed = ((Date.now() - this.startTime) / 1000) - this.pausedElapsed;
+
       this.pausedOn = 0;
     }
-    const stringTime = fancyTimeFormat(this.elapsed/1000)
+
+        
+    /*
+      TIME STARTED AT 12:00
+      GAME PLAYED TILL 12:01
+      GAME PAUSED ON 12:01
+      GAME RESUMED ON 12:05
+
+      4 MINUTES OF PAUSING
+      BY GAME_RESUMED - GAME_PAUSED
+
+      TOTAL TIME = GAME_RESUMED
+    */
+
+    const stringTime = fancyTimeFormat(this.elapsed)
     ctx.fillStyle = "white";
     ctx.fillText(`${stringTime}`, canvas.width - 160, 32 - 8);
   }
@@ -205,6 +227,7 @@ class Player extends SpriteAnimated {
         if (this.x + this.spriteWidth - borderMovement < 0) {
           roomCount -= 1;
           currentRoom = gameMap[roomCount];
+          console.log(currentRoom);
           this.x = MAZE_WIDTH;
         }
         this.x -= this.v;
@@ -220,6 +243,7 @@ class Player extends SpriteAnimated {
         if (this.x - this.spriteWidth + borderMovement > MAZE_WIDTH) {
           roomCount += 1;
           currentRoom = gameMap[roomCount];
+          console.log(currentRoom);
           this.x = 0;
         }
         this.x += this.v;
@@ -235,6 +259,7 @@ class Player extends SpriteAnimated {
         if (this.y + this.spriteHeight - borderMovement < 0) {
           roomCount -= 3;
           currentRoom = gameMap[roomCount];
+          console.log(currentRoom);
           this.y = MAZE_HEIGHT;
         }
         this.y -= this.v;
@@ -250,6 +275,7 @@ class Player extends SpriteAnimated {
         if (this.y - this.spriteHeight + borderMovement > MAZE_HEIGHT) {
           roomCount += 3;
           currentRoom = gameMap[roomCount];
+          console.log(currentRoom);
           this.y = 0;
         }
         this.y += this.v;

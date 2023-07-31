@@ -182,7 +182,7 @@ class Room {
   getSurroundingArea(a, b){
 
     let x = this.convertCords(a, b)[0];
-    let y = this.convertCords(a, b)[1]
+    let y = this.convertCords(a, b)[1];
 
     const avaialblePositions = [
       true ? this.map[y - 1][x] : [],  // N
@@ -198,90 +198,46 @@ class Room {
     let x = this.convertCords(a, b)[0];
     let y = this.convertCords(a, b)[1];
 
+    var northEntity = [];
+    var eastEntity = [];
+    var southEntity = [];
+    var westEntity = [];
 
-    //console.log(this.entityMap);
+    if (this.entityMap[y - 1] != undefined) {
+      if (this.entityMap[y - 1][x] != undefined) {
+        northEntity = this.entityMap[y - 1][x];
+      }
+    }
 
-    // var aboveEntity = [];
-    // var belowEntity = [];
-    // var rightEntity = [];
-    // var leftEntity = [];
+    if (this.entityMap[y] != undefined) {
+      if (this.entityMap[y][x + 1] != undefined) {
+        eastEntity = this.entityMap[y][x + 1];
+      }
+    }
 
-    // if (roomCount == 3) {
-    //   console.log(x, y);
-    // }
 
-    // if (y > 0) {
-    //   aboveEntity = this.entityMap[y - 1][x]
-    // }
+    if (this.entityMap[y + 1] != undefined) {
+      if (this.entityMap[y + 1][x] != undefined) {
+        southEntity = this.entityMap[y + 1][x];
+      }
+    }
 
-    // if (y > canvas.height) {
-    //   belowEntity = this.entityMap[y + 1][x]
-    // }
 
-    // if (x > 0) {
-    //   leftEntity = this.entityMap[y][x - 1] 
-    // }
+    if (this.entityMap[y] != undefined) {
+      if (this.entityMap[y][x - 1] != undefined) {
+        northEntity = this.entityMap[y][x - 1];
+      }
+    }
 
-    // if (x < canvas.width) {
-    //   rightEntity = this.entityMap[y][x + 1] 
-    // }
+    var localEntities = [
+      northEntity,  // N
+      eastEntity,   // E
+      southEntity,  // S
+      westEntity    // W
+    ];
 
-    // console.log(belowEntity)
+    return localEntities;
     
-    
-    // var localEntities = [
-    //   aboveEntity,  // N
-    //   this.entityMap[y][x + 1] != undefined ? this.entityMap[y][x + 1] : [],  // E,  // E
-    //   belowEntity,  // S
-    //   this.entityMap[y][x - 1] != undefined ? this.entityMap[y][x - 1] : [],    // W
-    // ];
-
-  // var localEntities = [
-  //   this.entityMap[y - 1][x],  // N
-  //   this.entityMap[y][x + 1],  // E
-  //   this.entityMap[y + 1][x],  // S
-  //   this.entityMap[y][x - 1]  // W
-  // ];
-
-  console.log(x, y)
-
-  // var n = [];
-  // var s = [];
-  // if (y != 0) {
-  //   n = this.entityMap[y - 1][x];
-  // }
-  // if (y >= canvas.height)
-  // {
-  //   s = this.entityMap[y + 1][x];
-  // }
-
-  // GOING LEFT AND DOWN AND UP IS A PROBLEM, GOING TO THE RIGHT IS FINE!
-
-  
-  // var localEntities = [
-  //   // y == 0 ? [] : this.entityMap[y - 1][x], // THIS IS A FIX BUT IDK WHY // N
-  //   this.entityMap[y - 1][x] != undefined ? this.entityMap[y - 1][x] : [],  // N
-  //   this.entityMap[y][x + 1] != undefined ? this.entityMap[y][x + 1] : [],  // E
-  //   this.entityMap[y + 1][x] != undefined ? this.entityMap[y + 1][x] : [],  // S
-  //   this.entityMap[y][x - 1] == undefined ? [] : this.entityMap[y][x - 1],  // W
-  // ];
-
-  // ORIGINAL
-  var localEntities = [
-    this.entityMap[y - 1][x] != undefined ? this.entityMap[y - 1][x] : [],  // N
-    this.entityMap[y][x + 1] != undefined ? this.entityMap[y][x + 1] : [],  // E
-    this.entityMap[y + 1][x] != undefined ? this.entityMap[y + 1][x] : [],  // S
-    this.entityMap[y][x - 1] != undefined ? this.entityMap[y][x - 1] : [],  // W
-  ];
-
-
-  //var localEntities = [];
-  
-
-  return localEntities;
-    
-
-
   }
 
   update() {

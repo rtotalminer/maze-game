@@ -10,6 +10,7 @@ Enjoy!
 
 # Todo
 
+- make canvas strechable and the textures to do so too
 - npcs w/ dialouge
 - stamina bar, w/sprint
 - More intelligent player spawing system (some spawns are unlucky occupied by mob)
