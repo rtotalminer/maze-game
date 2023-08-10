@@ -26,7 +26,10 @@ zombie01Face = "zombie_01_face.png"
 
 const npcDialogue0_0 = ["", "I was once like you but I was banished from my homeland after I betrayed the tyrannical King Alfred. If you find a ring in this godforsaken place, I can return to my former self, to my homeland, to my wife and to my...", "children. Of course, you shall recieve a generous reward, now make haste!"];
 
+const npc0 = ["npc", npcDialogue0_0, "harold"]
 const questItem0 = ["questItem", "harold"]
+const roomKey0 = ["roomKey", "RoomKey0"]
+const roomDoor = ["RoomDoor", "RoomKey0"]
 
 const map = {
   maze00: [
@@ -36,11 +39,11 @@ const map = {
     [0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0],
     [0, "sc", 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, "sc", 0, 1, 0],
     [0, "gc", 0, 1, 0, 1, 1, "e", 1, 1, 0, 1, 0, 1, 1, 1, 0],
-    [0, questItem0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, roomKey0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
     [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0],
-    [0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1],
+    [0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, roomDoor],
     [0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0],
-    [0, ["npc", npcDialogue0_0, "harold"], 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+    [0, npc0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0],
     [0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0],
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
     [0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0],

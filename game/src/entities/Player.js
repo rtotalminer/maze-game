@@ -62,18 +62,22 @@ class Player extends SpriteAnimated {
 
       var isMobs = false;
       
+    
+      
+
       for (let i=0; i < areaEntities.length; i++)
       {
         for (let j=0; j < areaEntities[i].length; j++){
-          if (areaEntities[i][j].name == "NPC") {
+          let entity = areaEntities[i][j];
+          if (entity.name == "NPC") {
             if (spaceBarReleased) {
-              areaEntities[i][j].playDialogue();
-              this.inDialogueWith = areaEntities[i][j];
-              areaEntities[i][j].isDialogue = true;
-              areaEntities[i][j].dialogueCount += 1;
-              if (areaEntities[i][j].dialogueCount >= areaEntities[i][j].textSequence.length) {
-                areaEntities[i][j].isDialogue = false;
-                areaEntities[i][j].dialogueCount = 0;
+              entity.playDialogue();
+              this.inDialogueWith = entity;
+              entity.isDialogue = true;
+              entity.dialogueCount += 1;
+              if (entity.dialogueCount >= entity.textSequence.length) {
+                entity.isDialogue = false;
+                entity.dialogueCount = 0;
               }
             }
             isMobs = true;
@@ -99,7 +103,7 @@ class Player extends SpriteAnimated {
     let borderWidth = 16;
     for (let i=0; i<this.inventory.length; i++) {
       let item = this.inventory[i];
-      console.log(item)
+      //console.log(item)
       ctx.drawImage(
         item.spriteSheet,
         item.srcX,
@@ -148,14 +152,11 @@ class Player extends SpriteAnimated {
 
   // Refactor needed
   playerCollision(room) {
-    var entities = room.getEntities();
-
+    let collidables = room.playerCollidables;
     // Check for any collisions
-    for (let i = 0; i < entities.length; i++) {
-      var ent = entities[i];
-      if (
-        ent.name != "Floor"
-      ) {
+    for (let i = 0; i < collidables.length; i++) {
+      var ent = collidables[i];
+      if (ent.name != "Floor") {
         const collider = collisionDetection(this, ent);
         if (collider == "Mob") {
           this.hp -= 5;
@@ -163,15 +164,17 @@ class Player extends SpriteAnimated {
         }
         if (collider == "Wall") {
         }
-        if (collider == "questItem") {
-          ent.onPickUp(this, room);
-        }
         if (collider == "Exit") {
           gameWon = true;
         }
+        if (collider == "RoomDoor") {
+          ent.unlockDoor(player, room);
+        }
         if (
           collider == "Silvercoin" ||
-          collider == "Goldcoin"
+          collider == "Goldcoin" ||
+          collider == "questItem" ||
+          collider == "RoomKey"
           )
         {
           ent.onPickUp(this, room);
@@ -182,6 +185,8 @@ class Player extends SpriteAnimated {
 
   movePlayer(room) {
     const borderMovement = 16;
+    let playerCollidables = room.walls.concat(room.mobs).concat(room.items);
+
     this.playerCollision(room);
     if (!this.mobCollision) {
       this.moveTo = "IDLE";

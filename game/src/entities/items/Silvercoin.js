@@ -1,6 +1,6 @@
 // This item is simply picked up and returned to an NPC
 
-class Silvercoin extends BasicItem {
+class Silvercoin extends SpriteBase {
     constructor(
       name,
       x,
@@ -30,6 +30,6 @@ class Silvercoin extends BasicItem {
 
       onPickUp(player, room) {
         player.gd += 1;
-        super.destroy(room)
+        room.destoryItem(this) // move to room destory
       }
 }

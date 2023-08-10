@@ -23,8 +23,8 @@ class SpriteAnimated extends SpriteBase {
   draw() {
     if (this.moveTo != "IDLE") {
       if (this.moveTo != "IDLE_N"){
-      this.currentFrame %= this.totalFrames;
-      this.srcX = this.currentFrame * this.spriteWidth;
+        this.currentFrame %= this.totalFrames;
+        this.srcX = this.currentFrame * this.spriteWidth;
       }
       if (this.moveTo == "E") {
         this.srcY = this.spriteDirections[1] * this.spriteHeight;

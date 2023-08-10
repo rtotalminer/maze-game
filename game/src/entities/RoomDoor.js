@@ -1,4 +1,4 @@
-class BasicItem extends SpriteBase {
+class RoomDoor extends SpriteBase {
     constructor(
       name,
       x,
@@ -9,7 +9,8 @@ class BasicItem extends SpriteBase {
       spriteRows,
       spriteCols,
       spriteDirections,
-      xOffset
+      xOffset,
+      key
     ) {
         super(
           name,
@@ -23,11 +24,16 @@ class BasicItem extends SpriteBase {
           spriteDirections,
           xOffset
         )
+        this.key = key;
 
       }
 
-      destroy(room) {
-        let newRoomItems = room.items.filter((item) => item != this);
-        room.items = newRoomItems;
+    unlockDoor(player, room) {
+      let doorKey = player.inventory.filter((item) => item.name.keyName == this.key);
+      console.log(doorKey);
+      if (doorKey.length > 0) {
+          super.destroy(room);
+          player.inventory.splice(this, 1);
       }
+    }
 }

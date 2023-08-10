@@ -1,6 +1,5 @@
 // This item is simply picked up and returned to an NPC
-
-class Goldcoin extends SpriteBase {
+class RoomKey extends SpriteBase {
     constructor(
       name,
       x,
@@ -11,25 +10,27 @@ class Goldcoin extends SpriteBase {
       spriteRows,
       spriteCols,
       spriteDirections,
-      xOffset
+      xOffset,
+      keyName,
     ) {
         super(
-          name,
-          x,
-          y,
-          w,
-          h,
-          filename,
-          spriteRows,
-          spriteCols,
-          spriteDirections,
-          xOffset
+            name,
+            x,
+            y,
+            w,
+            h,
+            filename,
+            spriteRows,
+            spriteCols,
+            spriteDirections,
+            xOffset
         )
+        this.keyName = keyName;
 
       }
 
       onPickUp(player, room) {
-        player.gd += 5;
+        player.inventory.push(this);
         room.destoryItem(this) // move to room destory
       }
 }

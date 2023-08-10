@@ -26,7 +26,7 @@ var currentRoom;
 
 // Game functions
 var numOfImages = 0;
-var noClip = true;
+var noClip = false;
 
 
 function loadImages() {

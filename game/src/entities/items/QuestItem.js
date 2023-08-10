@@ -1,6 +1,6 @@
 // This item is simply picked up and returned to an NPC
 
-class QuestItem extends BasicItem {
+class QuestItem extends SpriteBase {
     constructor(
       name,
       x,

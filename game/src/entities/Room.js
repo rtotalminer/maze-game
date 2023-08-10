@@ -3,7 +3,11 @@ class Room {
     this.map = map;
     this.entityMap = new Array();
 
+
     // Entities for the room
+    this.walls = new Array();
+    this.floors = new Array();
+
     this.textures = new Array();
     this.items = new Array();
     this.mobs = new Array();
@@ -11,18 +15,20 @@ class Room {
 
     this.entities = new Array();
 
+    this.playerCollidables = new Array();
+
     this.convertMap();
     this.getEntityMapState();
   }
 
   getEntities() {
-    this.entities = this.textures.concat(this.items).concat(this.mobs);
-    return this.entities;
+    this.entities = this.items.concat(this.mobs).concat(this.npcs);
+    this.playerCollidables = this.items.concat(this.walls).concat(this.mobs);
   }
 
   getEntityMapState() {
     this.entityMap = new Array();
-    const entities = this.mobs.concat(this.items);
+    this.getEntities();
 
     // create blank entity map state 
     for (let i = 0; i < this.map.length; i++) {
@@ -34,10 +40,14 @@ class Room {
       }
     }
 
-    for (let i = 0; i < entities.length; i++) {
-        let cords = this.convertCords(entities[i].x, entities[i].y);
-        this.entityMap[cords[1]][cords[0]].push(entities[i]);
+    // console.log(this.entities.length);
+
+
+    for (let i = 0; i < this.entities.length; i++) {
+        let cords = this.convertCords(this.entities[i].x, this.entities[i].y);
+        this.entityMap[cords[1]][cords[0]].push(this.entities[i]);
     }
+
   }
 
   // Is there a better way to store map data?
@@ -57,6 +67,9 @@ class Room {
             0
           )
           
+          this.walls.push(
+            e
+          );
           this.textures.push(
             e
           );
@@ -101,6 +114,38 @@ class Room {
               32,
               32,
               "goldbag.png",
+              1,
+              1,
+              0,
+              this.map[i][j][1]
+            )
+          );
+        }
+        if (this.map[i][j][0] == "roomKey") {
+          this.items.push(
+            new RoomKey(
+              "RoomKey",
+              BLOCK_WIDTH * [j],
+              BLOCK_WIDTH * [i],
+              32,
+              32,
+              "room_key.png",
+              1,
+              1,
+              0,
+              this.map[i][j][1]
+            )
+          );
+        }
+        if (this.map[i][j][0] == "RoomDoor") {
+          this.items.push(
+            new RoomDoor(
+              "RoomDoor",
+              BLOCK_WIDTH * [j],
+              BLOCK_WIDTH * [i],
+              32,
+              32,
+              "door.png",
               1,
               1,
               0,
@@ -157,7 +202,7 @@ class Room {
           );
         }
         if (this.map[i][j][0] == "npc") {
-          let q = new Mob(
+          let q = new NPC(
             "NPC",
             BLOCK_WIDTH * [j],
             BLOCK_WIDTH * [i],
@@ -167,7 +212,6 @@ class Room {
             3,
             4,
             [3, 2, 0, 1],
-            false,
             0,
             this.map[i][j][2]
           )
@@ -175,7 +219,7 @@ class Room {
           this.mobs.push(
             q
           );
-          this.npcs.push(q);
+          // this.npcs.push(q);
         }
       }
     }
@@ -190,8 +234,8 @@ class Room {
 
   // Destory's an item forever.
   destoryItem(entity, entity_loc) {
-    this.map[entity.y / BLOCK_WIDTH][entity.x / BLOCK_WIDTH] = 1;
-    this.getEntities().splice(entity_loc, 1);
+    let newRoomItems = this.items.filter((item) => item != entity);
+    this.items = newRoomItems;
   }
 
   // Gets the surrounding area of a pair of co-ordinates within the room.
@@ -199,19 +243,21 @@ class Room {
     let x = this.convertCords(a, b)[0];
     let y = this.convertCords(a, b)[1];
 
-    const avaialblePositions = [
+    const surroundingArea = [
       true ? this.map[y - 1][x] : [],  // N
       true ? this.map[y][x + 1] : [],  // E
       true ? this.map[y + 1][x] : [],  // S
       true ? this.map[y][x - 1] : [],  // W
     ];
-    return avaialblePositions;
+    return surroundingArea;
   }
 
   // Gets the surrounding entities of a pair of co-ordinates within the room.
   getSurroundingEntities(a, b) {
     let x = this.convertCords(a, b)[0];
     let y = this.convertCords(a, b)[1];
+
+    // console.log(this.entityMap);
 
     var northEntity = [];
     var eastEntity = [];
@@ -233,7 +279,9 @@ class Room {
 
     if (this.entityMap[y + 1] != undefined) {
       if (this.entityMap[y + 1][x] != undefined) {
+        // console.log( this.entityMap[y + 1][x].name)
         southEntity = this.entityMap[y + 1][x];
+
       }
     }
 
@@ -243,6 +291,7 @@ class Room {
         northEntity = this.entityMap[y][x - 1];
       }
     }
+    //console.log(southEntity)
 
     var localEntities = [
       northEntity,  // N
@@ -251,16 +300,24 @@ class Room {
       westEntity    // W
     ];
 
+    // console.log(localEntities);
+
     return localEntities;
     
   }
 
   update() {
-    for (let i = 0; i < this.mobs.length; i++) {
-      this.mobs[i].update(this.getEntities());
-    }
     // Refresh the state of our entity map
     this.getEntityMapState();
+
+    for (let i = 0; i < this.mobs.length; i++) {
+      let mob = this.mobs[i];
+      // let surroundingArea = this.getSurroundingArea(mob.x, mob.y);
+      mob.update(this);
+    }
+
+    
+
   }
 
   draw() {
