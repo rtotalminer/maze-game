@@ -10,7 +10,8 @@ class Mob extends SpriteAnimated {
     spriteCols,
     spriteDirections,
     isExplore,
-    xOffset
+    xOffset,
+    npcName
   ) {
     super(
       name,
@@ -33,6 +34,7 @@ class Mob extends SpriteAnimated {
 
     this.isDialogue = false;
     this.dialogueCount = 0;
+    this.npcName = npcName;
     this.textSequence = new Array();
 
     // this.npcFace = new Image();
@@ -63,7 +65,7 @@ class Mob extends SpriteAnimated {
     if (this.isDialogue){
       // Find suitable place to draw speech bubble
       let x0 = 0;
-      let y0 = canvas.height-64;
+      let y0 = canvas.height-32*3;
 
       let w = canvas.width;
       let h = 64;

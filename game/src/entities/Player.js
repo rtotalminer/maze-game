@@ -42,6 +42,7 @@ class Player extends SpriteAnimated {
     this.drawGoldCounter();
     this.drawClock();
     this.drawHealthbar();
+    this.drawInventory();
     super.draw();
   }
 
@@ -77,25 +78,11 @@ class Player extends SpriteAnimated {
             }
             isMobs = true;
           }
-          
-          if (i == 0) {
-
-          }
-          if (i == 1) {
-            
-          }
-          if (i == 2) {
-            
-          }
-          if (i == 3) {
-            
-          }
-          //console.log(areaEntities[i][j])
         }
       }
-       if (!isMobs && this.inDialogueWith != undefined) {
-        this.inDialogueWith.isDialogue = false;
-       }   
+      if (!isMobs && this.inDialogueWith != undefined) {
+      this.inDialogueWith.isDialogue = false;
+      }   
 
   }
 
@@ -106,6 +93,25 @@ class Player extends SpriteAnimated {
     colorRect(sX, sY, hpBarLength, 6, "red");
 
     //console.log(this.hp);
+  }
+
+  drawInventory() {
+    let borderWidth = 16;
+    for (let i=0; i<this.inventory.length; i++) {
+      let item = this.inventory[i];
+      console.log(item)
+      ctx.drawImage(
+        item.spriteSheet,
+        item.srcX,
+        item.srcY,
+        item.spriteWidth,
+        item.spriteHeight,
+        borderWidth*i,
+        MAZE_HEIGHT,
+        item.w,
+        item.h
+      );
+    }
   }
 
   drawGoldCounter() {
@@ -119,7 +125,7 @@ class Player extends SpriteAnimated {
     draw_image(ctx, "goldbag", x, y, w, h);
   }
 
-  // There is surely a cleaner way of doing this!!
+  // Dosen't work
   drawClock() {
     if (paused) {
       if (this.pausedOn == 0) {
@@ -130,48 +136,25 @@ class Player extends SpriteAnimated {
       }
     }
     else {
-      // this.totalPaused += this.pausedElapsed;
-      
-      //console.log(this.totalPaused);
-      console.log("PAUSED FOR ", this.pausedElapsed, " SECONDS" , "\n TIME ELAPSED FOR", this.elapsed, " SECONDS");
-
+      //  console.log("PAUSED FOR ", this.pausedElapsed, " SECONDS" , "\n TIME ELAPSED FOR", this.elapsed, " SECONDS");
       this.elapsed = ((Date.now() - this.startTime) / 1000) - this.pausedElapsed;
-
       this.pausedOn = 0;
     }
-
-        
-    /*
-      TIME STARTED AT 12:00
-      GAME PLAYED TILL 12:01
-      GAME PAUSED ON 12:01
-      GAME RESUMED ON 12:05
-
-      4 MINUTES OF PAUSING
-      BY GAME_RESUMED - GAME_PAUSED
-
-      TOTAL TIME = GAME_RESUMED
-    */
 
     const stringTime = fancyTimeFormat(this.elapsed)
     ctx.fillStyle = "white";
     ctx.fillText(`${stringTime}`, canvas.width - 160, 32 - 8);
   }
 
+  // Refactor needed
   playerCollision(room) {
     var entities = room.getEntities();
-    var collisions = new Array();
 
     // Check for any collisions
     for (let i = 0; i < entities.length; i++) {
       var ent = entities[i];
       if (
-        ent.name == "Mob" ||
-        ent.name == "Wall" ||
-        ent.name == "Exit" ||
-        ent.name == "NPC" ||
-        ent.name == "Silvercoin" ||
-        ent.name == "Goldcoin"
+        ent.name != "Floor"
       ) {
         const collider = collisionDetection(this, ent);
         if (collider == "Mob") {
@@ -180,34 +163,19 @@ class Player extends SpriteAnimated {
         }
         if (collider == "Wall") {
         }
+        if (collider == "questItem") {
+          ent.onPickUp(this, room);
+        }
         if (collider == "Exit") {
           gameWon = true;
         }
-        if (collider == "Silvercoin" || collider == "Goldcoin")
+        if (
+          collider == "Silvercoin" ||
+          collider == "Goldcoin"
+          )
         {
-          collisions.push(i);
-          if (collider == "Silvercoin") {
-            this.gd += 1;
-          }
-          else {
-            this.gd += 5;
-          }
+          ent.onPickUp(this, room);
         }
-      }
-    }
-
-    if (collisions.length > 0) {
-      for (let j = 0; j < collisions.length; j++) {
-        room.map[entities[collisions[j]].y / BLOCK_WIDTH][
-          entities[collisions[j]].x / BLOCK_WIDTH
-        ] = 1;
-        const a = room.items.find(
-          (item) =>
-            item.x == entities[collisions[j]].x &&
-            item.y == entities[collisions[j]].y
-        );
-        let q = room.items.filter((item) => item != a);
-        room.items = q;
       }
     }
   }

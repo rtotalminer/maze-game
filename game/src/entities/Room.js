@@ -25,7 +25,6 @@ class Room {
     const entities = this.mobs.concat(this.items);
 
     // create blank entity map state 
-    
     for (let i = 0; i < this.map.length; i++) {
       let a = new Array();
       this.entityMap.push(a)        
@@ -33,7 +32,6 @@ class Room {
         let b = new Array();
         this.entityMap[i].push(b)
       }
-    
     }
 
     for (let i = 0; i < entities.length; i++) {
@@ -81,7 +79,7 @@ class Room {
         }
         if (this.map[i][j] == "gc") {
           this.items.push(
-            new SpriteBase(
+            new Goldcoin(
               "Goldcoin",
               BLOCK_WIDTH * [j],
               BLOCK_WIDTH * [i],
@@ -94,9 +92,25 @@ class Room {
             )
           );
         }
+        if (this.map[i][j][0] == "questItem") {
+          this.items.push(
+            new QuestItem(
+              "questItem",
+              BLOCK_WIDTH * [j],
+              BLOCK_WIDTH * [i],
+              32,
+              32,
+              "goldbag.png",
+              1,
+              1,
+              0,
+              this.map[i][j][1]
+            )
+          );
+        }
         if (this.map[i][j] == "sc") {
           this.items.push(
-            new SpriteBase(
+            new Silvercoin(
               "Silvercoin",
               BLOCK_WIDTH * [j],
               BLOCK_WIDTH * [i],
@@ -122,7 +136,8 @@ class Room {
               4,
               [3, 2, 0, 1],
               true,
-              0
+              0,
+              null
             )
           );
         }
@@ -153,7 +168,8 @@ class Room {
             4,
             [3, 2, 0, 1],
             false,
-            0
+            0,
+            this.map[i][j][2]
           )
           q.textSequence = this.map[i][j][1];
           this.mobs.push(
@@ -165,8 +181,8 @@ class Room {
     }
   }
 
-  convertCords(a, b)
-  {
+  // Move to helper
+  convertCords(a, b) {
     var x = Math.floor(a / BLOCK_WIDTH);
     var y = Math.floor(b / BLOCK_WIDTH);
     return [x, y]
@@ -180,7 +196,6 @@ class Room {
 
   // Gets the surrounding area of a pair of co-ordinates within the room.
   getSurroundingArea(a, b){
-
     let x = this.convertCords(a, b)[0];
     let y = this.convertCords(a, b)[1];
 

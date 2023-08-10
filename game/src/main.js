@@ -36,6 +36,7 @@ function loadImages() {
 function loadGame() {
   escKeyPressedOnce = false;
   // Lazyload this?
+  // Do I need a structured clone?
   gameMap = new Array(
     new Room(structuredClone(map["maze00"])),
     new Room(structuredClone(map["maze01"])),
@@ -62,9 +63,9 @@ function loadGame() {
     5
   );
 
-  //player.enableHitbox = true;
+  // add a dev flag, enabling hitbo and noclip etc.
+  player.enableHitbox = true;
 
-  let startingRooms = [0, 1, 2, 3, 4, 5, 7, 8];
   roomCount = 0; //startingRooms[Math.floor(Math.random() * startingRooms.length)];
   currentRoom = gameMap[roomCount];
 }
