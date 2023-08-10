@@ -30,9 +30,8 @@ class RoomDoor extends SpriteBase {
 
     unlockDoor(player, room) {
       let doorKey = player.inventory.filter((item) => item.name.keyName == this.key);
-      console.log(doorKey);
       if (doorKey.length > 0) {
-          super.destroy(room);
+          room.destoryItem(this);
           player.inventory.splice(this, 1);
       }
     }

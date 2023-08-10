@@ -1,34 +1,39 @@
 class Room {
   constructor(map) {
+    // Maps
     this.map = map;
     this.entityMap = new Array();
 
-
-    // Entities for the room
+    // Textures
     this.walls = new Array();
     this.floors = new Array();
 
-    this.textures = new Array();
+    // Entities
+    this.entities = new Array();
     this.items = new Array();
     this.mobs = new Array();
     this.npcs = new Array();
-
-    this.entities = new Array();
-
-    this.playerCollidables = new Array();
+    this.collidables = new Array();
 
     this.convertMap();
     this.getEntityMapState();
   }
 
   getEntities() {
-    this.entities = this.items.concat(this.mobs).concat(this.npcs);
-    this.playerCollidables = this.items.concat(this.walls).concat(this.mobs);
+    return this.items.concat(this.mobs).concat(this.npcs);
+  }
+
+  getCollidables() {
+    return this.getEntities().concat(this.walls);
+  }
+
+  getStaticTextures() {
+    return this.walls.concat(this.floors);
   }
 
   getEntityMapState() {
     this.entityMap = new Array();
-    this.getEntities();
+    let entities = this.getEntities();
 
     // create blank entity map state 
     for (let i = 0; i < this.map.length; i++) {
@@ -41,11 +46,9 @@ class Room {
     }
 
     // console.log(this.entities.length);
-
-
-    for (let i = 0; i < this.entities.length; i++) {
-        let cords = this.convertCords(this.entities[i].x, this.entities[i].y);
-        this.entityMap[cords[1]][cords[0]].push(this.entities[i]);
+    for (let i = 0; i < entities.length; i++) {
+        let cords = this.convertCords(entities[i].x, entities[i].y);
+        this.entityMap[cords[1]][cords[0]].push(entities[i]);
     }
 
   }
@@ -70,9 +73,6 @@ class Room {
           this.walls.push(
             e
           );
-          this.textures.push(
-            e
-          );
         }
         if (this.map[i][j] != 0) {
           let e =   new SpriteBase(
@@ -86,8 +86,8 @@ class Room {
             1,
             0
           )
-          this.textures.push(
-          e
+          this.floors.push(
+            e
           );
         }
         if (this.map[i][j] == "gc") {
@@ -216,10 +216,10 @@ class Room {
             this.map[i][j][2]
           )
           q.textSequence = this.map[i][j][1];
-          this.mobs.push(
-            q
-          );
-          // this.npcs.push(q);
+          // this.mobs.push(
+          //   q
+          // );
+          this.npcs.push(q);
         }
       }
     }
@@ -232,10 +232,9 @@ class Room {
     return [x, y]
   }
 
-  // Destory's an item forever.
-  destoryItem(entity, entity_loc) {
-    let newRoomItems = this.items.filter((item) => item != entity);
-    this.items = newRoomItems;
+  // Destory's an item forever... "desTORY"
+  destoryItem(item) {
+    this.items = this.items.filter((_item) => _item != item); 
   }
 
   // Gets the surrounding area of a pair of co-ordinates within the room.
@@ -244,10 +243,10 @@ class Room {
     let y = this.convertCords(a, b)[1];
 
     const surroundingArea = [
-      true ? this.map[y - 1][x] : [],  // N
-      true ? this.map[y][x + 1] : [],  // E
-      true ? this.map[y + 1][x] : [],  // S
-      true ? this.map[y][x - 1] : [],  // W
+      this.map[y - 1][x],  // N
+      this.map[y][x + 1],  // E
+      this.map[y + 1][x],  // S
+      this.map[y][x - 1],  // W
     ];
     return surroundingArea;
   }
@@ -257,35 +256,27 @@ class Room {
     let x = this.convertCords(a, b)[0];
     let y = this.convertCords(a, b)[1];
 
-    // console.log(this.entityMap);
-
     var northEntity = [];
     var eastEntity = [];
     var southEntity = [];
     var westEntity = [];
 
+    // When player enteres new room i.e. out of bounds for entityMap.
     if (this.entityMap[y - 1] != undefined) {
       if (this.entityMap[y - 1][x] != undefined) {
         northEntity = this.entityMap[y - 1][x];
       }
     }
-
     if (this.entityMap[y] != undefined) {
       if (this.entityMap[y][x + 1] != undefined) {
         eastEntity = this.entityMap[y][x + 1];
       }
     }
-
-
     if (this.entityMap[y + 1] != undefined) {
       if (this.entityMap[y + 1][x] != undefined) {
-        // console.log( this.entityMap[y + 1][x].name)
         southEntity = this.entityMap[y + 1][x];
-
       }
     }
-
-
     if (this.entityMap[y] != undefined) {
       if (this.entityMap[y][x - 1] != undefined) {
         northEntity = this.entityMap[y][x - 1];
@@ -307,47 +298,23 @@ class Room {
   }
 
   update() {
-    // Refresh the state of our entity map
     this.getEntityMapState();
 
     for (let i = 0; i < this.mobs.length; i++) {
-      let mob = this.mobs[i];
-      // let surroundingArea = this.getSurroundingArea(mob.x, mob.y);
-      mob.update(this);
+      this.mobs[i].update(this);
     }
-
-    
-
   }
 
   draw() {
-    // Draw individually because of draw order and it saves space.
-    for (let i = 0; i < this.textures.length; i++) {
-      this.textures[i].draw();
-    }
-    for (let i = 0; i < this.items.length; i++) {
-      this.items[i].draw();
+    let textures = this.getStaticTextures()
+    let entities = this.getEntities();
+
+    for (let i = 0; i < textures.length; i++) {
+      textures[i].draw();
     }
 
-    var mobs = new Array();
-    var npcs = new Array();
-
-    for (let i = 0; i < this.mobs.length; i++) {
-      if (this.mobs[i].name == "Mob") {
-        mobs.push(this.mobs[i])
-      }
-      if (this.mobs[i].name == "NPC") {
-        npcs.push(this.mobs[i])
-      }
+    for (let i=0; i<entities.length; i++) {
+      entities[i].draw()
     }
-
-    for (let i = 0; i < mobs.length; i++) {
-      mobs[i].draw()
-    }
-    
-    for (let i = 0; i < npcs.length; i++) {
-      npcs[i].draw()
-    }
-
   }
 }

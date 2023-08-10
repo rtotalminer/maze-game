@@ -152,7 +152,7 @@ class Player extends SpriteAnimated {
 
   // Refactor needed
   playerCollision(room) {
-    let collidables = room.playerCollidables;
+    let collidables = room.getCollidables();
     // Check for any collisions
     for (let i = 0; i < collidables.length; i++) {
       var ent = collidables[i];
@@ -160,7 +160,6 @@ class Player extends SpriteAnimated {
         const collider = collisionDetection(this, ent);
         if (collider == "Mob") {
           this.hp -= 5;
-          console.log(this.hp);
         }
         if (collider == "Wall") {
         }
