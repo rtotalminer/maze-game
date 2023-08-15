@@ -33,17 +33,24 @@ class NPC extends SpriteAnimated {
       this.isAvailable = true;
       this.npcDialgoueInitiated = false;
       this.dialogueCount = 0;
+      this.currentDialogue = 0;
       this.npcName = npcName;
+      this.npcFinished = false;
+      this.done = false;
       this.textSequence = new Array();
     }
   
     update(entities) {
     }
   
+    // move most of this to update fx
     draw() {
       if (this.dialogueCount >= this.textSequence.length) {
         this.dialogueCount = -1;
         this.isDialogue = false;
+        if (this.currentDialogue == 1) {
+          this.npcFinished = true;
+        }
         // this.npcDialgoueInitiated = false;
       }
       if (this.isDialogue){
@@ -59,7 +66,7 @@ class NPC extends SpriteAnimated {
         draw_image(ctx, "zombie_01_face", x0+2, y0+2, 60, 60);
   
         // Draw text
-        let currentText = this.textSequence[this.dialogueCount];
+        let currentText = this.textSequence[this.currentDialogue][this.dialogueCount];
   
         // Set up our font and fill style
         let fontSize = 16;
@@ -90,6 +97,11 @@ class NPC extends SpriteAnimated {
         let item = playerInventory.find((_item) => _item.returnTo == this.npcName); 
         if (item) {
           console.log(item);
+          this.currentDialogue = 1;
+          if (!this.npcDialgoueInitiated) {
+            this.npcDialgoueInitiated = true;
+          }
+          this.playDialogue();
         }
         else {
           if (!this.npcDialgoueInitiated) {
@@ -101,10 +113,25 @@ class NPC extends SpriteAnimated {
 
 
     }
+
+    finished(player) {
+      player.gd += 10;
+
+      this.done = true;
+
+      let item = player.inventory.find((_item) => _item.returnTo == this.npcName); 
+      if (item) {
+          player.inventory = player.inventory.filter((item) => item.keyName != this.key);
+      }
+
+
+    }
   
     playDialogue() {
-      console.log("play dialouge ", this.dialogueCount)
-      this.isDialogue = true;
+      if (!this.done) {
+        console.log("play dialouge ", this.dialogueCount)
+        this.isDialogue = true;
+      }
     }
 
     incrementDialgoueCount() {

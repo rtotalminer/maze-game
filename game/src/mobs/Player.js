@@ -81,6 +81,9 @@ class Player extends SpriteAnimated {
               }
               entity.interact(this.inventory);
             }
+            if (entity.npcFinished && !entity.done) {
+              entity.finished(player);
+            }
           } 
         
       }

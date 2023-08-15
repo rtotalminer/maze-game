@@ -34,6 +34,7 @@ function loadImages() {
 }
 
 function loadGame() {
+
   escKeyPressedOnce = false;
   // Lazyload this?
   // Do I need a structured clone?

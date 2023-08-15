@@ -244,7 +244,8 @@ class Room {
             0,
             0,
             0,
-            this.map[i][j][2]
+            this.map[i][j][2],
+
           )
           q.srcY = q.spriteDirections[0] * q.spriteHeight;
           q.textSequence = this.map[i][j][1];
