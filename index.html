@@ -4,8 +4,9 @@
     <title>WealthRush</title>
 
     <!-- Static  -->
-    <img id="BrickGrey" hidden="hidden" src="../game/static/img/BrickGrey.png" />
+    <!-- <img id="BrickGrey" hidden="hidden" src="../game/static/img/BrickGrey.png" /> -->
     <img id="goldcoin" hidden="hidden" src="./game/static/img/goldcoin.png" />
+    <img id="roomKey" hidden="hidden" src="./game/static/img/room_key.png" />
     <img
       id="silvercoin"
       hidden="hidden"
@@ -15,6 +16,16 @@
       id="BrickLightGrey"
       hidden="hidden"
       src="./game/static/img/BrickLightGrey.png"
+    />
+    <img
+      id="HD4Walls"
+      hidden="hidden"
+      src="./game/static/img/hd_4_walls.png"
+    />
+    <img
+      id="TextureMap"
+      hidden="hidden"
+      src="./game/static/img/texture_map.png"
     />
     <img
       id="zombies_01"
@@ -44,17 +55,19 @@
 
     <!-- Base Entities  -->
     <script src="./game/src/entities/SpriteBase.js"></script>
+    <script src="./game/src/entities/SpriteAnimated.js"></script>
 
-    <!-- Items  -->
-    <script src="./game/src/entities/items/BasicItem.js"></script>
+    <!-- Game Items  -->
+    <script src="./game/src/entities/items/RoomKey.js"></script>
     <script src="./game/src/entities/items/QuestItem.js"></script>
     <script src="./game/src/entities/items/Goldcoin.js"></script>
     <script src="./game/src/entities/items/Silvercoin.js"></script>
 
     <!-- Entities  -->
-    <script src="./game/src/entities/SpriteAnimated.js"></script>
     <script src="./game/src/entities/Mob.js"></script>
+    <script src="./game/src/entities/NPC.js"></script>
     <script src="./game/src/entities/Room.js"></script>
+    <script src="./game/src/entities/RoomDoor.js"></script>
     <script src="./game/src/entities/Player.js"></script>
   </head>
 

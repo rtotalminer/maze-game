@@ -9,7 +9,9 @@ class Player extends SpriteAnimated {
     spriteRows,
     spriteCols,
     spriteDirections,
-    xOffset
+    xOffset,
+    spritePosX,
+    spritePosY
   ) {
     super(
       name,
@@ -21,7 +23,9 @@ class Player extends SpriteAnimated {
       spriteRows,
       spriteCols,
       spriteDirections,
-      xOffset
+      xOffset,
+      spritePosX,
+      spritePosY,
     );
 
     this.startTime = Date.now();
@@ -33,8 +37,12 @@ class Player extends SpriteAnimated {
     this.v = 4;
     this.hp = 75;
     this.gd = 0;
+
     this.inventory = new Array();
-    this.inDialogueWith;
+    
+    this.isNpcTalking = false;
+    this.inDialogueWith = null;
+
     this.mobCollision = false;
   }
 
@@ -59,31 +67,31 @@ class Player extends SpriteAnimated {
     
       let playerCentre = this.getCentre();
       let areaEntities  = room.getSurroundingEntities(playerCentre[0], playerCentre[1]);
+      let npc = false;
 
-      var isMobs = false;
-      
-      for (let i=0; i < areaEntities.length; i++)
-      {
+      for (let i=0; i < areaEntities.length; i++) {
         for (let j=0; j < areaEntities[i].length; j++){
-          if (areaEntities[i][j].name == "NPC") {
+          let entity = areaEntities[i][j];
+          if (entity.name == "NPC") {
+            npc = true;
             if (spaceBarReleased) {
-              areaEntities[i][j].playDialogue();
-              this.inDialogueWith = areaEntities[i][j];
-              areaEntities[i][j].isDialogue = true;
-              areaEntities[i][j].dialogueCount += 1;
-              if (areaEntities[i][j].dialogueCount >= areaEntities[i][j].textSequence.length) {
-                areaEntities[i][j].isDialogue = false;
-                areaEntities[i][j].dialogueCount = 0;
+              this.inDialogueWith = entity;
+              if (entity.npcDialgoueInitiated) {
+                entity.incrementDialgoueCount();
               }
+              entity.interact(this.inventory);
             }
-            isMobs = true;
-          }
-        }
+          } 
+        
       }
-      if (!isMobs && this.inDialogueWith != undefined) {
-      this.inDialogueWith.isDialogue = false;
-      }   
+    }
 
+    if (!npc && this.inDialogueWith != null) {
+      this.inDialogueWith.dialogueCount = 0;
+      this.inDialogueWith.npcDialgoueInitiated = false;
+      this.inDialogueWith.isDialogue = false;
+      this.inDialogueWith = null
+    }
   }
 
   drawHealthbar() {
@@ -99,18 +107,21 @@ class Player extends SpriteAnimated {
     let borderWidth = 16;
     for (let i=0; i<this.inventory.length; i++) {
       let item = this.inventory[i];
-      console.log(item)
-      ctx.drawImage(
-        item.spriteSheet,
-        item.srcX,
-        item.srcY,
-        item.spriteWidth,
-        item.spriteHeight,
-        borderWidth*i,
-        MAZE_HEIGHT,
-        item.w,
-        item.h
-      );
+      //console.log(item)
+      item.x = borderWidth*i;
+      item.y = MAZE_HEIGHT
+      item.draw();
+      // ctx.drawImage(
+      //   item.spriteSheet,
+      //   item.srcX,
+      //   item.srcY,
+      //   item.spriteWidth,
+      //   item.spriteHeight,
+      //   borderWidth*i,
+      //   MAZE_HEIGHT,
+      //   item.w,
+      //   item.h
+      // );
     }
   }
 
@@ -148,30 +159,28 @@ class Player extends SpriteAnimated {
 
   // Refactor needed
   playerCollision(room) {
-    var entities = room.getEntities();
-
+    let collidables = room.getCollidables();
     // Check for any collisions
-    for (let i = 0; i < entities.length; i++) {
-      var ent = entities[i];
-      if (
-        ent.name != "Floor"
-      ) {
+    for (let i = 0; i < collidables.length; i++) {
+      var ent = collidables[i];
+      if (ent.name != "Floor") {
         const collider = collisionDetection(this, ent);
         if (collider == "Mob") {
           this.hp -= 5;
-          console.log(this.hp);
         }
         if (collider == "Wall") {
-        }
-        if (collider == "questItem") {
-          ent.onPickUp(this, room);
         }
         if (collider == "Exit") {
           gameWon = true;
         }
+        if (collider == "RoomDoor") {
+          ent.unlockDoor(player, room);
+        }
         if (
           collider == "Silvercoin" ||
-          collider == "Goldcoin"
+          collider == "Goldcoin" ||
+          collider == "QuestItem" ||
+          collider == "RoomKey"
           )
         {
           ent.onPickUp(this, room);
@@ -182,6 +191,8 @@ class Player extends SpriteAnimated {
 
   movePlayer(room) {
     const borderMovement = 16;
+    let playerCollidables = room.walls.concat(room.mobs).concat(room.items);
+
     this.playerCollision(room);
     if (!this.mobCollision) {
       this.moveTo = "IDLE";

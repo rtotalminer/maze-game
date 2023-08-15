@@ -9,22 +9,24 @@ class SpriteAnimated extends SpriteBase {
     spriteRows,
     spriteCols,
     spriteDirections,
-    xOffset
+    xOffset,
+    spritePosX,
+    spritePosY
   ) {
-    super(name, x, y, w, h, filename, spriteRows, spriteCols, xOffset);
+    super(name, x, y, w, h, filename, spriteRows, spriteCols, xOffset, spritePosX, spritePosY);
     this.moveTo = "IDLE";
 
     this.currentFrame = 0;
     this.framesDrawn = 0;
-    this.totalFrames = 3;
+    this.totalFrames = spriteRows;
     this.spriteDirections = spriteDirections;
   }
 
   draw() {
     if (this.moveTo != "IDLE") {
       if (this.moveTo != "IDLE_N"){
-      this.currentFrame %= this.totalFrames;
-      this.srcX = this.currentFrame * this.spriteWidth;
+        this.currentFrame %= this.totalFrames;
+        this.srcX = this.currentFrame * this.spriteWidth;
       }
       if (this.moveTo == "E") {
         this.srcY = this.spriteDirections[1] * this.spriteHeight;
@@ -38,7 +40,10 @@ class SpriteAnimated extends SpriteBase {
       if (this.moveTo == "S") {
         this.srcY = this.spriteDirections[2] * this.spriteHeight;
       }
-    } else {
+    }
+    else if (this.moveTo == "STATIC") {
+      this.currentFrame %= this.totalFrames;
+      this.srcX = this.currentFrame * this.spriteWidth;
     }
 
     if (!escKeyPressedOnce) {
