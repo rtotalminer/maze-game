@@ -9,7 +9,9 @@ class Player extends SpriteAnimated {
     spriteRows,
     spriteCols,
     spriteDirections,
-    xOffset
+    xOffset,
+    spritePosX,
+    spritePosY
   ) {
     super(
       name,
@@ -21,7 +23,9 @@ class Player extends SpriteAnimated {
       spriteRows,
       spriteCols,
       spriteDirections,
-      xOffset
+      xOffset,
+      spritePosX,
+      spritePosY,
     );
 
     this.startTime = Date.now();
@@ -33,8 +37,12 @@ class Player extends SpriteAnimated {
     this.v = 4;
     this.hp = 75;
     this.gd = 0;
+
     this.inventory = new Array();
-    this.inDialogueWith;
+    
+    this.isNpcTalking = false;
+    this.inDialogueWith = null;
+
     this.mobCollision = false;
   }
 
@@ -59,35 +67,31 @@ class Player extends SpriteAnimated {
     
       let playerCentre = this.getCentre();
       let areaEntities  = room.getSurroundingEntities(playerCentre[0], playerCentre[1]);
+      let npc = false;
 
-      var isMobs = false;
-      
-    
-      
-
-      for (let i=0; i < areaEntities.length; i++)
-      {
+      for (let i=0; i < areaEntities.length; i++) {
         for (let j=0; j < areaEntities[i].length; j++){
           let entity = areaEntities[i][j];
           if (entity.name == "NPC") {
+            npc = true;
             if (spaceBarReleased) {
-              entity.playDialogue();
               this.inDialogueWith = entity;
-              entity.isDialogue = true;
-              entity.dialogueCount += 1;
-              if (entity.dialogueCount >= entity.textSequence.length) {
-                entity.isDialogue = false;
-                entity.dialogueCount = 0;
+              if (entity.npcDialgoueInitiated) {
+                entity.incrementDialgoueCount();
               }
+              entity.interact(this.inventory);
             }
-            isMobs = true;
-          }
-        }
+          } 
+        
       }
-      if (!isMobs && this.inDialogueWith != undefined) {
-      this.inDialogueWith.isDialogue = false;
-      }   
+    }
 
+    if (!npc && this.inDialogueWith != null) {
+      this.inDialogueWith.dialogueCount = 0;
+      this.inDialogueWith.npcDialgoueInitiated = false;
+      this.inDialogueWith.isDialogue = false;
+      this.inDialogueWith = null
+    }
   }
 
   drawHealthbar() {
@@ -104,17 +108,20 @@ class Player extends SpriteAnimated {
     for (let i=0; i<this.inventory.length; i++) {
       let item = this.inventory[i];
       //console.log(item)
-      ctx.drawImage(
-        item.spriteSheet,
-        item.srcX,
-        item.srcY,
-        item.spriteWidth,
-        item.spriteHeight,
-        borderWidth*i,
-        MAZE_HEIGHT,
-        item.w,
-        item.h
-      );
+      item.x = borderWidth*i;
+      item.y = MAZE_HEIGHT
+      item.draw();
+      // ctx.drawImage(
+      //   item.spriteSheet,
+      //   item.srcX,
+      //   item.srcY,
+      //   item.spriteWidth,
+      //   item.spriteHeight,
+      //   borderWidth*i,
+      //   MAZE_HEIGHT,
+      //   item.w,
+      //   item.h
+      // );
     }
   }
 
@@ -172,7 +179,7 @@ class Player extends SpriteAnimated {
         if (
           collider == "Silvercoin" ||
           collider == "Goldcoin" ||
-          collider == "questItem" ||
+          collider == "QuestItem" ||
           collider == "RoomKey"
           )
         {

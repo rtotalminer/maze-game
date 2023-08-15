@@ -10,6 +10,8 @@ class NPC extends SpriteAnimated {
       spriteCols,
       spriteDirections,
       xOffset,
+      spritePosX,
+      spritePosY,
       npcName
     ) {
       super(
@@ -22,15 +24,14 @@ class NPC extends SpriteAnimated {
         spriteRows,
         spriteCols,
         spriteDirections,
-        xOffset
-      );
-  
-      this.ox = x;
-      this.oy = y;
-      this.x = x;
-      this.y = y;
-  
+        xOffset,
+        spritePosX,
+        spritePosY
+      );  
+
       this.isDialogue = false;
+      this.isAvailable = true;
+      this.npcDialgoueInitiated = false;
       this.dialogueCount = 0;
       this.npcName = npcName;
       this.textSequence = new Array();
@@ -40,6 +41,11 @@ class NPC extends SpriteAnimated {
     }
   
     draw() {
+      if (this.dialogueCount >= this.textSequence.length) {
+        this.dialogueCount = -1;
+        this.isDialogue = false;
+        // this.npcDialgoueInitiated = false;
+      }
       if (this.isDialogue){
         // Find suitable place to draw speech bubble
         let x0 = 0;
@@ -78,9 +84,33 @@ class NPC extends SpriteAnimated {
       }
       super.draw();
     }
+
+    interact(playerInventory) {
+      if (this.isAvailable) {
+        let item = playerInventory.find((_item) => _item.returnTo == this.npcName); 
+        if (item) {
+          console.log(item);
+        }
+        else {
+          if (!this.npcDialgoueInitiated) {
+            this.npcDialgoueInitiated = true;
+          }
+          this.playDialogue();
+        }
+      }
+
+
+    }
   
     playDialogue() {
+      console.log("play dialouge ", this.dialogueCount)
       this.isDialogue = true;
+    }
+
+    incrementDialgoueCount() {
+      // if (!(this.dialogueCount >= this.textSequence.length - 1)) {
+        this.dialogueCount += 1;
+      // }
     }
   
   }

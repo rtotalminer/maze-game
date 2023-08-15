@@ -11,7 +11,9 @@ class Silvercoin extends SpriteBase {
       spriteRows,
       spriteCols,
       spriteDirections,
-      xOffset
+      xOffset,
+      spritePosX,
+      spritePosY,
     ) {
         super(
             name,
@@ -23,7 +25,9 @@ class Silvercoin extends SpriteBase {
             spriteRows,
             spriteCols,
             spriteDirections,
-            xOffset
+            xOffset,
+            spritePosX,
+            spritePosY,
         )
 
       }

@@ -11,6 +11,8 @@ class Mob extends SpriteAnimated {
     spriteDirections,
     isExplore,
     xOffset,
+    spritePosX,
+    spritePosY,
     npcName
   ) {
     super(
@@ -23,6 +25,8 @@ class Mob extends SpriteAnimated {
       spriteRows,
       spriteCols,
       spriteDirections,
+      spritePosX,
+      spritePosY,
       xOffset
     );
 
@@ -44,6 +48,7 @@ class Mob extends SpriteAnimated {
       } catch (err) {
         this.x = this.ox;
         this.y = this.oy;
+        this.moveTo = this.movesTo[Math.floor(Math.random() * this.movesTo.length)];
       }
     }
   }

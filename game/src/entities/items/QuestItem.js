@@ -1,5 +1,4 @@
 // This item is simply picked up and returned to an NPC
-
 class QuestItem extends SpriteBase {
     constructor(
       name,
@@ -12,6 +11,8 @@ class QuestItem extends SpriteBase {
       spriteCols,
       spriteDirections,
       xOffset,
+      spritePosX,
+      spritePosY,
       returnTo
     ) {
         super(
@@ -24,13 +25,17 @@ class QuestItem extends SpriteBase {
             spriteRows,
             spriteCols,
             spriteDirections,
-            xOffset
+            xOffset,
+            spritePosX,
+            spritePosY,
         )
+        this.returnTo = returnTo;
+        console.log(returnTo)
 
       }
 
       onPickUp(player, room) {
         player.inventory.push(this);
-        super.destroy(room)
+        room.destoryItem(this)
       }
 }

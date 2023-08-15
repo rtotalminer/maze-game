@@ -1,5 +1,5 @@
 class SpriteBase {
-  constructor(name, x, y, w, h, filename, spriteRows, spriteCols, xOffset) {
+  constructor(name, x, y, w, h, filename, spriteRows, spriteCols, xOffset, spritePosX, spritePosY) {
     this.name = name;
     this.x = x;
     this.y = y;
@@ -7,6 +7,7 @@ class SpriteBase {
     this.h = h;
     this.filename = filename;
 
+    // Offset for hitbox
     this.xOffset = xOffset;
 
     this.spriteSheet = new Image();
@@ -21,8 +22,8 @@ class SpriteBase {
     this.spriteWidth = this.spriteSheet.width / spriteRows;
     this.spriteHeight = this.spriteSheet.height / spriteCols;
 
-    this.srcX = 0;
-    this.srcY = 0;
+    this.srcX = spritePosX*this.spriteWidth;
+    this.srcY = spritePosY*this.spriteHeight;
 
     this.enableHitbox = false;
   }

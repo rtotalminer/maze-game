@@ -58,32 +58,41 @@ class Room {
     for (let i = 0; i < this.map.length; i++) {
       for (let j = 0; j < this.map[0].length; j++) {
         if (this.map[i][j] == 0) {
+          let r = Math.floor(Math.random() * 4);
+          let filename = `wall/brick_gray_${r}.png`
           let e = new SpriteBase(
             "Wall",
             BLOCK_WIDTH * [j],
             BLOCK_WIDTH * [i],
             32,
             32,
-            "BrickGrey.png",
-            1,
-            1,
+            filename,
+            2,
+            2,
+            0,
+            0,
             0
           )
+          // console.log(e.spriteWidth)
           
           this.walls.push(
             e
           );
         }
         if (this.map[i][j] != 0) {
+          let r = Math.floor(Math.random() * 4);
+          let filename = `floor/white_marble_${r}.png`
           let e =   new SpriteBase(
             "Floor",
             BLOCK_WIDTH * [j],
             BLOCK_WIDTH * [i],
             32,
             32,
-            "BrickLightGrey.png",
+            filename,
             1,
             1,
+            0,
+            0,
             0
           )
           this.floors.push(
@@ -101,14 +110,17 @@ class Room {
               "goldcoin.png",
               1,
               1,
+              0,
+              0,
               0
             )
           );
         }
         if (this.map[i][j][0] == "questItem") {
+          let returnTo = this.map[i][j][1]
           this.items.push(
             new QuestItem(
-              "questItem",
+              "QuestItem",
               BLOCK_WIDTH * [j],
               BLOCK_WIDTH * [i],
               32,
@@ -117,24 +129,32 @@ class Room {
               1,
               1,
               0,
-              this.map[i][j][1]
+              0,
+              0,
+              0,
+              returnTo,
             )
           );
         }
         if (this.map[i][j][0] == "roomKey") {
+          let key = new RoomKey(
+            "RoomKey",
+            BLOCK_WIDTH * [j],
+            BLOCK_WIDTH * [i],
+            32,
+            32,
+            "item/key_1.png",
+            8,
+            1,
+            [2, 1, 3, 4],
+            0,
+            0,
+            0,
+            this.map[i][j][1]
+          );
+          key.moveTo = "STATIC";
           this.items.push(
-            new RoomKey(
-              "RoomKey",
-              BLOCK_WIDTH * [j],
-              BLOCK_WIDTH * [i],
-              32,
-              32,
-              "room_key.png",
-              1,
-              1,
-              0,
-              this.map[i][j][1]
-            )
+            key
           );
         }
         if (this.map[i][j][0] == "RoomDoor") {
@@ -148,6 +168,8 @@ class Room {
               "door.png",
               1,
               1,
+              0,
+              0,
               0,
               this.map[i][j][1]
             )
@@ -164,6 +186,9 @@ class Room {
               "silvercoin.png",
               1,
               1,
+              0,
+              0,
+              0,
               0
             )
           );
@@ -182,6 +207,8 @@ class Room {
               [3, 2, 0, 1],
               true,
               0,
+              0,
+              0,
               null
             )
           );
@@ -197,6 +224,8 @@ class Room {
               "door.png",
               1,
               1,
+              0,
+              0,
               0
             )
           );
@@ -213,8 +242,11 @@ class Room {
             4,
             [3, 2, 0, 1],
             0,
+            0,
+            0,
             this.map[i][j][2]
           )
+          q.srcY = q.spriteDirections[0] * q.spriteHeight;
           q.textSequence = this.map[i][j][1];
           // this.mobs.push(
           //   q

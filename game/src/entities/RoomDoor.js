@@ -8,8 +8,9 @@ class RoomDoor extends SpriteBase {
       filename,
       spriteRows,
       spriteCols,
-      spriteDirections,
       xOffset,
+      spritePosX,
+      spritePosY,
       key
     ) {
         super(
@@ -21,18 +22,21 @@ class RoomDoor extends SpriteBase {
           filename,
           spriteRows,
           spriteCols,
-          spriteDirections,
-          xOffset
+          xOffset,
+          spritePosX,
+          spritePosY,
         )
         this.key = key;
 
       }
 
     unlockDoor(player, room) {
-      let doorKey = player.inventory.filter((item) => item.name.keyName == this.key);
-      if (doorKey.length > 0) {
+      console.log(player.inventory, this.key)
+      let doorKey = player.inventory.find((item) => item.keyName == this.key);
+      console.log(doorKey, this.key)
+      if (doorKey) {
           room.destoryItem(this);
-          player.inventory.splice(this, 1);
+          player.inventory = player.inventory.filter((item) => item.keyName != this.key);
       }
     }
 }

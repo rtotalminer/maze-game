@@ -1,5 +1,5 @@
 // This item is simply picked up and returned to an NPC
-class RoomKey extends SpriteBase {
+class RoomKey extends SpriteAnimated {
     constructor(
       name,
       x,
@@ -11,20 +11,24 @@ class RoomKey extends SpriteBase {
       spriteCols,
       spriteDirections,
       xOffset,
+      spritePosX,
+      spritePosY,
       keyName,
     ) {
-        super(
-            name,
-            x,
-            y,
-            w,
-            h,
-            filename,
-            spriteRows,
-            spriteCols,
-            spriteDirections,
-            xOffset
-        )
+      super(
+        name,
+        x,
+        y,
+        w,
+        h,
+        filename,
+        spriteRows,
+        spriteCols,
+        spriteDirections,
+        xOffset,
+        spritePosX,
+        spritePosY,
+      )
         this.keyName = keyName;
 
       }

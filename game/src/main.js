@@ -60,11 +60,18 @@ function loadGame() {
     4,
     4,
     [1, 3, 0, 2],
-    5
+    5,
+    0,
+    0
   );
 
+  let isDev = true;
+
   // add a dev flag, enabling hitbo and noclip etc.
-  player.enableHitbox = true;
+  if (isDev) {
+    player.enableHitbox = true;
+    noClip = true;
+  }
 
   roomCount = 0; //startingRooms[Math.floor(Math.random() * startingRooms.length)];
   currentRoom = gameMap[roomCount];
