@@ -28,7 +28,7 @@ const npcDialogue0_0 = ["I was once like you but I was banished from my homeland
 const npcDialogue0_1 = ["Yes you have found this item! I can now leave this place", "Oh and I forget, a reward, take this"]
 
 const npc0 = ["npc", [npcDialogue0_0, npcDialogue0_1], "harold"]
-const questItem0 = ["questItem", "harold"]
+const questItem0 = ["questItem", "harold", "ring_0"]
 const roomKey0 = ["roomKey", "RoomKey0"]
 const roomDoor = ["RoomDoor", "RoomKey0"]
 

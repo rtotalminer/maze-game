@@ -118,6 +118,7 @@ class Room {
         }
         if (this.map[i][j][0] == "questItem") {
           let returnTo = this.map[i][j][1]
+          let questItemName = this.map[i][j][2];
           this.items.push(
             new QuestItem(
               "QuestItem",
@@ -125,7 +126,7 @@ class Room {
               BLOCK_WIDTH * [i],
               32,
               32,
-              "goldbag.png",
+              "item/ring_1.png",
               1,
               1,
               0,
@@ -195,7 +196,7 @@ class Room {
         }
         if (this.map[i][j] == "e") {
           this.mobs.push(
-            new Mob(
+            new Zombie(
               "Mob",
               BLOCK_WIDTH * [j],
               BLOCK_WIDTH * [i],
@@ -328,6 +329,12 @@ class Room {
 
     return localEntities;
     
+  }
+
+  // Gets an AxB are surrounding the player, depending on the light level
+  getLightArea(player) {
+    // Get the available areas, determines if the light level will
+    // overlap the map
   }
 
   update() {

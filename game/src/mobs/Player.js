@@ -111,7 +111,7 @@ class Player extends SpriteAnimated {
     for (let i=0; i<this.inventory.length; i++) {
       let item = this.inventory[i];
       //console.log(item)
-      item.x = borderWidth*i;
+      item.x = borderWidth*(2*i);
       item.y = MAZE_HEIGHT
       item.draw();
       // ctx.drawImage(
@@ -129,14 +129,39 @@ class Player extends SpriteAnimated {
   }
 
   drawGoldCounter() {
+    let goldImg;
+    
+    if (this.gd < 5) {
+      goldImg = "1";
+    }
+    else if (this.gd < 10) {
+      goldImg = "2";
+    }
+    else if (this.gd < 15) {
+      goldImg = "3";
+    }
+    else if (this.gd < 20) {
+      goldImg = "4";
+    }
+    else if (this.gd < 25) {
+      goldImg = "5";
+    }
+    else if (this.gd < 30) {
+      goldImg = "6";
+    }
+    else {
+      goldImg = "max"
+    }
+    
+    let gold = new Image();
+    gold.src = `./game/static/img/item/gold/gold_pile_${goldImg}.png`;
+    
     let x = canvas.width - 32 * 3;
     let y = 0;
-    let w = 32;
-    let h = 32;
     ctx.font = "22px Impact";
     ctx.fillStyle = "gold";
     ctx.fillText(`${this.gd}`, canvas.width - 64, 32 - 8);
-    draw_image(ctx, "goldbag", x, y, w, h);
+    ctx.drawImage(gold, x, y);
   }
 
   // Dosen't work
