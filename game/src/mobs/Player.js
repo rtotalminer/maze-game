@@ -129,28 +129,13 @@ class Player extends SpriteAnimated {
   }
 
   drawGoldCounter() {
+
     let goldImg;
-    
-    if (this.gd < 5) {
-      goldImg = "1";
-    }
-    else if (this.gd < 10) {
-      goldImg = "2";
-    }
-    else if (this.gd < 15) {
-      goldImg = "3";
-    }
-    else if (this.gd < 20) {
-      goldImg = "4";
-    }
-    else if (this.gd < 25) {
-      goldImg = "5";
-    }
-    else if (this.gd < 30) {
-      goldImg = "6";
+    if (this.gd >= 75) {
+      goldImg = "max"
     }
     else {
-      goldImg = "max"
+      goldImg = Math.floor(this.gd/5) + 1;
     }
     
     let gold = new Image();
