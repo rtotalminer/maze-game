@@ -15,6 +15,7 @@ class SpriteAnimated extends SpriteBase {
   ) {
     super(name, x, y, w, h, filename, spriteRows, spriteCols, xOffset, spritePosX, spritePosY);
     this.moveTo = "IDLE";
+    this.idle = false;
 
     this.currentFrame = 0;
     this.framesDrawn = 0;
@@ -23,7 +24,7 @@ class SpriteAnimated extends SpriteBase {
   }
 
   draw() {
-    if (this.moveTo != "IDLE" && this.moveTo != "STATIC") {
+    if (this.moveTo != "IDLE") {
       if (this.moveTo != "IDLE_N"){
         this.currentFrame %= this.totalFrames;
         this.srcX = this.currentFrame * this.spriteWidth;
@@ -31,7 +32,7 @@ class SpriteAnimated extends SpriteBase {
       if (this.moveTo == "E") {
         this.srcY = this.spriteDirections[1] * this.spriteHeight;
       }
-      if (this.moveTo == "N" || this.moveTo == "IDLE_N") {
+      if (this.moveTo == "N") {
         this.srcY = this.spriteDirections[0] * this.spriteHeight;
       }
       if (this.moveTo == "W") {
@@ -43,14 +44,16 @@ class SpriteAnimated extends SpriteBase {
     }
     if (this.moveTo == "STATIC") {
       this.currentFrame++;
-        this.framesDrawn = 0;
+      this.framesDrawn = 0;
     }
 
     if (!escKeyPressedOnce) {
-      this.framesDrawn++;
-      if (this.framesDrawn >= 10) {
-        this.currentFrame++;
-        this.framesDrawn = 0;
+      if (!this.static) {
+        this.framesDrawn++;
+        if (this.framesDrawn >= 10) {
+          this.currentFrame++;
+          this.framesDrawn = 0;
+        }
       }
     }
 

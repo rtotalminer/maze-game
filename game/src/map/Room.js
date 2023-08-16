@@ -148,7 +148,7 @@ class Room {
               BLOCK_WIDTH * [i],
               32,
               32,
-              "item/ring_1.png",
+              `item/${questItemName}.png`,
               1,
               1,
               0,
@@ -257,6 +257,8 @@ class Room {
           );
         }
         if (this.map[i][j][0] == "npc") {
+          let reward = this.map[i][j][3]
+          let facing = this.map[i][j][4]
           let q = new NPC(
             "NPC",
             BLOCK_WIDTH * [j],
@@ -271,9 +273,11 @@ class Room {
             0,
             0,
             this.map[i][j][2],
-
+            reward,
+            facing
           )
-          q.srcY = q.spriteDirections[0] * q.spriteHeight;
+          // q.srcY = q.spriteDirections[0] * q.spriteHeight;
+          q.static = true;
           q.textSequence = this.map[i][j][1];
           // this.mobs.push(
           //   q
@@ -338,7 +342,7 @@ class Room {
     }
     if (this.entityMap[y] != undefined) {
       if (this.entityMap[y][x - 1] != undefined) {
-        northEntity = this.entityMap[y][x - 1];
+        westEntity = this.entityMap[y][x - 1];
       }
     }
     //console.log(southEntity)
@@ -368,9 +372,9 @@ class Room {
       "CL": (this.textureMap[y][x-1] != undefined) ? this.textureMap[y][x-1] : [],
       "CC": (this.textureMap[y][x] != undefined) ? this.textureMap[y][x] : [],
       "CR": (this.textureMap[y][x+1] != undefined) ? this.textureMap[y][x+1] : [],
-      "BL": (this.textureMap[y+1][x-1] != undefined) ? this.textureMap[y+1][x-1] : [],
-      "BC": (this.textureMap[y+1][x] != undefined) ? this.textureMap[y+1][x] : [],
-      "BR": (this.textureMap[y+1][x+1] != undefined) ? this.textureMap[y+1][x+1] : [],
+      "BL": (this.textureMap[y+1][x-1] != undefined) ? (this.textureMap[y+1][x-1] != undefined) ? this.textureMap[y+1][x-1] : [] : [],
+      "BC": (this.textureMap[y+1][x] != undefined) ? (this.textureMap[y+1][x] != undefined) ? this.textureMap[y+1][x] : [] : [],
+      "BR": (this.textureMap[y+1][x+1] != undefined) ? (this.textureMap[y+1][x+1] != undefined) ? this.textureMap[y+1][x+1] : [] : [],
     }
     
     let entities = {
@@ -380,26 +384,51 @@ class Room {
       "CL": (this.entityMap[y][x-1] != undefined) ? this.entityMap[y][x-1] : [],
       "CC": (this.entityMap[y][x] != undefined) ? this.entityMap[y][x] : [],
       "CR": (this.entityMap[y][x+1] != undefined) ? this.entityMap[y][x+1] : [],
-      "BL": (this.entityMap[y+1][x-1] != undefined) ? this.entityMap[y+1][x-1] : [],
-      "BC": (this.entityMap[y+1][x] != undefined) ? this.entityMap[y+1][x] : [],
-      "BR": (this.entityMap[y+1][x+1] != undefined) ? this.entityMap[y+1][x+1] : [],
+      "BL": (this.entityMap[y+1][x-1] != undefined) ? (this.entityMap[y+1][x-1] != undefined) ? this.entityMap[y+1][x-1] : [] : [],
+      "BC": (this.entityMap[y+1][x] != undefined) ? (this.entityMap[y+1][x] != undefined) ? this.entityMap[y+1][x] : [] : [],
+      "BR": (this.entityMap[y+1][x+1] != undefined) ? (this.entityMap[y+1][x+1] != undefined) ? this.entityMap[y+1][x+1] : [] : [],
     }
 
+    // Player facing vision
     if (player.directionLooking == "S") {
       if (this.entityMap[y+2] != undefined) {
         // console.log(this.textureMap[y+1][x].name);
-          if (this.textureMap[y+1][x].name != "Wall") {
+          if (this.textureMap[y+1][x][0].name != "Wall") {
           entities["BSS"] = (this.entityMap[y+2][x] != undefined) ? this.entityMap[y+2][x] : []
           textures["BSS"] = (this.textureMap[y+2][x] != undefined) ? this.textureMap[y+2][x] : []
         }
       }
     }
-    
-    // let surroundingArea = this.getSurroundingArea(x, y);
-    // let surroundingEntities = this.getSurroundingEntities(x, y);
-    if (escKeyPressed)
-      // console.log(this.textureMap);
-      console.log(player.directionLooking);
+    if (player.directionLooking == "N") {
+      if (this.entityMap[y-2] != undefined) {
+        if (this.textureMap[y][y-1] != undefined) {
+          if (this.textureMap[y-1][x][0].name != "Wall") {
+            entities["TNN"] = (this.entityMap[y-2][x] != undefined) ? this.entityMap[y-2][x] : []
+            textures["TNN"] = (this.textureMap[y-2][x] != undefined) ? this.textureMap[y-2][x] : []
+          }
+        }
+      }
+    }
+    if (player.directionLooking == "E") {
+      if (this.entityMap[y] != undefined) {
+        if (this.textureMap[y][x+1] != undefined) {
+          if (this.textureMap[y][x+1][0].name != "Wall") {
+            entities["CEE"] = (this.entityMap[y][x+2] != undefined) ? this.entityMap[y][x+2] : []
+            textures["CEE"] = (this.textureMap[y][x+2] != undefined) ? this.textureMap[y][x+2] : []
+          }
+        }
+      }
+    }
+    if (player.directionLooking == "W") {
+      if (this.textureMap[y] != undefined) {
+        if (this.textureMap[y][x-1] != undefined) {
+          if (this.textureMap[y][x-1][0].name != "Wall") {
+            entities["CWW"] = (this.entityMap[y][x-2] != undefined) ? this.entityMap[y][x-2] : []
+            textures["CWW"] = (this.textureMap[y][x-2] != undefined) ? this.textureMap[y][x-2] : []
+        }
+        }
+      }
+    }
 
     return [textures, entities];
   }

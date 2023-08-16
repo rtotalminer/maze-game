@@ -12,7 +12,9 @@ class NPC extends SpriteAnimated {
       xOffset,
       spritePosX,
       spritePosY,
-      npcName
+      npcName,
+      reward,
+      facing
     ) {
       super(
         name,
@@ -39,11 +41,15 @@ class NPC extends SpriteAnimated {
       this.done = false;
       this.textSequence = new Array();
 
+      this.reward = reward;
+      this.moveTo = facing;
+
       this.talkingAudio = document.getElementById("mumbling");
+      this.rewardAudio = document.getElementById("coinPickup");
     }
   
     update(entities) {
-      console.log(this.isDialogue);
+      // console.log(this.isDialogue);
       if (!this.isDialogue) {
         this.talkingAudio.pause();
       }
@@ -125,7 +131,7 @@ class NPC extends SpriteAnimated {
     }
 
     finished(player) {
-      player.gd += 10;
+      player.gd += this.reward;
 
       this.done = true;
 
@@ -134,7 +140,7 @@ class NPC extends SpriteAnimated {
           player.inventory = player.inventory.filter((item) => item.keyName != this.key);
       }
 
-
+      this.rewardAudio.play();
     }
   
     playDialogue() {

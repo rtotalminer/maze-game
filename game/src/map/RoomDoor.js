@@ -27,6 +27,7 @@ class RoomDoor extends SpriteBase {
           spritePosY,
         )
         this.key = key;
+        this.unlockAudio = new Audio("game/static/audio/item_pickup.mp3");
 
       }
 
@@ -37,6 +38,7 @@ class RoomDoor extends SpriteBase {
       if (doorKey) {
           room.destoryItem(this);
           player.inventory = player.inventory.filter((item) => item.keyName != this.key);
+          this.unlockAudio.play();
       }
     }
 }

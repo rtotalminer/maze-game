@@ -182,7 +182,7 @@ function collisionDetection(c_ent, ent) {
       if (c_ent.name == "Player" &&
         (ent.name == "Goldcoin" ||
         ent.name == "Silvercoin" ||
-        ent.name == "RoomDoor")
+        ent.name == "RoomDoor" )
         ) {
         
         c_ent.y = y0;
@@ -199,7 +199,7 @@ function collisionDetection(c_ent, ent) {
       if (c_ent.name == "Player" &&
         (ent.name == "Goldcoin" ||
         ent.name == "Silvercoin" ||
-        ent.name == "RoomDoor")
+        ent.name == "RoomDoor" )
         ) {
         
         c_ent.y = y0;
@@ -213,11 +213,17 @@ function collisionDetection(c_ent, ent) {
 
   if (y0 + h0 > y1 && y0 < y1 + h1) {
     if (x0 + w0 > x1 && x0 < x1) {
+      if (ent.name == "Player" && c_ent.name == "Wall") {
+        c_ent.x = x0;
+      }
       //Collision on left side
       c_ent.x = x1 - c_ent.w + c_ent.xOffset;
       return ent.name;
     } else if (x0 > x1 && x0 < x1 + w1) {
       // Collision on right side
+      if (c_ent.name == "Player" && ent.name == "Wall") {
+        c_ent.x = x0;
+      }
       c_ent.x = x1 + ent.w - c_ent.xOffset;
       return ent.name;
     }

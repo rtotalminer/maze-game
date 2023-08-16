@@ -79,7 +79,7 @@ function loadGame() {
   // add a dev flag, enabling hitbo and noclip etc.
   if (isDev) {
     player.enableHitbox = true;
-    noClip = false;
+    noClip = true;
   }
 
   roomCount = 0; //startingRooms[Math.floor(Math.random() * startingRooms.length)];

@@ -104,7 +104,7 @@ class Player extends SpriteAnimated {
     let y = canvas.height - invH
 
     if (player.x >= canvas.width/2) {
-      x = 0;
+      x = 16;
     }
 
     let invBg = new Image(); // do we need to redefine like with gold
@@ -155,6 +155,8 @@ class Player extends SpriteAnimated {
       let playerCentre = this.getCentre();
       let areaEntities  = room.getSurroundingEntities(playerCentre[0], playerCentre[1]);
       let npc = false;
+
+      // console.log(areaEntities);
 
       for (let i=0; i < areaEntities.length; i++) {
         for (let j=0; j < areaEntities[i].length; j++){
@@ -239,20 +241,22 @@ class Player extends SpriteAnimated {
 
   // Refactor needed
   playerCollision(room) {
+    this.mobCollision = false;
     let collidables = room.getCollidables();
     // Check for any collisions
     for (let i = 0; i < collidables.length; i++) {
       var ent = collidables[i];
       if (ent.name != "Floor") {
         const collider = collisionDetection(this, ent);
-        if (collider != undefined) {console.log(collider)}
+        if (collider != undefined) {//console.log(collider)
+          ;}
         if (collider == "Mob") {
           if (!isDev) {this.hp -= 5;}
           this.damageAudio.play();
           this.mobCollision = true;
         }
-        else {
-          this.mobCollision = false;
+        if (collider != "Mob") {
+          
         }
         if (collider == "Wall") {
         }
@@ -293,7 +297,7 @@ class Player extends SpriteAnimated {
         if (this.x + this.spriteWidth - borderMovement < 0) {
           roomCount -= 1;
           currentRoom = gameMap[roomCount];
-          console.log(currentRoom);
+          // console.log(currentRoom);
           this.x = MAZE_WIDTH;
         }
         this.x -= this.v;
@@ -309,7 +313,7 @@ class Player extends SpriteAnimated {
         if (this.x - this.spriteWidth + borderMovement > MAZE_WIDTH) {
           roomCount += 1;
           currentRoom = gameMap[roomCount];
-          console.log(currentRoom);
+          // console.log(currentRoom);
           this.x = 0;
         }
         this.x += this.v;
@@ -325,7 +329,7 @@ class Player extends SpriteAnimated {
         if (this.y + this.spriteHeight - borderMovement < 0) {
           roomCount -= 3;
           currentRoom = gameMap[roomCount];
-          console.log(currentRoom);
+          // console.log(currentRoom);
           this.y = MAZE_HEIGHT;
         }
         this.y -= this.v;
@@ -341,7 +345,7 @@ class Player extends SpriteAnimated {
         if (this.y - this.spriteHeight + borderMovement > MAZE_HEIGHT) {
           roomCount += 3;
           currentRoom = gameMap[roomCount];
-          console.log(currentRoom);
+          // console.log(currentRoom);
           this.y = 0;
         }
         this.y += this.v;
@@ -353,8 +357,11 @@ class Player extends SpriteAnimated {
       upKeyPressed = false;
     }
   
+    // console.log(thiss.mobCollision)
+  
     // move to f(x)
     if (this.mobCollision) {
+      console.log(this.mobCollision)
       this.damageAudio.play();
     }
 

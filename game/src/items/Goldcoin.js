@@ -37,7 +37,7 @@ class Goldcoin extends SpriteBase {
 
       onPickUp(player, room) {
         this.pickupAudio.play();
-        player.gd += 5;
+        player.gd += 3;
         room.destoryItem(this) // move to room destory
       }
 }

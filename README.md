@@ -11,7 +11,7 @@ Enjoy!
 # Todo
 
 - MAJOR PROBLEM IS MOB CAN PUSH PLAYER THROUGH WALL
-
+  - POSSIBLE FIX IS TI PUT IN SURROUONDING MAP WHEN CHECKING OR COLLISION AND ALLOWING WALLS TO HAVE HIGHER STATUS THAN MOBS
 - make canvas strechable and the textures to do so too
 - npcs w/ dialouge
 - stamina bar, w/sprint 
