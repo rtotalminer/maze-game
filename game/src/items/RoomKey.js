@@ -1,5 +1,5 @@
 // This item is simply picked up and returned to an NPC
-class RoomKey extends SpriteAnimated {
+class RoomKey extends BaseItem {
     constructor(
       name,
       x,
@@ -13,6 +13,7 @@ class RoomKey extends SpriteAnimated {
       xOffset,
       spritePosX,
       spritePosY,
+      pickupAudio,
       keyName,
     ) {
       super(
@@ -28,13 +29,14 @@ class RoomKey extends SpriteAnimated {
         xOffset,
         spritePosX,
         spritePosY,
+        pickupAudio,
       )
         this.keyName = keyName;
-
+        // this.pickUpAudio = document.getElementById("itemPickup");
       }
 
       onPickUp(player, room) {
         player.inventory.push(this);
-        room.destoryItem(this) // move to room destory
+        super.onPickUp(room);
       }
 }

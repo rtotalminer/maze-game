@@ -155,6 +155,7 @@ class Room {
               0,
               0,
               0,
+              "game/static/audio/item_pickup.mp3",
               returnTo,
             )
           );
@@ -169,13 +170,15 @@ class Room {
             "item/key_1.png",
             8,
             1,
-            [2, 1, 3, 4],
+            [0, 0, 0, 0],
             0,
             0,
             0,
+            "game/static/audio/item_pickup.mp3",
             this.map[i][j][1]
           );
           key.moveTo = "STATIC";
+          console.log(key)
           this.items.push(
             key
           );
@@ -396,6 +399,9 @@ class Room {
 
     for (let i = 0; i < this.mobs.length; i++) {
       this.mobs[i].update(this);
+    }
+    for (let i = 0; i < this.npcs.length; i++) {
+      this.npcs[i].update(this);
     }
   }
 

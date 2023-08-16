@@ -10,6 +10,12 @@ var spaceBarPressed = false;
 var escKeyPressed = false;
 var iKeyPressed = false;
 
+// Movement keys
+var wKeyPressed = false;
+var aKeyPressed = false;
+var sKeyPressed = false;
+var dKeyPressed = false;
+
 var escKeyPressedOnce = false;
 var spaceKeyPressedOnce = false;
 

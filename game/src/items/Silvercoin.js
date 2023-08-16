@@ -29,10 +29,12 @@ class Silvercoin extends SpriteBase {
             spritePosX,
             spritePosY,
         )
-
+        // Audio
+        this.pickupAudio = document.getElementById("coinPickup");
       }
 
       onPickUp(player, room) {
+        this.pickupAudio.play();
         player.gd += 1;
         room.destoryItem(this) // move to room destory
       }

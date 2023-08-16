@@ -4,7 +4,14 @@ const UP_KEY = 38;
 const DOWN_KEY = 40;
 const SPACE_BAR = 32;
 const ESC_KEY = 27;
+
 const I_KEY = 73;
+
+// Movement keys
+const W_KEY = 87;
+const A_KEY = 65;
+const S_KEY = 83;
+const D_KEY = 68;
 
 const BLOCK_WIDTH = 32;
 const MAZE_WIDTH = BLOCK_WIDTH * 16;

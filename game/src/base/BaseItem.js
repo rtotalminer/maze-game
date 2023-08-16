@@ -1,6 +1,6 @@
 // This item is simply picked up and returned to an NPC
 
-class Goldcoin extends SpriteBase {
+class BaseItem extends SpriteAnimated {
     constructor(
       name,
       x,
@@ -14,6 +14,7 @@ class Goldcoin extends SpriteBase {
       xOffset,
       spritePosX,
       spritePosY,
+      pickupAudio
     ) {
         super(
           name,
@@ -31,13 +32,11 @@ class Goldcoin extends SpriteBase {
         )
 
         // Audio
-        this.pickupAudio = document.getElementById("coinPickup");
-
+        this.pickupAudio = new Audio(pickupAudio);
       }
 
-      onPickUp(player, room) {
+      onPickUp(room) {
         this.pickupAudio.play();
-        player.gd += 5;
-        room.destoryItem(this) // move to room destory
+        room.destoryItem(this);
       }
 }

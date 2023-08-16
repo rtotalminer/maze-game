@@ -10,6 +10,8 @@ Enjoy!
 
 # Todo
 
+- MAJOR PROBLEM IS MOB CAN PUSH PLAYER THROUGH WALL
+
 - make canvas strechable and the textures to do so too
 - npcs w/ dialouge
 - stamina bar, w/sprint 
@@ -24,7 +26,6 @@ Enjoy!
 - MOBS CAN PUSH THROUGH WALLS
 - MOVE TO SERVER TO AVOID CHEATING
 
-- MOBS GLITCH USER THROUGH WALLS SOMETIMES
 
 - ROWS AND COLUMNS ARE BACKWARDS
 - THERE IS SOMETIMES A BLACK SCREEN BEFORE STARTING GAME (test by adding files to index.html) -- this is defo the reasons cus all other assets load

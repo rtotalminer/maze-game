@@ -1,5 +1,5 @@
 // This item is simply picked up and returned to an NPC
-class QuestItem extends SpriteBase {
+class QuestItem extends BaseItem {
     constructor(
       name,
       x,
@@ -13,7 +13,8 @@ class QuestItem extends SpriteBase {
       xOffset,
       spritePosX,
       spritePosY,
-      returnTo
+      pickupAudio,
+      returnTo,
     ) {
         super(
             name,
@@ -28,10 +29,9 @@ class QuestItem extends SpriteBase {
             xOffset,
             spritePosX,
             spritePosY,
+            pickupAudio
         )
         this.returnTo = returnTo;
-        console.log(returnTo)
-
       }
 
       onPickUp(player, room) {

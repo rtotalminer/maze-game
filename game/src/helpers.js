@@ -31,6 +31,18 @@ function keyPressed(e) {
   if (e.keyCode == I_KEY) {
     iKeyPressed = true;
   }
+  if (e.keyCode == W_KEY) {
+    wKeyPressed = true;
+  }
+  if (e.keyCode == A_KEY) {
+    aKeyPressed = true;
+  }
+  if (e.keyCode == S_KEY) {
+    sKeyPressed = true;
+  }
+  if (e.keyCode == D_KEY) {
+    dKeyPressed = true;
+  }
 
   if (e.keyCode == ESC_KEY) {
     escKeyPressedOnce = !escKeyPressedOnce;
@@ -56,6 +68,18 @@ function keyReleased(e) {
   }
   if (e.keyCode == I_KEY) {
     iKeyPressed = false;
+  }
+  if (e.keyCode == W_KEY) {
+    wKeyPressed = false;
+  }
+  if (e.keyCode == A_KEY) {
+    aKeyPressed = false;
+  }
+  if (e.keyCode == S_KEY) {
+    sKeyPressed = false;
+  }
+  if (e.keyCode == D_KEY) {
+    dKeyPressed = false;
   }
   if (e.keyCode == SPACE_BAR) {
     spaceBarPressed = false;

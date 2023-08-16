@@ -38,9 +38,15 @@ class NPC extends SpriteAnimated {
       this.npcFinished = false;
       this.done = false;
       this.textSequence = new Array();
+
+      this.talkingAudio = document.getElementById("mumbling");
     }
   
     update(entities) {
+      console.log(this.isDialogue);
+      if (!this.isDialogue) {
+        this.talkingAudio.pause();
+      }
     }
   
     // move most of this to update fx
@@ -54,6 +60,7 @@ class NPC extends SpriteAnimated {
         // this.npcDialgoueInitiated = false;
       }
       if (this.isDialogue){
+        this.talkingAudio.play();
         // Find suitable place to draw speech bubble
         let x0 = 0;
         let y0 = canvas.height-32*3;
@@ -88,6 +95,9 @@ class NPC extends SpriteAnimated {
         // Get allowed text, chop it up into sequeneces on key press
   
   
+      }
+      if (!this.isDialogue) {
+        this.talkingAudio.pause();
       }
       super.draw();
     }

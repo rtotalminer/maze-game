@@ -46,6 +46,13 @@ class Player extends SpriteAnimated {
     this.inDialogueWith = null;
 
     this.mobCollision = false;
+
+    this.dead = false;
+
+    // Audio
+    this.footstepsAudio = document.getElementById("footsteps"); 
+    this.damageAudio = document.getElementById("oof"); 
+
   }
 
   setDirectionLooking() {
@@ -55,11 +62,12 @@ class Player extends SpriteAnimated {
   }
 
   draw() {
+    // console.log((this.inDialogueWith.done) != null ? this.inDialogueWith.done : [] )
     //this.drawGoldCounter();
     //this.drawClock();
     this.drawHealthbar();
 
-    if (iKeyPressed) {
+    if (iKeyPressed && !this.inDialogueWith) {
       console.log("PRESSED")
       this.drawInventoryMenu()
     }
@@ -81,11 +89,19 @@ class Player extends SpriteAnimated {
     this.drawGoldCounter();
     this.drawInventory();
 
-    let x = canvas.width - 100
-    let y = canvas.height - 200
+    let invW = 150;
+    let invH = 250;
 
-    console.log(x, y)
-    colorRect(x, y, 100, 200, "grey");
+    let x = canvas.width - invW
+    let y = canvas.height - invH
+
+    if (player.x >= canvas.width/2) {
+      x = 0;
+    }
+
+    colorRect(x, y, invW, invH, "grey");
+    this.drawGoldCounter(x, y + invH-32);
+
 
   }
 
@@ -120,6 +136,7 @@ class Player extends SpriteAnimated {
       this.inDialogueWith.npcDialgoueInitiated = false;
       this.inDialogueWith.isDialogue = false;
       this.inDialogueWith = null
+      // this.inDialogueWith.talkingAudio.pause();
     }
   }
 
@@ -154,7 +171,7 @@ class Player extends SpriteAnimated {
     }
   }
 
-  drawGoldCounter() {
+  drawGoldCounter(x, y) {
 
     let goldImg;
     if (this.gd >= 75) {
@@ -166,12 +183,11 @@ class Player extends SpriteAnimated {
     
     let gold = new Image();
     gold.src = `./game/static/img/item/gold/gold_pile_${goldImg}.png`;
-    
-    let x = canvas.width - 32 * 3;
-    let y = 0;
+
     ctx.font = "22px Impact";
     ctx.fillStyle = "gold";
-    ctx.fillText(`${this.gd}`, canvas.width - 64, 32 - 8);
+
+    ctx.fillText(`${this.gd}`, x+32, y+24);
     ctx.drawImage(gold, x, y);
   }
 
@@ -206,6 +222,7 @@ class Player extends SpriteAnimated {
         const collider = collisionDetection(this, ent);
         if (collider == "Mob") {
           this.hp -= 5;
+          this.damageAudio.play();
         }
         if (collider == "Wall") {
         }
@@ -233,13 +250,14 @@ class Player extends SpriteAnimated {
     let playerCollidables = room.walls.concat(room.mobs).concat(room.items);
 
     this.playerCollision(room);
+
     if (!this.mobCollision) {
       this.moveTo = "IDLE";
       if (
-        leftKeyPressed &&
-        !rightKeyPressed &&
-        !upKeyPressed &&
-        !downKeyPressed
+        aKeyPressed &&
+        !dKeyPressed &&
+        !wKeyPressed &&
+        !sKeyPressed
       ) {
         this.moveTo = "W";
         if (this.x + this.spriteWidth - borderMovement < 0) {
@@ -252,10 +270,10 @@ class Player extends SpriteAnimated {
       }
 
       if (
-        rightKeyPressed &&
-        !leftKeyPressed &&
-        !upKeyPressed &&
-        !downKeyPressed
+        dKeyPressed &&
+        !aKeyPressed &&
+        !wKeyPressed &&
+        !sKeyPressed
       ) {
         this.moveTo = "E";
         if (this.x - this.spriteWidth + borderMovement > MAZE_WIDTH) {
@@ -268,10 +286,10 @@ class Player extends SpriteAnimated {
       }
 
       if (
-        upKeyPressed &&
-        !leftKeyPressed &&
-        !rightKeyPressed &&
-        !downKeyPressed
+        wKeyPressed &&
+        !aKeyPressed &&
+        !dKeyPressed &&
+        !sKeyPressed
       ) {
         this.moveTo = "N";
         if (this.y + this.spriteHeight - borderMovement < 0) {
@@ -284,10 +302,10 @@ class Player extends SpriteAnimated {
       }
 
       if (
-        downKeyPressed &&
-        !leftKeyPressed &&
-        !rightKeyPressed &&
-        !upKeyPressed
+        sKeyPressed &&
+        !aKeyPressed &&
+        !dKeyPressed &&
+        !wKeyPressed
       ) {
         this.moveTo = "S";
         if (this.y - this.spriteHeight + borderMovement > MAZE_HEIGHT) {
@@ -303,6 +321,23 @@ class Player extends SpriteAnimated {
       leftKeyPressed = false;
       rightKeyPressed = false;
       upKeyPressed = false;
+    }
+  
+    // move to f(x)
+    if (this.mobCollision) {
+      this.damageAudio.play();
+    }
+
+    if (!gameWon || this.hp > 0) {
+      if (this.moveTo != "IDLE") {
+        this.footstepsAudio.play();
+      }
+      else {
+        this.footstepsAudio.pause();
+      }
+    }
+    if (this.hp < 0) {
+      this.footstepsAudio.pause();
     }
   }
 }

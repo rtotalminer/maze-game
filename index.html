@@ -58,6 +58,7 @@
     <!-- Base Entities  -->
     <script src="./game/src/base/SpriteBase.js"></script>
     <script src="./game/src/base/SpriteAnimated.js"></script>
+    <script src="./game/src/base/BaseItem.js"></script>
 
     <!-- Game Items  -->
     <script src="./game/src/items/RoomKey.js"></script>
@@ -74,6 +75,8 @@
   </head>
 
   <body>
+
+    
     
     <div id="gameArea">
       <canvas
@@ -95,6 +98,25 @@
       </div>
     </div>
     <script src="./game/src/main.js"></script>
+
+    <!-- Audio  -->
+    <audio id="footsteps">
+      <source src="./game/static/audio/walking.mp3" type="audio/ogg">
+    </audio>
+    <audio id="coinPickup">
+      <source src="./game/static/audio/coin_pickup.mp3" type="audio/ogg">
+    </audio>
+    <audio id="oof">
+      <source src="./game/static/audio/oof.mp3" type="audio/ogg">
+    </audio>
+    <audio id="itemPickup">
+      <source src="./game/static/audio/item_pickup.mp3" type="audio/ogg">
+    </audio>
+    <audio id="mumbling">
+      <source src="./game/static/audio/mumbling.mp3" type="audio/ogg">
+    </audio>
+
+
   </body>
 
   <style>
