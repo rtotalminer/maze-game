@@ -13,8 +13,8 @@ class SpriteBase {
     this.spriteSheet = new Image();
     this.spriteSheet.src = `./game/static/img/${this.filename}`; // Move string literals to config
 
-    numOfImages++;
-    this.spriteSheet.onload = loadImages;
+    // numOfImages++;
+    // this.spriteSheet.onload = loadImages;
 
     this.spriteRows = spriteRows;
     this.spriteCols = spriteCols;

@@ -4,6 +4,7 @@ const UP_KEY = 38;
 const DOWN_KEY = 40;
 const SPACE_BAR = 32;
 const ESC_KEY = 27;
+const I_KEY = 73;
 
 const BLOCK_WIDTH = 32;
 const MAZE_WIDTH = BLOCK_WIDTH * 16;
@@ -12,8 +13,8 @@ const MAZE_HEIGHT = BLOCK_WIDTH * 16;
 const P_NAME = "Nigel";
 const P_C = "blue";
 
-const P_X0 = 32;
-const P_Y0 = 32;
+const P_X0 = 32*1;
+const P_Y0 = 32*1;
 const P_H = 32;
 const P_W = 32;
 

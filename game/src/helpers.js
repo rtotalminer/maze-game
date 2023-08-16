@@ -28,6 +28,9 @@ function keyPressed(e) {
   if (e.keyCode == ESC_KEY) {
     escKeyPressed = true;
   }
+  if (e.keyCode == I_KEY) {
+    iKeyPressed = true;
+  }
 
   if (e.keyCode == ESC_KEY) {
     escKeyPressedOnce = !escKeyPressedOnce;
@@ -50,6 +53,9 @@ function keyReleased(e) {
   }
   if (e.keyCode == RIGHT_KEY) {
     rightKeyPressed = false;
+  }
+  if (e.keyCode == I_KEY) {
+    iKeyPressed = false;
   }
   if (e.keyCode == SPACE_BAR) {
     spaceBarPressed = false;

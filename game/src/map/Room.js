@@ -3,6 +3,7 @@ class Room {
     // Maps
     this.map = map;
     this.entityMap = new Array();
+    this.textureMap = new Array();
 
     // Textures
     this.walls = new Array();
@@ -17,6 +18,7 @@ class Room {
 
     this.convertMap();
     this.getEntityMapState();
+    this.getTextureMap();
   }
 
   getEntities() {
@@ -50,10 +52,30 @@ class Room {
         let cords = this.convertCords(entities[i].x, entities[i].y);
         this.entityMap[cords[1]][cords[0]].push(entities[i]);
     }
-
   }
 
-  // Is there a better way to store map data?
+  // Gets all the static textures and stores it into texture map
+  getTextureMap() {
+    let textures = this.getStaticTextures();
+
+    // create blank entity map state 
+    for (let i = 0; i < this.map.length; i++) {
+      let a = new Array();
+      this.textureMap.push(a)        
+      for (let j = 0; j < this.map[0].length; j++) {
+        let b = new Array();
+        this.textureMap[i].push(b)
+      }
+    }
+
+    for (let i = 0; i < textures.length; i++) {
+        let cords = this.convertCords(textures[i].x, textures[i].y);
+        this.textureMap[cords[1]][cords[0]].push(textures[i]);
+    }
+  }
+
+
+  // Is there a better way to store map data? --> use json for map data then convert to objects
   convertMap() {
     for (let i = 0; i < this.map.length; i++) {
       for (let j = 0; j < this.map[0].length; j++) {
@@ -333,8 +355,40 @@ class Room {
 
   // Gets an AxB are surrounding the player, depending on the light level
   getLightArea(player) {
-    // Get the available areas, determines if the light level will
-    // overlap the map
+    let [a, b] = player.getCentre();
+    let [x, y] = this.convertCords(a, b);
+
+    let textures = {
+      "TL": (this.textureMap[y-1][x-1] != undefined) ? this.textureMap[y-1][x-1] : [],     // Top Left
+      "TC": (this.textureMap[y-1][x] != undefined) ? this.textureMap[y-1][x] : [],       // Top Center
+      "TR": (this.textureMap[y-1][x+1] != undefined) ? this.textureMap[y-1][x+1] : [],
+      "CL": (this.textureMap[y][x-1] != undefined) ? this.textureMap[y][x-1] : [],
+      "CC": (this.textureMap[y][x] != undefined) ? this.textureMap[y][x] : [],
+      "CR": (this.textureMap[y][x+1] != undefined) ? this.textureMap[y][x+1] : [],
+      "BL": (this.textureMap[y+1][x-1] != undefined) ? this.textureMap[y+1][x-1] : [],
+      "BC": (this.textureMap[y+1][x] != undefined) ? this.textureMap[y+1][x] : [],
+      "BR": (this.textureMap[y+1][x+1] != undefined) ? this.textureMap[y+1][x+1] : [],
+    }
+    
+    let entities = {
+      "TL": (this.entityMap[y-1][x-1] != undefined) ? this.entityMap[y-1][x-1] : [],     // Top Left
+      "TC": (this.entityMap[y-1][x] != undefined) ? this.entityMap[y-1][x] : [],       // Top Center
+      "TR": (this.entityMap[y-1][x+1] != undefined) ? this.entityMap[y-1][x+1] : [],
+      "CL": (this.entityMap[y][x-1] != undefined) ? this.entityMap[y][x-1] : [],
+      "CC": (this.entityMap[y][x] != undefined) ? this.entityMap[y][x] : [],
+      "CR": (this.entityMap[y][x+1] != undefined) ? this.entityMap[y][x+1] : [],
+      "BL": (this.entityMap[y+1][x-1] != undefined) ? this.entityMap[y+1][x-1] : [],
+      "BC": (this.entityMap[y+1][x] != undefined) ? this.entityMap[y+1][x] : [],
+      "BR": (this.entityMap[y+1][x+1] != undefined) ? this.entityMap[y+1][x+1] : [],
+    }
+    
+    // let surroundingArea = this.getSurroundingArea(x, y);
+    // let surroundingEntities = this.getSurroundingEntities(x, y);
+    if (escKeyPressed)
+      // console.log(this.textureMap);
+      console.log(player.directionLooking);
+
+    return [textures, entities];
   }
 
   update() {
@@ -346,15 +400,29 @@ class Room {
   }
 
   draw() {
-    let textures = this.getStaticTextures()
-    let entities = this.getEntities();
+    // let textures = this.getStaticTextures()
+    // let entities = this.getEntities();
 
-    for (let i = 0; i < textures.length; i++) {
-      textures[i].draw();
+    let [textures, entities] = this.getLightArea(player);
+
+    // console.log({textures, entities})
+
+    for (let i in textures) {
+      if (textures[i][0] != null) 
+        textures[i][0].draw();
     }
 
-    for (let i=0; i<entities.length; i++) {
-      entities[i].draw()
+    for (let i in entities) {
+      if (entities[i][0] != null)
+        entities[i][0].draw()
     }
+
+    // for (let i = 0; i < textures.length; i++) {
+    //   textures[i].draw();
+    // }
+
+    // for (let i=0; i<entities.length; i++) {
+    //   entities[i].draw()
+    // }
   }
 }

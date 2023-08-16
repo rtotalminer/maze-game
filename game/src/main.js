@@ -8,6 +8,7 @@ var upKeyPressed = false;
 var downKeyPressed = false;
 var spaceBarPressed = false;
 var escKeyPressed = false;
+var iKeyPressed = false;
 
 var escKeyPressedOnce = false;
 var spaceKeyPressedOnce = false;
@@ -66,7 +67,7 @@ function loadGame() {
     0
   );
 
-  let isDev = true;
+  let isDev = false;
 
   // add a dev flag, enabling hitbo and noclip etc.
   if (isDev) {

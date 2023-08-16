@@ -34,9 +34,11 @@ class Player extends SpriteAnimated {
     this.pausedOn = 0;
     this.totalPaused = 0;
 
-    this.v = 4;
+    this.v = 3;
     this.hp = 75;
     this.gd = 0;
+
+    this.directionLooking = "S";
 
     this.inventory = new Array();
     
@@ -46,21 +48,45 @@ class Player extends SpriteAnimated {
     this.mobCollision = false;
   }
 
+  setDirectionLooking() {
+    if (this.moveTo != "IDLE") {
+      this.directionLooking = this.moveTo;
+    }
+  }
+
   draw() {
-    this.drawGoldCounter();
-    this.drawClock();
+    //this.drawGoldCounter();
+    //this.drawClock();
     this.drawHealthbar();
-    this.drawInventory();
+
+    if (iKeyPressed) {
+      console.log("PRESSED")
+      this.drawInventoryMenu()
+    }
+    //  this.drawInventory();
     super.draw();
   }
 
   update(room) {
     if (this.hp <= 75) {
-      this.hp += 0.01;
+      this.hp += 0.1;
     }
 
+    this.setDirectionLooking();
     this.playerActions(room);
     this.movePlayer(room);
+  }
+
+  drawInventoryMenu() {
+    this.drawGoldCounter();
+    this.drawInventory();
+
+    let x = canvas.width - 100
+    let y = canvas.height - 200
+
+    console.log(x, y)
+    colorRect(x, y, 100, 200, "grey");
+
   }
 
   playerActions(room) {
