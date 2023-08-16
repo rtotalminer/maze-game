@@ -2,12 +2,21 @@
 
 var canvas, ctx;
 
+var isDev = false;
+
 var rightKeyPressed = false;
 var leftKeyPressed = false;
 var upKeyPressed = false;
 var downKeyPressed = false;
 var spaceBarPressed = false;
 var escKeyPressed = false;
+var iKeyPressed = false;
+
+// Movement keys
+var wKeyPressed = false;
+var aKeyPressed = false;
+var sKeyPressed = false;
+var dKeyPressed = false;
 
 var escKeyPressedOnce = false;
 var spaceKeyPressedOnce = false;
@@ -34,6 +43,7 @@ function loadImages() {
 }
 
 function loadGame() {
+
   escKeyPressedOnce = false;
   // Lazyload this?
   // Do I need a structured clone?
@@ -65,7 +75,6 @@ function loadGame() {
     0
   );
 
-  let isDev = true;
 
   // add a dev flag, enabling hitbo and noclip etc.
   if (isDev) {

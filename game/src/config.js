@@ -5,6 +5,14 @@ const DOWN_KEY = 40;
 const SPACE_BAR = 32;
 const ESC_KEY = 27;
 
+const I_KEY = 73;
+
+// Movement keys
+const W_KEY = 87;
+const A_KEY = 65;
+const S_KEY = 83;
+const D_KEY = 68;
+
 const BLOCK_WIDTH = 32;
 const MAZE_WIDTH = BLOCK_WIDTH * 16;
 const MAZE_HEIGHT = BLOCK_WIDTH * 16;
@@ -12,12 +20,12 @@ const MAZE_HEIGHT = BLOCK_WIDTH * 16;
 const P_NAME = "Nigel";
 const P_C = "blue";
 
-const P_X0 = 32;
-const P_Y0 = 32;
+const P_X0 = 32*1;
+const P_Y0 = 32*1;
 const P_H = 32;
 const P_W = 32;
 
-const VERSION = "0.1"
+const VERSION = "0.1_ALPHA_PRE_RELEASE"
 
 zombie01Face = "zombie_01_face.png"
 
@@ -25,11 +33,17 @@ zombie01Face = "zombie_01_face.png"
 // Each text snippet cannot be longer than 255 characters
 
 const npcDialogue0_0 = ["I was once like you but I was banished from my homeland after I betrayed the tyrannical King Alfred. If you find a ring in this godforsaken place, I can return to my former self, to my homeland, to my wife and to my...", "children. Of course, you shall recieve a generous reward, now make haste!"];
+const npcDialogue0_1 = ["Yes you have found this item! I can now leave this place", "Oh and I forget, a reward, take this"]
+const npc0 = ["npc", [npcDialogue0_0, npcDialogue0_1], "harold", 5, "N"]
+const questItem0 = ["questItem", "harold", "ring_0"]
 
-const npc0 = ["npc", npcDialogue0_0, "harold"]
-const questItem0 = ["questItem", "harold"]
 const roomKey0 = ["roomKey", "RoomKey0"]
 const roomDoor = ["RoomDoor", "RoomKey0"]
+
+const npcDialogue1_0 = ["Hello adventurer! I was hoping someone would find me here...", "I lost my antique book, could you help me find it, your reward will be handsome!"]
+const npcDialogue1_1 = ["Well done adventurer! You found my precious book!", "Take this reward as a gesture of our freindship!"]
+const npc1 = ["npc", [npcDialogue1_0, npcDialogue1_1], "nigel", 10, "N"]
+const questItem1 = ["questItem", "nigel", "book_0"]
 
 const map = {
   maze00: [
@@ -38,11 +52,11 @@ const map = {
     [0, 1, 0, 1, 0, "sc", 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0],
     [0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0],
     [0, "sc", 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, "sc", 0, 1, 0],
-    [0, "gc", 0, 1, 0, 1, 1, "e", 1, 1, 0, 1, 0, 1, 1, 1, 0],
-    [0, roomKey0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 1, 1, "e", 1, 1, 0, 1, 0, 1, 1, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
     [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0],
     [0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, roomDoor],
-    [0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0],
+    [0, roomKey0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0],
     [0, npc0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0],
     [0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0],
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
@@ -80,7 +94,7 @@ const map = {
     [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0],
     [0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, "e", 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0],
+    [0, "e", 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, npc1, 0, 1, 0],
     [0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0],
     [1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1],
     [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
@@ -89,13 +103,13 @@ const map = {
     [0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0],
     [0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0],
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-    [0, 1, 1, 1, 1, 1, 0, 1, "e", 1, 0, 0, 1, 1, 1, "sc", 0],
+    [0, 1, 1, 1, 1, 1, 0, 1, "e", 1, 0, 0, 1, 1, 1, 1, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
   ],
 
   maze02: [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, "sc", 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, questItem1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
     [0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0],
     [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0],
     [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0],

@@ -28,6 +28,21 @@ function keyPressed(e) {
   if (e.keyCode == ESC_KEY) {
     escKeyPressed = true;
   }
+  if (e.keyCode == I_KEY) {
+    iKeyPressed = true;
+  }
+  if (e.keyCode == W_KEY) {
+    wKeyPressed = true;
+  }
+  if (e.keyCode == A_KEY) {
+    aKeyPressed = true;
+  }
+  if (e.keyCode == S_KEY) {
+    sKeyPressed = true;
+  }
+  if (e.keyCode == D_KEY) {
+    dKeyPressed = true;
+  }
 
   if (e.keyCode == ESC_KEY) {
     escKeyPressedOnce = !escKeyPressedOnce;
@@ -50,6 +65,21 @@ function keyReleased(e) {
   }
   if (e.keyCode == RIGHT_KEY) {
     rightKeyPressed = false;
+  }
+  if (e.keyCode == I_KEY) {
+    iKeyPressed = false;
+  }
+  if (e.keyCode == W_KEY) {
+    wKeyPressed = false;
+  }
+  if (e.keyCode == A_KEY) {
+    aKeyPressed = false;
+  }
+  if (e.keyCode == S_KEY) {
+    sKeyPressed = false;
+  }
+  if (e.keyCode == D_KEY) {
+    dKeyPressed = false;
   }
   if (e.keyCode == SPACE_BAR) {
     spaceBarPressed = false;
@@ -147,10 +177,12 @@ function collisionDetection(c_ent, ent) {
         
         
       // }
+
+
       if (c_ent.name == "Player" &&
         (ent.name == "Goldcoin" ||
         ent.name == "Silvercoin" ||
-        ent.name == "RoomDoor")
+        ent.name == "RoomDoor" )
         ) {
         
         c_ent.y = y0;
@@ -167,7 +199,7 @@ function collisionDetection(c_ent, ent) {
       if (c_ent.name == "Player" &&
         (ent.name == "Goldcoin" ||
         ent.name == "Silvercoin" ||
-        ent.name == "RoomDoor")
+        ent.name == "RoomDoor" )
         ) {
         
         c_ent.y = y0;
@@ -181,11 +213,17 @@ function collisionDetection(c_ent, ent) {
 
   if (y0 + h0 > y1 && y0 < y1 + h1) {
     if (x0 + w0 > x1 && x0 < x1) {
+      if (ent.name == "Player" && c_ent.name == "Wall") {
+        c_ent.x = x0;
+      }
       //Collision on left side
       c_ent.x = x1 - c_ent.w + c_ent.xOffset;
       return ent.name;
     } else if (x0 > x1 && x0 < x1 + w1) {
       // Collision on right side
+      if (c_ent.name == "Player" && ent.name == "Wall") {
+        c_ent.x = x0;
+      }
       c_ent.x = x1 + ent.w - c_ent.xOffset;
       return ent.name;
     }
