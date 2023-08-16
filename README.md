@@ -1,33 +1,22 @@
-# Configuration
+# Wealth Rush
+<p align=center>
+  <img src="https://ipfs.io/ipfs/QmQEfvHSZ5gTmUAeSAL6AapB1wFDgGyoNybTdV5XLEFcwX?filename=wealthrush.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="600" height="600" />
+</p>
 
-Currently there are 4 entities: walls: 0, floor: 1, mobs: "e", silvercoins: "sc" and goldcoins "gc". This is how they are specified in the map config and are loaded accordingly.
+ - ![]( =250x250)
 
-# User guide
+## Introduction
+A stranded adventurer awoken in a mysterious dungeon inhabitated by fearless zombies and generous quest-giving creatures has to gain a large fortune and escape!
 
-Open index.html,
-Read the tip on how to play is the bottom left.
-Enjoy!
+## How to play
+The goal of the game is to escape and accumilate as much money as you can, on the web page in the bottom left there is a tooltip, but here is a summary of the controls:
+ - Move with 'WASD'
+ - Interact with NPCs with the 'spacebar'
+ - Open the inventory with 'I'
+ - Press 'ESC' to pause.
 
-# Todo
-
-- MAJOR PROBLEM IS MOB CAN PUSH PLAYER THROUGH WALL
-  - POSSIBLE FIX IS TI PUT IN SURROUONDING MAP WHEN CHECKING OR COLLISION AND ALLOWING WALLS TO HAVE HIGHER STATUS THAN MOBS
-- make canvas strechable and the textures to do so too
-- npcs w/ dialouge
-- stamina bar, w/sprint 
-- pickup armour and add to a health as blue but overlappring current health
-- More intelligent player spawing system (some spawns are unlucky occupied by mob)
-- REFACTOR STUDY MAZE GEN ALGOS AND PATH FINDERS
-- Add Other Items, NPCS, and Tasks
-- ADD ITEMS + NPC
-
-- fix collision detection, when going into an item for example it detects a top side collision 
-
-- MOBS CAN PUSH THROUGH WALLS
-- MOVE TO SERVER TO AVOID CHEATING
-
-- WHEN DEAD SHOW THE CHARACTER DEAD AND CONTINUE UPDATING AND DRAWING MAP
-
-- ROWS AND COLUMNS ARE BACKWARDS
-- THERE IS SOMETIMES A BLACK SCREEN BEFORE STARTING GAME (test by adding files to index.html) -- this is defo the reasons cus all other assets load
-- MAKE A BASE CLASS NPC TO HAVE DIFFERNET NPCS DO DIFFRENT METHODS WHEN FINISHED
+## Pre-release notes
+This game is by far no where near to a complete game, but it contains a few minutes of fun and an opportunity to show of my project, here are some obvious bugs and lack of features you may encounter:
+ - The texture such as walls and floors may not correctly spawn on an initial load, just refresh the page until it does.
+ - Zombies could glitch you through walls - either breaking the game or transferring you to a different room.
+ - The map is incomplete, there are only 2 quests and 1 door, with a poor designed ending screen and menu.
