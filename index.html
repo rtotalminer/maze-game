@@ -8,7 +8,7 @@
     <!-- Static  -->
     <!-- <img id="BrickGrey" hidden="hidden" src="../game/static/img/BrickGrey.png" /> -->
     <img id="goldcoin" hidden="hidden" src="./game/static/img/goldcoin.png" />
-    <img id="roomKey" hidden="hidden" src="./game/static/img/room_key.png" />
+    <img id="roomKey" hidden="hidden" src="./game/static/img/item/key.png" />
     <img
       id="silvercoin"
       hidden="hidden"
@@ -80,22 +80,16 @@
     
     <div id="gameArea">
       <canvas
-        style="
-          display: block;
-          margin-right: auto;
-          margin-left: auto;
-          border: 1px solid black;
-        "
+        class="canvas"
         id="game"
         width="544"
         height="544"
       ></canvas>
-
-      <div class="tooltip">
-        How To Play
-        <span class="tooltiptext"
-          >get gold, dont die. move: ←↑→↓ pause: esc restart: f5</span>
-      </div>
+    </div>
+    <div class="tooltip">
+      How To Play
+      <span class="tooltiptext"
+        >get gold, dont die. move: ←↑→↓ pause: esc restart: f5</span>
     </div>
     <script src="./game/src/main.js"></script>
 
@@ -130,6 +124,14 @@
       border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
     }
 
+    .canvas {
+      padding: 0;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      width: 45em;
+    }
+
     /* Tooltip text */
     .tooltip .tooltiptext {
       visibility: hidden;
@@ -149,5 +151,12 @@
     .tooltip:hover .tooltiptext {
       visibility: visible;
     }
+
+    @font-face {
+      font-family: "Dungeon";
+      src:
+        url("game/static/font/DUNGRG.TTF")
+    }
+    
   </style>
 </html>

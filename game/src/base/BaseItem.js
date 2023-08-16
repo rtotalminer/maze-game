@@ -35,8 +35,12 @@ class BaseItem extends SpriteAnimated {
         this.pickupAudio = new Audio(pickupAudio);
       }
 
-      onPickUp(room) {
-        this.pickupAudio.play();
-        room.destoryItem(this);
+      onPickUp(player, room) {
+        if (!(player.inventory.length > player.maxInventory)) {
+          this.pickupAudio.play();
+          room.destoryItem(this);
+          return true;
+        }
+        return false;
       }
 }

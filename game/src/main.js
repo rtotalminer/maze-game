@@ -2,6 +2,8 @@
 
 var canvas, ctx;
 
+var isDev = true;
+
 var rightKeyPressed = false;
 var leftKeyPressed = false;
 var upKeyPressed = false;
@@ -73,12 +75,11 @@ function loadGame() {
     0
   );
 
-  let isDev = false;
 
   // add a dev flag, enabling hitbo and noclip etc.
   if (isDev) {
     player.enableHitbox = true;
-    noClip = true;
+    noClip = false;
   }
 
   roomCount = 0; //startingRooms[Math.floor(Math.random() * startingRooms.length)];

@@ -35,7 +35,9 @@ class QuestItem extends BaseItem {
       }
 
       onPickUp(player, room) {
-        player.inventory.push(this);
-        room.destoryItem(this)
+        let pickUp = super.onPickUp(player, room);
+        if (pickUp) {
+          player.inventory.push(this);
+        }
       }
 }

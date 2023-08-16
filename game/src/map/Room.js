@@ -167,8 +167,8 @@ class Room {
             BLOCK_WIDTH * [i],
             32,
             32,
-            "item/key_1.png",
-            8,
+            "item/key.png",
+            1,
             1,
             [0, 0, 0, 0],
             0,
@@ -384,6 +384,16 @@ class Room {
       "BC": (this.entityMap[y+1][x] != undefined) ? this.entityMap[y+1][x] : [],
       "BR": (this.entityMap[y+1][x+1] != undefined) ? this.entityMap[y+1][x+1] : [],
     }
+
+    if (player.directionLooking == "S") {
+      if (this.entityMap[y+2] != undefined) {
+        // console.log(this.textureMap[y+1][x].name);
+          if (this.textureMap[y+1][x].name != "Wall") {
+          entities["BSS"] = (this.entityMap[y+2][x] != undefined) ? this.entityMap[y+2][x] : []
+          textures["BSS"] = (this.textureMap[y+2][x] != undefined) ? this.textureMap[y+2][x] : []
+        }
+      }
+    }
     
     // let surroundingArea = this.getSurroundingArea(x, y);
     // let surroundingEntities = this.getSurroundingEntities(x, y);
@@ -406,29 +416,34 @@ class Room {
   }
 
   draw() {
-    // let textures = this.getStaticTextures()
-    // let entities = this.getEntities();
 
-    let [textures, entities] = this.getLightArea(player);
+    if (!isDev) {
+      let [textures, entities] = this.getLightArea(player);
 
-    // console.log({textures, entities})
+      // console.log({textures, entities})
 
-    for (let i in textures) {
-      if (textures[i][0] != null) 
-        textures[i][0].draw();
+      for (let i in textures) {
+        if (textures[i][0] != null) 
+          textures[i][0].draw();
+      }
+
+      for (let i in entities) {
+        if (entities[i][0] != null)
+          entities[i][0].draw()
+      }
     }
 
-    for (let i in entities) {
-      if (entities[i][0] != null)
-        entities[i][0].draw()
+    else {
+      let textures = this.getStaticTextures()
+      let entities = this.getEntities();
+
+      for (let i = 0; i < textures.length; i++) {
+        textures[i].draw();
+      }
+
+      for (let i=0; i<entities.length; i++) {
+        entities[i].draw()
+      }
     }
-
-    // for (let i = 0; i < textures.length; i++) {
-    //   textures[i].draw();
-    // }
-
-    // for (let i=0; i<entities.length; i++) {
-    //   entities[i].draw()
-    // }
   }
 }

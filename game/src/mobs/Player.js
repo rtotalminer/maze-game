@@ -53,6 +53,12 @@ class Player extends SpriteAnimated {
     this.footstepsAudio = document.getElementById("footsteps"); 
     this.damageAudio = document.getElementById("oof"); 
 
+    // Inventory
+    this.invBg = new Image();
+    this.invBg.src = "./game/static/img/player/inv_bg.png";
+    this.maxInventory = 16;
+    this.slotsPerRow = 4;
+
   }
 
   setDirectionLooking() {
@@ -69,7 +75,7 @@ class Player extends SpriteAnimated {
 
     if (iKeyPressed && !this.inDialogueWith) {
       console.log("PRESSED")
-      this.drawInventoryMenu()
+      this.drawInventory()
     }
     //  this.drawInventory();
     super.draw();
@@ -85,21 +91,60 @@ class Player extends SpriteAnimated {
     this.movePlayer(room);
   }
 
-  drawInventoryMenu() {
+  drawInventory() {
     this.drawGoldCounter();
-    this.drawInventory();
 
-    let invW = 150;
-    let invH = 250;
+    let w = 4;
+    let h = 6;
 
-    let x = canvas.width - invW
+    let invW = 32*w;
+    let invH = 32*h;
+
+    let x = canvas.width - invW - 16
     let y = canvas.height - invH
 
     if (player.x >= canvas.width/2) {
       x = 0;
     }
 
-    colorRect(x, y, invW, invH, "grey");
+    let invBg = new Image(); // do we need to redefine like with gold
+    invBg.src = "./game/static/img/player/inv_bg.png";
+
+    
+    // colorRect(x-5, y-5, invW+5, invH+5, "grey");
+
+    for (let i=0; i<w; i++) {
+      for (let j=0; j<h; j++) {
+        // console.log(x+(i*32), y+(j*32));
+        ctx.drawImage(invBg, x+(i*32), y+(j*32));
+      }
+    }
+
+    ctx.font = "22px Dungeon";
+    ctx.fillStyle = "white";
+    ctx.fillText(`Backpack`, x+32, y+24);
+
+    // draw
+
+    // for (let i=0; i<=4; i++) {
+    //   for (let j=0; i<=4; i++) {
+    //     let item = this.inventory[i+j];
+    //     item.x = x + (32*(i));
+    //     item.y = y + 32*(j);
+    //     item.draw();
+    //   }
+    // }
+
+
+    for (let i=0; i<this.inventory.length; i++) {
+      let item = this.inventory[i];
+      let j = Math.floor(i/4);
+
+      item.x = x + (32*(i)) - (32*(j*4));
+      item.y = y + 32*(j+1);
+      item.draw();
+    }
+
     this.drawGoldCounter(x, y + invH-32);
 
 
@@ -149,27 +194,6 @@ class Player extends SpriteAnimated {
     //console.log(this.hp);
   }
 
-  drawInventory() {
-    let borderWidth = 16;
-    for (let i=0; i<this.inventory.length; i++) {
-      let item = this.inventory[i];
-      //console.log(item)
-      item.x = borderWidth*(2*i);
-      item.y = MAZE_HEIGHT
-      item.draw();
-      // ctx.drawImage(
-      //   item.spriteSheet,
-      //   item.srcX,
-      //   item.srcY,
-      //   item.spriteWidth,
-      //   item.spriteHeight,
-      //   borderWidth*i,
-      //   MAZE_HEIGHT,
-      //   item.w,
-      //   item.h
-      // );
-    }
-  }
 
   drawGoldCounter(x, y) {
 
@@ -181,10 +205,11 @@ class Player extends SpriteAnimated {
       goldImg = Math.floor(this.gd/5) + 1;
     }
     
+    // why create a new image each time?
     let gold = new Image();
     gold.src = `./game/static/img/item/gold/gold_pile_${goldImg}.png`;
 
-    ctx.font = "22px Impact";
+    ctx.font = "22px Dungeon";
     ctx.fillStyle = "gold";
 
     ctx.fillText(`${this.gd}`, x+32, y+24);
@@ -220,9 +245,14 @@ class Player extends SpriteAnimated {
       var ent = collidables[i];
       if (ent.name != "Floor") {
         const collider = collisionDetection(this, ent);
+        if (collider != undefined) {console.log(collider)}
         if (collider == "Mob") {
-          this.hp -= 5;
+          if (!isDev) {this.hp -= 5;}
           this.damageAudio.play();
+          this.mobCollision = true;
+        }
+        else {
+          this.mobCollision = false;
         }
         if (collider == "Wall") {
         }

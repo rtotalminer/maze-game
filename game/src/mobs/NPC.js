@@ -63,7 +63,7 @@ class NPC extends SpriteAnimated {
         this.talkingAudio.play();
         // Find suitable place to draw speech bubble
         let x0 = 0;
-        let y0 = canvas.height-32*3;
+        let y0 = canvas.height-32*2;
   
         let w = canvas.width;
         let h = 64;
@@ -76,11 +76,11 @@ class NPC extends SpriteAnimated {
         let currentText = this.textSequence[this.currentDialogue][this.dialogueCount];
   
         // Set up our font and fill style
-        let fontSize = 16;
+        let fontSize = 22;
         let border = 64;
   
         ctx.fillStyle = "#000000"
-        ctx.font = `${fontSize}px serif`;
+        ctx.font = `${fontSize}px Dungeon`;
         
         let x = x0 + border;
         let y = y0 + fontSize;

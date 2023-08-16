@@ -36,7 +36,9 @@ class RoomKey extends BaseItem {
       }
 
       onPickUp(player, room) {
-        player.inventory.push(this);
-        super.onPickUp(room);
+        let pickUp = super.onPickUp(player, room);
+        if (pickUp) {
+          player.inventory.push(this);
+        }
       }
 }

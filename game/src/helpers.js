@@ -177,6 +177,8 @@ function collisionDetection(c_ent, ent) {
         
         
       // }
+
+
       if (c_ent.name == "Player" &&
         (ent.name == "Goldcoin" ||
         ent.name == "Silvercoin" ||
