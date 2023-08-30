@@ -153,6 +153,7 @@ function mainLoop() {
     spaceBarReleased = false;
 
     if (player.hp <= 0) {
+      // kill player, purge all items from inventory
       gameOver = true;
     }
 

@@ -89,8 +89,8 @@ class Room {
             32,
             32,
             filename,
-            2,
-            2,
+            1,
+            1,
             0,
             0,
             0
@@ -259,7 +259,7 @@ class Room {
         if (this.map[i][j][0] == "npc") {
           let reward = this.map[i][j][3]
           let facing = this.map[i][j][4]
-          let q = new NPC(
+          let npc = new NPC(
             "NPC",
             BLOCK_WIDTH * [j],
             BLOCK_WIDTH * [i],
@@ -271,18 +271,12 @@ class Room {
             [3, 2, 0, 1],
             0,
             0,
-            0,
-            this.map[i][j][2],
-            reward,
-            facing
           )
-          // q.srcY = q.spriteDirections[0] * q.spriteHeight;
-          q.static = true;
-          q.textSequence = this.map[i][j][1];
-          // this.mobs.push(
-          //   q
-          // );
-          this.npcs.push(q);
+          npc.setFacingDirection(facing);
+          npc.setReward(reward);
+          npc.static = true;
+          npc.textSequence = this.map[i][j][1];
+          this.npcs.push(npc);
         }
       }
     }
