@@ -1,3 +1,4 @@
+
 class Player extends SpriteAnimated {
   constructor(
     name,
@@ -59,6 +60,8 @@ class Player extends SpriteAnimated {
     this.maxInventory = 16;
     this.slotsPerRow = 4;
 
+    smartCollision(1, 2);
+
   }
 
   setDirectionLooking() {
@@ -68,6 +71,7 @@ class Player extends SpriteAnimated {
   }
 
   draw() {
+
     // console.log((this.inDialogueWith.done) != null ? this.inDialogueWith.done : [] )
     //this.drawGoldCounter();
     //this.drawClock();
@@ -79,13 +83,15 @@ class Player extends SpriteAnimated {
     }
     //  this.drawInventory();
     super.draw();
+
+    //getQuadrants(this);
+
   }
 
   update(room) {
     if (this.hp <= 75) {
       this.hp += 0.1;
     }
-
     this.setDirectionLooking();
     this.playerActions(room);
     this.movePlayer(room);
@@ -239,45 +245,22 @@ class Player extends SpriteAnimated {
     ctx.fillText(`${stringTime}`, canvas.width - 160, 32 - 8);
   }
 
-  // Refactor needed
-  playerCollision(room) {
-    this.mobCollision = false;
-    let collidables = room.getCollidables();
-    // Check for any collisions
-    for (let i = 0; i < collidables.length; i++) {
-      var ent = collidables[i];
-      if (ent.name != "Floor") {
-        const collider = collisionDetection(this, ent);
-        if (collider != undefined) {//console.log(collider)
-          ;}
-        if (collider == "Mob") {
-          if (!isDev) {this.hp -= 5;}
-          this.damageAudio.play();
-          this.mobCollision = true;
-        }
-        if (collider != "Mob") {
-          
-        }
-        if (collider == "Wall") {
-        }
-        if (collider == "Exit") {
-          gameWon = true;
-        }
-        if (collider == "RoomDoor") {
-          ent.unlockDoor(player, room);
-        }
-        if (
-          collider == "Silvercoin" ||
-          collider == "Goldcoin" ||
-          collider == "QuestItem" ||
-          collider == "RoomKey"
-          )
-        {
-          ent.onPickUp(this, room);
-        }
-      }
+    playerCollision(room)
+    {
+	let cords = this.getCentre();
+	let coldbs = room.getSurroundingCollidables(cords[0], cords[1])
+	let collisions = smartCollision(this, coldbs); 
+
+	for (let k = 0; k < collisions.length; k++) {
+	    if (collisions[k].col instanceof BaseItem) {
+		collisions[k].col.onPickUp(this, room)
+	    }
+	    if (collisions[k].col.name == "Mob") {
+		
+	    }
+	}
     }
-  }
+
 
   movePlayer(room) {
     const borderMovement = 16;
@@ -309,6 +292,7 @@ class Player extends SpriteAnimated {
         !wKeyPressed &&
         !sKeyPressed
       ) {
+        console.log(dKeyPressed);
         this.moveTo = "E";
         if (this.x - this.spriteWidth + borderMovement > MAZE_WIDTH) {
           roomCount += 1;
@@ -361,7 +345,7 @@ class Player extends SpriteAnimated {
   
     // move to f(x)
     if (this.mobCollision) {
-      console.log(this.mobCollision)
+      
       this.damageAudio.play();
     }
 

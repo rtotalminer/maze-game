@@ -34,7 +34,7 @@ class Zombie extends SpriteAnimated {
     this.oy = y;
     this.x = x;
     this.y = y;
-    this.v = 4;
+    this.v = 3;
 
     this.movesTo = new Array();
     this.moving = false;

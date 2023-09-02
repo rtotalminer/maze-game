@@ -5,6 +5,13 @@ function colorRect(x, y, w, h, c) {
   ctx.fillRect(x, y, w, h);
 }
 
+function colorRect2(r, c) {
+  ctx.strokeStyle = c;
+  ctx.beginPath();
+  ctx.rect(r[0], r[1], r[2], r[3]);
+  ctx.stroke();
+}
+
 function drawText(text, x, y, c) {
  
 }
@@ -155,7 +162,11 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+
+
+
 function collisionDetection(c_ent, ent) {
+  
   let x0 = c_ent.x + c_ent.xOffset;
   let y0 = c_ent.y;
   let w0 = c_ent.w - 2 * c_ent.xOffset;
@@ -172,11 +183,11 @@ function collisionDetection(c_ent, ent) {
   else {
   if (x0 + w0 > x1 && x0 < x1 + w1) {
     if (y0 + h0 > y1 && y0 < y1) {
-      // Collision on top side
-      // if (!(c_ent.name == "Player")) {
-        
-        
-      // }
+      
+      if (c_ent.name == "Player" && ent.name == "Wall") {
+        c_ent.y = y0;
+        ////////return ent.name;
+      }
 
 
       if (c_ent.name == "Player" &&
@@ -213,15 +224,17 @@ function collisionDetection(c_ent, ent) {
 
   if (y0 + h0 > y1 && y0 < y1 + h1) {
     if (x0 + w0 > x1 && x0 < x1) {
-      if (ent.name == "Player" && c_ent.name == "Wall") {
+      if (c_ent.name == "Player" && ent.name == "Wall") {
         c_ent.x = x0;
+        return ent.name;
       }
       //Collision on left side
       c_ent.x = x1 - c_ent.w + c_ent.xOffset;
       return ent.name;
-    } else if (x0 > x1 && x0 < x1 + w1) {
+    }
+      if (x0 > x1 && x0 < x1 + w1) {
       // Collision on right side
-      if (c_ent.name == "Player" && ent.name == "Wall") {
+      if (c_ent.name == "Player" && ent.name == "Wall") { 
         c_ent.x = x0;
       }
       c_ent.x = x1 + ent.w - c_ent.xOffset;

@@ -1,6 +1,6 @@
 // This item is simply picked up and returned to an NPC
 
-class Silvercoin extends SpriteBase {
+class Silvercoin extends BaseItem {
     constructor(
       name,
       x,
@@ -13,7 +13,8 @@ class Silvercoin extends SpriteBase {
       spriteDirections,
       xOffset,
       spritePosX,
-      spritePosY,
+	spritePosY,
+	pickupAudio
     ) {
         super(
             name,
@@ -28,6 +29,7 @@ class Silvercoin extends SpriteBase {
             xOffset,
             spritePosX,
             spritePosY,
+	    pickupAudio
         )
         // Audio
         this.pickupAudio = document.getElementById("coinPickup");
@@ -36,6 +38,7 @@ class Silvercoin extends SpriteBase {
       onPickUp(player, room) {
         this.pickupAudio.play();
         player.gd += 1;
-        room.destoryItem(this) // move to room destory
+          room.destoryItem(this) // move to room destory
+	  super.onPickUp(player, room);
       }
 }

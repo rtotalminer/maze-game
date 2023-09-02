@@ -2,7 +2,7 @@
 
 var canvas, ctx;
 
-var isDev = false;
+var isDev = true;
 
 var rightKeyPressed = false;
 var leftKeyPressed = false;
@@ -48,6 +48,7 @@ function loadGame() {
   // Lazyload this?
   // Do I need a structured clone?
   gameMap = new Array(
+    new Room(map["testMap"]),
     new Room(structuredClone(map["maze00"])),
     new Room(structuredClone(map["maze01"])),
     new Room(structuredClone(map["maze02"])),
@@ -78,7 +79,7 @@ function loadGame() {
 
   // add a dev flag, enabling hitbo and noclip etc.
   if (isDev) {
-    player.enableHitbox = true;
+    player.enableHitbox = false;
     noClip = true;
   }
 

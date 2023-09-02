@@ -32,26 +32,39 @@ class Room {
   getStaticTextures() {
     return this.walls.concat(this.floors);
   }
-
-  getEntityMapState() {
-    this.entityMap = new Array();
-    let entities = this.getEntities();
-
-    // create blank entity map state 
+  
+  createBlankMapState() {
+    let mapState = new Array();
     for (let i = 0; i < this.map.length; i++) {
-      let a = new Array();
-      this.entityMap.push(a)        
+      mapState.push(new Array());        
       for (let j = 0; j < this.map[0].length; j++) {
-        let b = new Array();
-        this.entityMap[i].push(b)
+        mapState[i].push(new Array());
       }
     }
+    return mapState;
+  }
 
-    // console.log(this.entities.length);
+  // Map state functions can be generalised.
+  getEntityMapState() {
+    let entities = this.getEntities();
+    this.entityMap = this.createBlankMapState();
+
     for (let i = 0; i < entities.length; i++) {
         let cords = this.convertCords(entities[i].x, entities[i].y);
         this.entityMap[cords[1]][cords[0]].push(entities[i]);
     }
+  }
+
+  getCollidableMapState() {
+    let mapState = this.createBlankMapState();
+    let collidables = this.getCollidables();
+
+    for (let i = 0; i < collidables.length; i++) {
+      let rect = collidables[i].getCentre();
+      let cords = this.convertCords(rect[0], rect[1]);
+      mapState[cords[1]][cords[0]].push(collidables[i]);
+    }
+    return mapState;
   }
 
   // Gets all the static textures and stores it into texture map
@@ -308,6 +321,24 @@ class Room {
     return surroundingArea;
   }
 
+  // Get the surrounding 
+    getSurroundingCollidables(x, y)
+    {
+	let cords  = this.convertCords(x, y);
+	let state = this.getCollidableMapState();
+
+	x = cords[0];
+	y = cords[1];
+
+	return [
+	    (state[y] == undefined) ? [] : state[y][x],
+	    (state[y-1] == undefined) ? [] : state[y-1][x],
+	    (state[y][x+1] == undefined) ? [] : state[y][x+1],
+	    (state[y+1] == undefined) ? [] : state[y+1][x],
+	    (state[y][x-1] == undefined) ? [] : state[y][x-1],
+	];
+    }
+
   // Gets the surrounding entities of a pair of co-ordinates within the room.
   getSurroundingEntities(a, b) {
     let x = this.convertCords(a, b)[0];
@@ -317,7 +348,9 @@ class Room {
     var eastEntity = [];
     var southEntity = [];
     var westEntity = [];
-
+    
+    //let nEnt = this.?entityMap[y-1][x];
+    //console.log(nEnt);
     // When player enteres new room i.e. out of bounds for entityMap.
     if (this.entityMap[y - 1] != undefined) {
       if (this.entityMap[y - 1][x] != undefined) {

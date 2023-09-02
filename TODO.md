@@ -10,7 +10,15 @@ Enjoy!
 
 # Todo
 
-## Major
+## Roadmanp
+### v0.12
+#### Major changes
+- Fix the collision detection to be more smooth.
+- Refactor the code into Typescript.
+- Use JSON to load map configuration.
+#### Minor changes
+
+
 - REFACTOR
 - MAJOR PROBLEM IS MOB CAN PUSH PLAYER THROUGH WALL
   - POSSIBLE FIX IS TI PUT IN SURROUONDING MAP WHEN CHECKING OR COLLISION AND ALLOWING WALLS TO HAVE HIGHER STATUS THAN MOBS
