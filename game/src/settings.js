@@ -43,8 +43,11 @@ var dKeyPressed = false;
 
 var escKeyPressedOnce = false;
 var spaceKeyPressedOnce = false;
+var downKeyPressedOnce = false;
+var upKeyPressedOnce = false;
 
 var spaceBarReleased = false;
+var downKeyReleased = false;
 
 // Game Variables
 var gameOver = false;
@@ -52,6 +55,13 @@ var gameWon = false;
 var showMenu = true;
 var paused = false;
 var isDev = false;
+
+// Menu Variables
+
+
+var menuSelection = 1;
+var menuX = MAZE_WIDTH/2;
+var menuY = MAZE_HEIGHT/2;
 
 // Game Objects
 var player;
@@ -113,7 +123,6 @@ const map = {
         ['Goldcoin', [1, 3]]
       ],
       "mobs": [
-            ["Mob", [1, 4]]
         ],
       "npcs": [],
     }

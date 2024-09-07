@@ -8,12 +8,6 @@ function loadImages() {
 function loadGame() {
 
   escKeyPressedOnce = false;
-  // Lazyload this?
-  // Do I need a structured clone?
-  // new Room(0, buildRoomConfig(0))
-
-
-
 
   // Check if map is valid ..
   player = new Player(
@@ -61,12 +55,13 @@ window.onload = function () {
 };
 
 function mainLoop() {
+
+
   ctx.fillStyle = "rgba(0,0,0)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  //console.log(spaceBarPressed);
+
   if (gameOver) {
     draw_image(ctx, "deathscreen", 0, 0, canvas.width, canvas.height);
-
     if (spaceBarPressed) {
       sleep(50).then(() => {
         gameOver = false;
@@ -90,7 +85,9 @@ function mainLoop() {
     ctx.font = "22px Impact";
     ctx.fillStyle = "rgba(0,0,0)";
     ctx.fillText(`PAUSED`, canvas.width / 2 - 27, canvas.height / 2);
-  } else if (gameWon) {
+  }
+  
+  else if (gameWon) {
     ctx.fillStyle = "rgba(225,225,225)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.font = "22px Impact";
@@ -106,20 +103,22 @@ function mainLoop() {
         showMenu = true;
       });
     }
-  } else {
-
+  }
+  
+  else {
     currentRoom.update();
     player.update(currentRoom);
 
     spaceBarReleased = false;
+
 
     if (player.hp <= 0) {
       // kill player, purge all items from inventory
       gameOver = true;
     }
 
-
     currentRoom.draw();
     player.draw();
   }
+  
 }

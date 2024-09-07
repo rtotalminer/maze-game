@@ -12,19 +12,17 @@ function colorRect2(r, c) {
   ctx.stroke();
 }
 
-function drawText(text, x, y, c) {
- 
-}
-
 function keyPressed(e) {
   if (e.keyCode == LEFT_KEY) {
     leftKeyPressed = true;
   }
   if (e.keyCode == DOWN_KEY) {
     downKeyPressed = true;
+    downKeyPressedOnce = true;
   }
   if (e.keyCode == UP_KEY) {
     upKeyPressed = true;
+    upKeyPressedOnce = true;
   }
   if (e.keyCode == RIGHT_KEY) {
     rightKeyPressed = true;
@@ -58,6 +56,7 @@ function keyPressed(e) {
   if (e.keyCode == SPACE_BAR) {
     spaceKeyPressedOnce = !spaceKeyPressedOnce;
   }
+
 }
 
 function keyReleased(e) {
@@ -89,7 +88,6 @@ function keyReleased(e) {
     dKeyPressed = false;
   }
   if (e.keyCode == SPACE_BAR) {
-    spaceBarPressed = false;
     spaceBarReleased = true;
   }
   if (e.keyCode == ESC_KEY) {
