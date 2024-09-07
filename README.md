@@ -1,6 +1,6 @@
 # Wealth Rush
 <p align=center>
-  <img src="https://ipfs.io/ipfs/QmQEfvHSZ5gTmUAeSAL6AapB1wFDgGyoNybTdV5XLEFcwX?filename=wealthrush.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="600" height="600" />
+  <img src="./game/static/img/menu.png" alt="" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="600" height="600" />
 </p>
 
 ## Introduction
