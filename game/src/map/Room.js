@@ -32,26 +32,39 @@ class Room {
   getStaticTextures() {
     return this.walls.concat(this.floors);
   }
-
-  getEntityMapState() {
-    this.entityMap = new Array();
-    let entities = this.getEntities();
-
-    // create blank entity map state 
+  
+  createBlankMapState() {
+    let mapState = new Array();
     for (let i = 0; i < this.map.length; i++) {
-      let a = new Array();
-      this.entityMap.push(a)        
+      mapState.push(new Array());        
       for (let j = 0; j < this.map[0].length; j++) {
-        let b = new Array();
-        this.entityMap[i].push(b)
+        mapState[i].push(new Array());
       }
     }
+    return mapState;
+  }
 
-    // console.log(this.entities.length);
+  // Map state functions can be generalised.
+  getEntityMapState() {
+    let entities = this.getEntities();
+    this.entityMap = this.createBlankMapState();
+
     for (let i = 0; i < entities.length; i++) {
         let cords = this.convertCords(entities[i].x, entities[i].y);
         this.entityMap[cords[1]][cords[0]].push(entities[i]);
     }
+  }
+
+  getCollidableMapState() {
+    let mapState = this.createBlankMapState();
+    let collidables = this.getCollidables();
+
+    for (let i = 0; i < collidables.length; i++) {
+      let rect = collidables[i].getCentre();
+      let cords = this.convertCords(rect[0], rect[1]);
+      mapState[cords[1]][cords[0]].push(collidables[i]);
+    }
+    return mapState;
   }
 
   // Gets all the static textures and stores it into texture map
@@ -89,8 +102,8 @@ class Room {
             32,
             32,
             filename,
-            2,
-            2,
+            1,
+            1,
             0,
             0,
             0
@@ -259,7 +272,7 @@ class Room {
         if (this.map[i][j][0] == "npc") {
           let reward = this.map[i][j][3]
           let facing = this.map[i][j][4]
-          let q = new NPC(
+          let npc = new NPC(
             "NPC",
             BLOCK_WIDTH * [j],
             BLOCK_WIDTH * [i],
@@ -271,18 +284,12 @@ class Room {
             [3, 2, 0, 1],
             0,
             0,
-            0,
-            this.map[i][j][2],
-            reward,
-            facing
           )
-          // q.srcY = q.spriteDirections[0] * q.spriteHeight;
-          q.static = true;
-          q.textSequence = this.map[i][j][1];
-          // this.mobs.push(
-          //   q
-          // );
-          this.npcs.push(q);
+          npc.setFacingDirection(facing);
+          npc.setReward(reward);
+          npc.static = true;
+          npc.textSequence = this.map[i][j][1];
+          this.npcs.push(npc);
         }
       }
     }
@@ -314,6 +321,32 @@ class Room {
     return surroundingArea;
   }
 
+  // Get the surrounding 
+    getSurroundingCollidables(x, y)
+    {
+	let cords  = this.convertCords(x, y);
+	let state = this.getCollidableMapState();
+
+	x = cords[0];
+	y = cords[1];
+
+	let surroundings =  [
+	    (state[y] == undefined) ? [] : state[y][x],
+	    (state[y-1] == undefined) ? [] : state[y-1][x],
+	    (state[y] == undefined) ? [] : (state[y][x+1] == undefined) ? [] : state[y][x+1],
+	    (state[y+1] == undefined) ? [] : state[y+1][x],
+	    (state[y] == undefined) ? [] : (state[y][x-1] == undefined) ? [] : state[y][x-1],
+	];
+
+    for (let i = 0; i < surroundings.length; i ++) {
+      if (surroundings[i] == undefined) {
+        surroundings[i] = [];
+      }
+    }
+
+    return  surroundings;
+    }
+
   // Gets the surrounding entities of a pair of co-ordinates within the room.
   getSurroundingEntities(a, b) {
     let x = this.convertCords(a, b)[0];
@@ -323,7 +356,9 @@ class Room {
     var eastEntity = [];
     var southEntity = [];
     var westEntity = [];
-
+    
+    //let nEnt = this.?entityMap[y-1][x];
+    //console.log(nEnt);
     // When player enteres new room i.e. out of bounds for entityMap.
     if (this.entityMap[y - 1] != undefined) {
       if (this.entityMap[y - 1][x] != undefined) {

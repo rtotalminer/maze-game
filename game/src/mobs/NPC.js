@@ -13,8 +13,6 @@ class NPC extends SpriteAnimated {
       spritePosX,
       spritePosY,
       npcName,
-      reward,
-      facing
     ) {
       super(
         name,
@@ -41,11 +39,21 @@ class NPC extends SpriteAnimated {
       this.done = false;
       this.textSequence = new Array();
 
-      this.reward = reward;
-      this.moveTo = facing;
 
       this.talkingAudio = document.getElementById("mumbling");
       this.rewardAudio = document.getElementById("coinPickup");
+    }
+
+    setFacingDirection(direction) {
+      this.moveTo = direction;
+    }
+
+    setReward(reward) {
+      this.reward = reward;
+    }
+
+    setNpcName(name) {
+      this.npcName = name;
     }
   
     update(entities) {
@@ -110,7 +118,13 @@ class NPC extends SpriteAnimated {
 
     interact(playerInventory) {
       if (this.isAvailable) {
-        let item = playerInventory.find((_item) => _item.returnTo == this.npcName); 
+        let item = false; 
+        for (let i = 0; i < playerInventory.length; i++) {
+          if (playerInventory[i] instanceof QuestItem) {
+            playerInventory[i].returnTo == this.npcName;
+            item = true;
+          }
+        }
         if (item) {
           console.log(item);
           this.currentDialogue = 1;

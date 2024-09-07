@@ -1,10 +1,12 @@
+
+// A static un-animated texture
 class SpriteBase {
   constructor(name, x, y, w, h, filename, spriteRows, spriteCols, xOffset, spritePosX, spritePosY) {
     this.name = name;
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
+    this.w = 32;
+    this.h = 32;
     this.filename = filename;
 
     // Offset for hitbox
@@ -16,8 +18,8 @@ class SpriteBase {
     // numOfImages++;
     // this.spriteSheet.onload = loadImages;
 
-    this.spriteRows = spriteRows;
-    this.spriteCols = spriteCols;
+    this.spriteRows = 1;
+    this.spriteCols = 1;
 
     this.spriteWidth = this.spriteSheet.width / spriteRows;
     this.spriteHeight = this.spriteSheet.height / spriteCols;

@@ -48,6 +48,7 @@ function loadGame() {
   // Lazyload this?
   // Do I need a structured clone?
   gameMap = new Array(
+    //new Room(map["testMap"]),
     new Room(structuredClone(map["maze00"])),
     new Room(structuredClone(map["maze01"])),
     new Room(structuredClone(map["maze02"])),
@@ -78,7 +79,7 @@ function loadGame() {
 
   // add a dev flag, enabling hitbo and noclip etc.
   if (isDev) {
-    player.enableHitbox = true;
+    player.enableHitbox = false;
     noClip = true;
   }
 
@@ -113,7 +114,8 @@ function mainLoop() {
     //colorRect(0, 0, canvas.width, canvas.height, "white");
     draw_image(ctx, "menu", 0, 0, canvas.width, canvas.height);
     if (spaceBarPressed) {
-      sleep(0).then(() => {
+      // bad fix to stop textures delay but it works?
+      sleep(100).then(() => {
         loadGame();
         showMenu = false;
       });
@@ -153,6 +155,7 @@ function mainLoop() {
     spaceBarReleased = false;
 
     if (player.hp <= 0) {
+      // kill player, purge all items from inventory
       gameOver = true;
     }
 

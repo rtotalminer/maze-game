@@ -1,3 +1,5 @@
+// RENAME TO SETTINGS TO DISTINGUISH FROM OUR CONFIG JSON
+
 const LEFT_KEY = 37;
 const RIGHT_KEY = 39;
 const UP_KEY = 38;
@@ -45,7 +47,19 @@ const npcDialogue1_1 = ["Well done adventurer! You found my precious book!", "Ta
 const npc1 = ["npc", [npcDialogue1_0, npcDialogue1_1], "nigel", 10, "N"]
 const questItem1 = ["questItem", "nigel", "book_0"]
 
+const npc_d_00 = ["I was once like you but I was banished from my homeland after I betrayed the tyrannical King Alfred. If you find a ring in this godforsaken place, I can return to my former self, to my homeland, to my wife and to my...", "children. Of course, you shall recieve a generous reward, now make haste!"];
+const npc_d_01 = ["Yes you have found this item! I can now leave this place", "Oh and I forget, a reward, take this"]
+
+const npc0_0 = {
+  "id": "NPC",
+  "name": "Picklberry",
+  "dialogueSequence": [npc_d_00, npc_d_01],
+  "reward": 10,
+  "startsFacing": "N"
+}
+
 const map = {
+
   maze00: [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
