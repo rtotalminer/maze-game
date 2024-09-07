@@ -330,13 +330,21 @@ class Room {
 	x = cords[0];
 	y = cords[1];
 
-	return [
+	let surroundings =  [
 	    (state[y] == undefined) ? [] : state[y][x],
 	    (state[y-1] == undefined) ? [] : state[y-1][x],
-	    (state[y][x+1] == undefined) ? [] : state[y][x+1],
+	    (state[y] == undefined) ? [] : (state[y][x+1] == undefined) ? [] : state[y][x+1],
 	    (state[y+1] == undefined) ? [] : state[y+1][x],
-	    (state[y][x-1] == undefined) ? [] : state[y][x-1],
+	    (state[y] == undefined) ? [] : (state[y][x-1] == undefined) ? [] : state[y][x-1],
 	];
+
+    for (let i = 0; i < surroundings.length; i ++) {
+      if (surroundings[i] == undefined) {
+        surroundings[i] = [];
+      }
+    }
+
+    return  surroundings;
     }
 
   // Gets the surrounding entities of a pair of co-ordinates within the room.

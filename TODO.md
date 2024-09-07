@@ -9,16 +9,19 @@ Read the tip on how to play is the bottom left.
 Enjoy!
 
 # Todo
+- [~] To avoid the player from jumping over mobs when colliding with there movement, we should block all movement along the dimensions of the mob collision. Although this needs more testing 
 
 ## Roadmanp
+### v0.11
+- [~] Make into a game you can *actually* play.
+
 ### v0.12
-#### Major changes
-- Fix the collision detection to be more smooth.
-- Refactor the code into Typescript.
+- Fix the collision detection to be more smooth. [x]
+- Refactor the code into Typescript. 
 - Use JSON to load map configuration.
-#### Minor changes
-
-
+### v0.13
+- [~] Change map rendering to world oriented rather than player orientated. 
+ 
 - REFACTOR
 - MAJOR PROBLEM IS MOB CAN PUSH PLAYER THROUGH WALL
   - POSSIBLE FIX IS TI PUT IN SURROUONDING MAP WHEN CHECKING OR COLLISION AND ALLOWING WALLS TO HAVE HIGHER STATUS THAN MOBS

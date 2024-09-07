@@ -244,21 +244,23 @@ class Player extends SpriteAnimated {
   playerCollision(room) {
       let cords = this.getCentre();
       let coldbs = room.getSurroundingCollidables(cords[0], cords[1])
+      console.log(coldbs)
       let collisions = smartCollision(this, coldbs);
 
-      
       this.mobCollision = false;
 
       for (let k = 0; k < collisions.length; k++) {
           if (collisions[k].col instanceof BaseItem) {
               collisions[k].col.onPickUp(this, room)
           }
+          if (collisions[k].col instanceof RoomDoor) {
+            collisions[k].col.unlockDoor(this, room)
+            }
           if (collisions[k].col.name == "Mob") {
             this.mobCollision = true;
           }
       }
   }
-
 
   movePlayer(room) {
       const borderMovement = 16;
@@ -278,7 +280,7 @@ class Player extends SpriteAnimated {
               this.moveTo = "W";
               if (this.x + this.spriteWidth - borderMovement < 0) {
                   roomCount -= 1;
-                  currentRoom = gameMap[roomCount];
+                  currentRoom = gameMap[roomCount]; // #TODO: only trigger map change when player is allowed to
                   // console.log(currentRoom);
                   this.x = MAZE_WIDTH;
               }

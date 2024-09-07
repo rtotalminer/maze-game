@@ -48,7 +48,7 @@ function loadGame() {
   // Lazyload this?
   // Do I need a structured clone?
   gameMap = new Array(
-    new Room(map["testMap"]),
+    //new Room(map["testMap"]),
     new Room(structuredClone(map["maze00"])),
     new Room(structuredClone(map["maze01"])),
     new Room(structuredClone(map["maze02"])),
