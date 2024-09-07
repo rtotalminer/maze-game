@@ -2,7 +2,7 @@
 
 var canvas, ctx;
 
-var isDev = true;
+var isDev = false;
 
 var rightKeyPressed = false;
 var leftKeyPressed = false;

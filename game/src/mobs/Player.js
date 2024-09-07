@@ -257,6 +257,7 @@ class Player extends SpriteAnimated {
             }
           if (collisions[k].col.name == "Mob") {
             this.mobCollision = true;
+            this.hp -= 10;
           }
       }
   }
