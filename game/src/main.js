@@ -1,4 +1,6 @@
 
+var canvas, ctx;
+
 function loadImages() {
   if (--numOfImages > 0) return;
 }
@@ -8,17 +10,9 @@ function loadGame() {
   escKeyPressedOnce = false;
   // Lazyload this?
   // Do I need a structured clone?
+  // new Room(0, buildRoomConfig(0))
   gameMap = new Array(
-    //new Room(map["testMap"]),
-    new Room(structuredClone(map["maze00"])),
-    new Room(structuredClone(map["maze01"])),
-    new Room(structuredClone(map["maze02"])),
-    new Room(structuredClone(map["maze03"])),
-    new Room(structuredClone(map["maze04"])),
-    new Room(structuredClone(map["maze05"])),
-    new Room(structuredClone(map["maze06"])),
-    new Room(structuredClone(map["maze07"])),
-    new Room(structuredClone(map["maze08"]))
+    new Room(rawMapData['00'], [], [], [])
   );
 
   // Check if map is valid ..

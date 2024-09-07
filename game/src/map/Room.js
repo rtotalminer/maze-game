@@ -1,7 +1,18 @@
-class Room {
-  constructor(map) {
-    // Maps
+
+class RoomConfig {
+  constructor(map, items, mobs, npcs) {
     this.map = map;
+    this.items = items;
+    this.mobs = mobs;
+    this.npcs = npcs;
+  }
+}
+
+class Room {
+  constructor(map, items, mobs, npcs) {
+    this.config = new RoomConfig(map, items, mobs, npcs);
+
+    // Maps
     this.entityMap = new Array();
     this.textureMap = new Array();
 
@@ -16,7 +27,7 @@ class Room {
     this.npcs = new Array();
     this.collidables = new Array();
 
-    this.convertMap();
+    this.compileFromConfig();
     this.getEntityMapState();
     this.getTextureMap();
   }
@@ -35,9 +46,9 @@ class Room {
   
   createBlankMapState() {
     let mapState = new Array();
-    for (let i = 0; i < this.map.length; i++) {
+    for (let i = 0; i < this.config.map.length; i++) {
       mapState.push(new Array());        
-      for (let j = 0; j < this.map[0].length; j++) {
+      for (let j = 0; j < this.config.map[0].length; j++) {
         mapState[i].push(new Array());
       }
     }
@@ -70,16 +81,7 @@ class Room {
   // Gets all the static textures and stores it into texture map
   getTextureMap() {
     let textures = this.getStaticTextures();
-
-    // create blank entity map state 
-    for (let i = 0; i < this.map.length; i++) {
-      let a = new Array();
-      this.textureMap.push(a)        
-      for (let j = 0; j < this.map[0].length; j++) {
-        let b = new Array();
-        this.textureMap[i].push(b)
-      }
-    }
+    this.textureMap = this.createBlankMapState()
 
     for (let i = 0; i < textures.length; i++) {
         let cords = this.convertCords(textures[i].x, textures[i].y);
@@ -87,9 +89,30 @@ class Room {
     }
   }
 
+  compileFromConfig() {
+    for (let i = 0; i < this.config.map.length; i++) {
+      for (let j = 0; j < this.config.map[0].length; j++) {
+        if (this.config.map[i][j] == 0) {
+          let r = Math.floor(Math.random() * 4);
+          let file = `wall/brick_gray_${r}.png`;
+          this.walls.push(new SpriteBase("Wall", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
+        }
+        if (this.config.map[i][j] == 1) { 
+          let r = Math.floor(Math.random() * 4);
+          let file = `floor/white_marble_${r}.png`;
+          this.floors.push(new SpriteBase("Floor", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
+        }
+      }
+    }
+    // Mobs contain an array of objects relating to the infomation
+    // Likewise with items and NPCS. 
+    
+  }
 
   // Is there a better way to store map data? --> use json for map data then convert to objects
   convertMap() {
+    // Get the texture map from the config
+
     for (let i = 0; i < this.map.length; i++) {
       for (let j = 0; j < this.map[0].length; j++) {
         if (this.map[i][j] == 0) {
