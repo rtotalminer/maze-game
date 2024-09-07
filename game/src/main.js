@@ -12,7 +12,7 @@ function loadGame() {
   // Do I need a structured clone?
   // new Room(0, buildRoomConfig(0))
   gameMap = new Array(
-    new Room(rawMapData['00'], [], [], [])
+    new Room(map['00']['map'], map['00']['items'], [], [])
   );
 
   // Check if map is valid ..

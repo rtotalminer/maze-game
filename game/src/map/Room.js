@@ -90,20 +90,35 @@ class Room {
   }
 
   compileFromConfig() {
+    let r; let file;
     for (let i = 0; i < this.config.map.length; i++) {
-      for (let j = 0; j < this.config.map[0].length; j++) {
-        if (this.config.map[i][j] == 0) {
-          let r = Math.floor(Math.random() * 4);
-          let file = `wall/brick_gray_${r}.png`;
-          this.walls.push(new SpriteBase("Wall", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
+        for (let j = 0; j < this.config.map[0].length; j++) {
+            switch (this.config.map[i][j]) {
+                case 0:
+                    r = Math.floor(Math.random() * 4);
+                    file = `wall/brick_gray_${r}.png`;
+                    this.walls.push(new SpriteBase("Wall", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
+                    break
+                case 1:
+                    r = Math.floor(Math.random() * 4);
+                    file = `floor/white_marble_${r}.png`;
+                    this.floors.push(new SpriteBase("Floor", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
+                    break
+            }
         }
-        if (this.config.map[i][j] == 1) { 
-          let r = Math.floor(Math.random() * 4);
-          let file = `floor/white_marble_${r}.png`;
-          this.floors.push(new SpriteBase("Floor", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
-        }
-      }
     }
+    let x; let y;
+    for (let i = 0 ; i < this.config.items.length; i++) {
+        switch (this.config.items[i][0]) {
+            case 'Goldcoin':
+                file = 'goldcoin.png'
+                x = BLOCK_WIDTH*this.config.items[i][1][0];
+                y = BLOCK_WIDTH*this.config.items[i][1][1];
+                this.items.push(new Goldcoin("Goldcoin", x, y, 32, 32, file, 1, 1, 0, 0, 0));
+        }
+    }
+
+
     // Mobs contain an array of objects relating to the infomation
     // Likewise with items and NPCS. 
     
