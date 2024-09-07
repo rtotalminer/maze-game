@@ -13,8 +13,7 @@ Enjoy!
 
 ## Roadmanp
 ### v0.11
-- [~] Make into a game you can *actually* play.
-
+- [x] Make into a game you can *actually* play.
 ### v0.12
 - Fix the collision detection to be more smooth. [x]
 - Refactor the code into Typescript. 

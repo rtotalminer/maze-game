@@ -1,5 +1,43 @@
 // RENAME TO SETTINGS TO DISTINGUISH FROM OUR CONFIG JSON
 
+
+var canvas, ctx;
+
+var isDev = false;
+
+var rightKeyPressed = false;
+var leftKeyPressed = false;
+var upKeyPressed = false;
+var downKeyPressed = false;
+var spaceBarPressed = false;
+var escKeyPressed = false;
+var iKeyPressed = false;
+
+// Movement keys
+var wKeyPressed = false;
+var aKeyPressed = false;
+var sKeyPressed = false;
+var dKeyPressed = false;
+
+var escKeyPressedOnce = false;
+var spaceKeyPressedOnce = false;
+
+var spaceBarReleased = false;
+
+var gameOver = false;
+var gameWon = false;
+var showMenu = true;
+var paused = false;
+
+var player;
+var gameMap;
+var roomCount;
+var currentRoom;
+
+// Game functions
+var numOfImages = 0;
+var noClip = false;
+
 const LEFT_KEY = 37;
 const RIGHT_KEY = 39;
 const UP_KEY = 38;
