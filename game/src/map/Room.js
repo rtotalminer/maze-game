@@ -115,6 +115,7 @@ class Room {
                 x = BLOCK_WIDTH*this.config.items[i][1][0];
                 y = BLOCK_WIDTH*this.config.items[i][1][1];
                 this.items.push(new Goldcoin("Goldcoin", x, y, 32, 32, file, 1, 1, 0, 0, 0));
+                break
         }
     }
 
