@@ -114,7 +114,8 @@ function mainLoop() {
     //colorRect(0, 0, canvas.width, canvas.height, "white");
     draw_image(ctx, "menu", 0, 0, canvas.width, canvas.height);
     if (spaceBarPressed) {
-      sleep(0).then(() => {
+      // bad fix to stop textures delay but it works?
+      sleep(100).then(() => {
         loadGame();
         showMenu = false;
       });

@@ -118,7 +118,13 @@ class NPC extends SpriteAnimated {
 
     interact(playerInventory) {
       if (this.isAvailable) {
-        let item = playerInventory.find((_item) => _item.returnTo == this.npcName); 
+        let item = false; 
+        for (let i = 0; i < playerInventory.length; i++) {
+          if (playerInventory[i] instanceof QuestItem) {
+            playerInventory[i].returnTo == this.npcName;
+            item = true;
+          }
+        }
         if (item) {
           console.log(item);
           this.currentDialogue = 1;

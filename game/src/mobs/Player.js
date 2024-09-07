@@ -244,7 +244,6 @@ class Player extends SpriteAnimated {
   playerCollision(room) {
       let cords = this.getCentre();
       let coldbs = room.getSurroundingCollidables(cords[0], cords[1])
-      console.log(coldbs)
       let collisions = smartCollision(this, coldbs);
 
       this.mobCollision = false;
