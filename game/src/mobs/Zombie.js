@@ -62,10 +62,10 @@ class Zombie extends SpriteAnimated {
     var y = Math.floor(this.y / BLOCK_WIDTH); 
 
     const avaialblePositions = {
-      N: room.map[y - 1][x],
-      E: room.map[y][x + 1],
-      S: room.map[y + 1][x],
-      W: room.map[y][x - 1],
+      N: room.config.map[y - 1][x],
+      E: room.config.map[y][x + 1],
+      S: room.config.map[y + 1][x],
+      W: room.config.map[y][x - 1],
     };
 
     if (!this.moving) {

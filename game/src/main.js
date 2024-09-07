@@ -11,9 +11,9 @@ function loadGame() {
   // Lazyload this?
   // Do I need a structured clone?
   // new Room(0, buildRoomConfig(0))
-  gameMap = new Array(
-    new Room(map['00']['map'], map['00']['items'], map['00']['mobs'], map['00']['npcs'])
-  );
+
+
+
 
   // Check if map is valid ..
   player = new Player(
@@ -49,6 +49,14 @@ window.onload = function () {
   document.addEventListener("keydown", keyPressed);
   document.addEventListener("keyup", keyReleased);
 
+  // Create Menu Room
+  menuRoom = new Room(map['menu']['map'], [], map['menu']['mobs'], []);
+
+  // Load 
+  gameMap = new Array(
+    new Room(map['00']['map'], map['00']['items'], map['00']['mobs'], map['00']['npcs'])
+  );
+
   setInterval(mainLoop, 1000 / 50);
 };
 
@@ -65,17 +73,13 @@ function mainLoop() {
         showMenu = true;
       });
     }
-  } else if (showMenu) {
-    //colorRect(0, 0, canvas.width, canvas.height, "white");
-    draw_image(ctx, "menu", 0, 0, canvas.width, canvas.height);
-    if (spaceBarPressed) {
-      // bad fix to stop textures delay but it works?
-      sleep(100).then(() => {
-        loadGame();
-        showMenu = false;
-      });
-    }
-  } else if (escKeyPressedOnce) {
+  }
+
+  else if (showMenu) {
+    menu(canvas, ctx);
+  }
+
+  else if (escKeyPressedOnce) {
     currentRoom.draw();
 
     player.draw();
