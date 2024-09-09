@@ -1,31 +1,25 @@
 class Player extends SpriteAnimated {
   constructor(
-      name,
-      x,
-      y,
-      w,
-      h,
-      filename,
-      spriteRows,
-      spriteCols,
-      spriteDirections,
-      xOffset,
-      spritePosX,
-      spritePosY
+    name,
+    x,
+    y,
+    spritesheet,
+    spritePosX,
+    spritePosY,
+    offset,
+    totalFrames,
+    spriteDirections
   ) {
       super(
-          name,
-          x,
-          y,
-          w,
-          h,
-          filename,
-          spriteRows,
-          spriteCols,
-          spriteDirections,
-          xOffset,
-          spritePosX,
-          spritePosY,
+        name,
+        x,
+        y,
+        spritesheet,
+        spritePosX,
+        spritePosY,
+        offset,
+        totalFrames,
+        spriteDirections
       );
 
       this.startTime = Date.now();
@@ -277,6 +271,7 @@ class Player extends SpriteAnimated {
               !wKeyPressed &&
               !sKeyPressed
           ) {
+            this.static = false;
               this.moveTo = "W";
               if (this.x + this.spriteWidth - borderMovement < 0) {
                   roomCount -= 1;
@@ -287,12 +282,13 @@ class Player extends SpriteAnimated {
               this.x -= this.v;
           }
 
-          if (
+          else if (
               dKeyPressed &&
               !aKeyPressed &&
               !wKeyPressed &&
               !sKeyPressed
           ) {
+            this.static = false;
               this.moveTo = "E";
               if (this.x - this.spriteWidth + borderMovement > MAZE_WIDTH) {
                   roomCount += 1;
@@ -303,12 +299,13 @@ class Player extends SpriteAnimated {
               this.x += this.v;
           }
 
-          if (
+          else if (
               wKeyPressed &&
               !aKeyPressed &&
               !dKeyPressed &&
               !sKeyPressed
           ) {
+            this.static = false;
               this.moveTo = "N";
               if (this.y + this.spriteHeight - borderMovement < 0) {
                   roomCount -= 3;
@@ -319,12 +316,13 @@ class Player extends SpriteAnimated {
               this.y -= this.v;
           }
 
-          if (
+          else if (
               sKeyPressed &&
               !aKeyPressed &&
               !dKeyPressed &&
               !wKeyPressed
           ) {
+            this.static = false;
               this.moveTo = "S";
               if (this.y - this.spriteHeight + borderMovement > MAZE_HEIGHT) {
                   roomCount += 3;
@@ -333,6 +331,9 @@ class Player extends SpriteAnimated {
                   this.y = 0;
               }
               this.y += this.v;
+          }
+          else {
+            this.static = true;
           }
       } else {
           downKeyPressed = false;

@@ -33,7 +33,7 @@ class SpriteAnimated extends SpriteBase {
   }
 
   draw() {
-    if (this.moveTo == 'IDLE') {
+    if (this.moveTo == 'IDLE' && !this.static) {
       this.currentFrame %= this.totalFrames;
       this.srcX = this.startX + (this.currentFrame*this.spriteWidth)
     }
@@ -55,10 +55,6 @@ class SpriteAnimated extends SpriteBase {
       if (this.moveTo == "S") {
         this.srcY = this.spriteDirections[2] * this.spriteHeight;
       }
-    }
-    if (this.moveTo == "STATIC") {
-      this.currentFrame++;
-      this.framesDrawn = 0;
     }
 
     if (!escKeyPressedOnce) {

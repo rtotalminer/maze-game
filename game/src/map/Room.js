@@ -142,6 +142,7 @@ class Room {
           textures[1],
           0, 0, 0, 3, [3, 2, 0, 1],
       );
+      console.log(mob.spritesheet.cellHeight)
       mob.isExplore = true;
         this.mobs.push(mob);
         // this.mobs.push(new Zombie(name, x, y, 32, 32, file, 3, 4, [3, 2, 0, 1], true, 0, 0, 0, null));

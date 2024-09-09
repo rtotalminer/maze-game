@@ -7,20 +7,15 @@ function loadSpritesheet(spritesheet) {
 function loadGame() {
   escKeyPressedOnce = false;
 
+
   player = new Player(
-    "Player",
+    'Player',
     P_X0,
     P_Y0,
-    32,
-    32,
-    "player.png",
-    4,
-    4,
-    [1, 3, 0, 2],
-    5,
-    0,
-    0
+    textures[2],
+    0, 0, 0, 4, [1, 3, 0, 2]
   );
+
 
   if (isDev) {
     player.enableHitbox = false;
@@ -34,7 +29,8 @@ function loadGame() {
 function precache() {
   textures = [
     new Spritesheet('texture_map.png', 64, 95),
-    new Spritesheet('zombies_01.png', 3, 4)
+    new Spritesheet('zombies_01.png', 3, 4),
+    new Spritesheet('player.png', 4, 4)
   ];
   numOfImages = textures.length; 
 }
