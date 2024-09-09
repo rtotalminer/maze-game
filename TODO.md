@@ -8,10 +8,25 @@ For version v0.0.1 the game should be at a playable state as it was supposed to 
 - [x] Add an animated menu screen with an option for a map maker.
 - [~] Fix texture loading.
 - [~] Add easy-to-edit configuration w/ room loading as it currently is.
-- [~] Modulate the code in the main.js, settings.js etc..
+- [~] Refactor the code in the main.js, settings.js, menu.js etc..
 
+### v0.1.2
+Minor development patches and tweaks.
+
+- [x] Add .gitignore.
+- [~] Restructure index.html and server.js to /game/
+
+### v1.0.0
+The game mechanics will pretty much be the exact same in all previous version, but it should be playable, when I mean playable I mean textures load properly, no determentral bugs and the game simply 'works' - the user can go from start to finish in the game, play with all it's features and be without any major bugs.
+
+ 
 ### v2.0.0
-Version 2.0.0 codename far away because seems like it will come in the distant future of Neverland... This version will come with smooth and dynamiic camera movement for an open-world experience.
+Version 2.0.0 codename 'far away' because seems like it will come in the distant future of Neverland... This version will come with smooth and dynamiic camera movement for an open-world experience.
 
 - [~] Implement open world mapping.
 - [~] Implement dynamic camera.
+
+### v3.0.0
+I muust be high!
+
+- [x] Multiplayer!
