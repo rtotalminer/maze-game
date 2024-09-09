@@ -95,22 +95,29 @@ class Room {
         for (let j = 0; j < this.config.map[0].length; j++) {
             switch (this.config.map[i][j]) {
                 case 0:
-                    r = Math.floor(Math.random() * 4);
+                    r = Math.floor(Math.random() * 7);
                     let wall = 
                       new SpriteBase(
                         "Wall",
                         BLOCK_WIDTH * [j],
                         BLOCK_WIDTH * [i],
                         textures[0],
-                        11, 20, 0
+                        0+r, 19, 0
                       )
                     this.walls.push(wall)
                     break
-                // case 1:
-                //     r = Math.floor(Math.random() * 4);
-                //     file = `floor/white_marble_${r}.png`;
-                //     this.floors.push(new SpriteBase("Floor", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
-                //     break
+                  case 1:
+                    r = Math.floor(Math.random() * 5);
+                    let floor = 
+                      new SpriteBase(
+                        "floor",
+                        BLOCK_WIDTH * [j],
+                        BLOCK_WIDTH * [i],
+                        textures[0],
+                        1+r, 23, 0
+                      )
+                    this.floors.push(floor)
+                    break
             }
         }
     }

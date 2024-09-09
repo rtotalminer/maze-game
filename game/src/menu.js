@@ -19,6 +19,7 @@ const settingsButton = new MenuButton(MAZE_WIDTH/2, MAZE_HEIGHT/2 + 200, 'Settin
 var buttons = [startButton, mapButton, settingsButton];
 var count = 0;
 
+
 function menu(canvas, ctx) {
 
     // change state
@@ -57,9 +58,20 @@ function menu(canvas, ctx) {
     drawText(ctx, 'Made by SaintStudios', 150, 150, 'rgba(225,225,225)', 'Dungeon', 40)
 
     file = 'goldcoin.png'
-    // let coin = new SpriteAnimated("Goldcoin", selectedButton.x-100, selectedButton.y-68, 32, 32, file, 1, 1, 0, 0, 0, 0);
-    // coin.w = 84; coin.h = 84;
-    //coin.draw();
+    // new SpriteBase(
+    //     "Wall",
+    //     BLOCK_WIDTH * [j],
+    //     BLOCK_WIDTH * [i],
+    //     textures[0],
+    //     11, 20, 0
+    //   )
+
+
+    menuPointer.y = startButton.x-70 + count*100
+
+    //coin.srcX += 32;
+    menuPointer.w = 84; menuPointer.h = 84;
+    menuPointer.draw();
 
     startButton.draw(ctx);
     mapButton.draw(ctx);

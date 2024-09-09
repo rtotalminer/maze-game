@@ -39,7 +39,17 @@ function precache() {
 }
 
 function preload() {
+  // menu
+  menuPointer = new SpriteAnimated(
+      "Menu Pointer",
+      startButton.x-100,
+      startButton.y-68,
+      textures[0],
+      47, 0, 0, 5, [[0, 0], [0, 1], [0, 2], [0, 3]]   
+  );
   menuRoom = new Room(map['menu']['map'], [], map['menu']['mobs'], []);
+
+  // game
   gameMap = new Array(
     new Room(map['00']['map'], map['00']['items'], map['00']['mobs'], map['00']['npcs'])
   );

@@ -57,9 +57,9 @@ var paused = false;
 var isDev = false;
 
 // Menu Variables
-
-
 var menuSelection = 1;
+var menuPointer;
+var menuRoom;
 var menuX = MAZE_WIDTH/2;
 var menuY = MAZE_HEIGHT/2;
 
@@ -67,7 +67,6 @@ var menuY = MAZE_HEIGHT/2;
 var canvas, ctx;
 var player;
 var gameMap;
-var menuRoom;
 var roomCount;
 var currentRoom;
 var textures;
