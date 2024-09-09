@@ -1,28 +1,26 @@
 
 // A static un-animated texture
 class SpriteBase {
-  constructor(name, x, y, w, h, filename, spriteRows, spriteCols, xOffset, spritePosX, spritePosY) {
+  constructor(name, x, y, spritesheet, spritePosX, spritePosY, offset) {
     this.name = name;
     this.x = x;
     this.y = y;
     this.w = 32;
     this.h = 32;
-    this.filename = filename;
 
     // Offset for hitbox
-    this.xOffset = xOffset;
+    this.xOffset = offset;
 
-    this.spriteSheet = new Image();
-    this.spriteSheet.src = `./game/static/img/${this.filename}`; // Move string literals to config
+    // this.spriteSheet = new Image();
+    // this.spriteSheet.src = `./game/static/img/${this.filename}`; // Move string literals to config
 
     // numOfImages++;
     // this.spriteSheet.onload = loadImages;
 
-    this.spriteRows = 1;
-    this.spriteCols = 1;
+    this.spritesheet = spritesheet;
 
-    this.spriteWidth = this.spriteSheet.width / spriteRows;
-    this.spriteHeight = this.spriteSheet.height / spriteCols;
+    this.spriteWidth = this.spritesheet.cellWidth;
+    this.spriteHeight = this.spritesheet.cellHeight;
 
     this.srcX = spritePosX*this.spriteWidth;
     this.srcY = spritePosY*this.spriteHeight;
@@ -34,8 +32,9 @@ class SpriteBase {
     if (this.enableHitbox) {
       this.drawHitbox();
     }
+    console.log()
     ctx.drawImage(
-      this.spriteSheet,
+      this.spritesheet.spritesheet,
       this.srcX,
       this.srcY,
       this.spriteWidth,

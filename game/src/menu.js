@@ -57,9 +57,9 @@ function menu(canvas, ctx) {
     drawText(ctx, 'Made by SaintStudios', 150, 150, 'rgba(225,225,225)', 'Dungeon', 40)
 
     file = 'goldcoin.png'
-    let coin = new SpriteAnimated("Goldcoin", selectedButton.x-100, selectedButton.y-68, 32, 32, file, 1, 1, 0, 0, 0, 0);
-    coin.w = 84; coin.h = 84;
-    coin.draw();
+    // let coin = new SpriteAnimated("Goldcoin", selectedButton.x-100, selectedButton.y-68, 32, 32, file, 1, 1, 0, 0, 0, 0);
+    // coin.w = 84; coin.h = 84;
+    //coin.draw();
 
     startButton.draw(ctx);
     mapButton.draw(ctx);

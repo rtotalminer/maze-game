@@ -1,8 +1,9 @@
 
 var canvas, ctx;
 
-function loadImages() {
-  if (--numOfImages > 0) return;
+function loadSpritesheet(spritesheet) {
+  spritesheet.load();
+  if (--numOfImages <= 0)  preload();
 }
 
 function loadGame() {
@@ -36,20 +37,36 @@ function loadGame() {
   currentRoom = gameMap[roomCount];
 }
 
-window.onload = function () {
+async function precacheTextures() {
+  console.log('precaching textures');
+
+  // the best things is to use large spritesheets
+  textures = {
+    'texture_map': new Spritesheet('texture_map.png', 64, 95),
+  };
+
+  //... save all needed textures to a a dictionary file and isntead
+  // of providing the file name to sprite base, create Spritesheet.js
+  // that a pointer is used it 
+  console.log('textures cached')
+
+}
+
+function preload() {
+  menuRoom = new Room(map['menu']['map'], [], map['menu']['mobs'], []);
+  gameMap = new Array(
+    new Room(map['00']['map'], map['00']['items'], map['00']['mobs'], map['00']['npcs'])
+  );
+}
+
+window.onload = async function () {
   canvas = document.getElementById("game");
   ctx = canvas.getContext("2d");
 
   document.addEventListener("keydown", keyPressed);
   document.addEventListener("keyup", keyReleased);
 
-  // Create Menu Room
-  menuRoom = new Room(map['menu']['map'], [], map['menu']['mobs'], []);
-
-  // Load 
-  gameMap = new Array(
-    new Room(map['00']['map'], map['00']['items'], map['00']['mobs'], map['00']['npcs'])
-  );
+  await precacheTextures();
 
   setInterval(mainLoop, 1000 / 50);
 };

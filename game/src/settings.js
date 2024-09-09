@@ -69,9 +69,10 @@ var gameMap;
 var menuRoom;
 var roomCount;
 var currentRoom;
+var textures;
 
 // Game Functions
-var numOfImages = 0;
+var numOfImages = 1;
 var noClip = false;
 
 const map = {

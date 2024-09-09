@@ -96,37 +96,45 @@ class Room {
             switch (this.config.map[i][j]) {
                 case 0:
                     r = Math.floor(Math.random() * 4);
-                    file = `wall/brick_gray_${r}.png`;
-                    this.walls.push(new SpriteBase("Wall", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
+                    let wall = 
+                      new SpriteBase(
+                        "Wall",
+                        BLOCK_WIDTH * [j],
+                        BLOCK_WIDTH * [i],
+                        textures['texture_map'],
+                        11, 19, 0
+                      )
+                      console.log(wall)
+                    this.walls.push(wall)
                     break
-                case 1:
-                    r = Math.floor(Math.random() * 4);
-                    file = `floor/white_marble_${r}.png`;
-                    this.floors.push(new SpriteBase("Floor", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
-                    break
+                // case 1:
+                //     r = Math.floor(Math.random() * 4);
+                //     file = `floor/white_marble_${r}.png`;
+                //     this.floors.push(new SpriteBase("Floor", BLOCK_WIDTH * [j], BLOCK_WIDTH * [i], 32, 32, file, 1, 1, 0, 0, 0))
+                //     break
             }
         }
     }
-    let x; let y;
-    for (let i = 0 ; i < this.config.items.length; i++) {
-        switch (this.config.items[i][0]) {
-            case 'Goldcoin':
-                file = 'goldcoin.png'
-                x = BLOCK_WIDTH*this.config.items[i][1][0];
-                y = BLOCK_WIDTH*this.config.items[i][1][1];
-                this.items.push(new Goldcoin("Goldcoin", x, y, 32, 32, file, 1, 1, 0, 0, 0));
-                break
-        }
-    }
+    // let x; let y;
+    // for (let i = 0 ; i < this.config.items.length; i++) {
+    //     switch (this.config.items[i][0]) {
+    //         case 'Goldcoin':
+    //             file = 'goldcoin.png'
+    //             x = BLOCK_WIDTH*this.config.items[i][1][0];
+    //             y = BLOCK_WIDTH*this.config.items[i][1][1];
+    //             this.items.push(new Goldcoin("Goldcoin", x, y, 32, 32, file, 1, 1, 0, 0, 0));
+    //             break
+    //     }
+    // }
 
-    let name;
-    for (let i = 0; i < this.config.mobs.length; i++) {
-        file = "zombies_01.png";
-        x = BLOCK_WIDTH * this.config.mobs[i][1][0];
-        y = BLOCK_WIDTH * this.config.mobs[i][1][1];
-        name = this.config.mobs[i][0];
-        this.mobs.push(new Zombie(name, x, y, 32, 32, file, 3, 4, [3, 2, 0, 1], true, 0, 0, 0, null));
-    }
+    // let name;
+    // for (let i = 0; i < this.config.mobs.length; i++) {
+    //     file = "zombies_01.png";
+    //     x = BLOCK_WIDTH * this.config.mobs[i][1][0];
+    //     y = BLOCK_WIDTH * this.config.mobs[i][1][1];
+    //     name = this.config.mobs[i][0];
+    //     this.mobs.push(new Zombie(name, x, y, 32, 32, file, 3, 4, [3, 2, 0, 1], true, 0, 0, 0, null));
+    // }
     
   }
 
