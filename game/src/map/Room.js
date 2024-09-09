@@ -101,10 +101,9 @@ class Room {
                         "Wall",
                         BLOCK_WIDTH * [j],
                         BLOCK_WIDTH * [i],
-                        textures['texture_map'],
-                        11, 19, 0
+                        textures[0],
+                        11, 20, 0
                       )
-                      console.log(wall)
                     this.walls.push(wall)
                     break
                 // case 1:

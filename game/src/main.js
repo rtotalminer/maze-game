@@ -1,16 +1,12 @@
 
-var canvas, ctx;
-
 function loadSpritesheet(spritesheet) {
   spritesheet.load();
   if (--numOfImages <= 0)  preload();
 }
 
 function loadGame() {
-
   escKeyPressedOnce = false;
 
-  // Check if map is valid ..
   player = new Player(
     "Player",
     P_X0,
@@ -26,30 +22,20 @@ function loadGame() {
     0
   );
 
-
-  // add a dev flag, enabling hitbo and noclip etc.
   if (isDev) {
     player.enableHitbox = false;
     noClip = true;
   }
 
-  roomCount = 0; //startingRooms[Math.floor(Math.random() * startingRooms.length)];
+  roomCount = 0;
   currentRoom = gameMap[roomCount];
 }
 
-async function precacheTextures() {
-  console.log('precaching textures');
-
-  // the best things is to use large spritesheets
-  textures = {
-    'texture_map': new Spritesheet('texture_map.png', 64, 95),
-  };
-
-  //... save all needed textures to a a dictionary file and isntead
-  // of providing the file name to sprite base, create Spritesheet.js
-  // that a pointer is used it 
-  console.log('textures cached')
-
+function precache() {
+  textures = [
+    new Spritesheet('texture_map.png', 64, 95),
+  ];
+  numOfImages = textures.length; 
 }
 
 function preload() {
@@ -59,14 +45,14 @@ function preload() {
   );
 }
 
-window.onload = async function () {
+window.onload = function () {
   canvas = document.getElementById("game");
   ctx = canvas.getContext("2d");
 
   document.addEventListener("keydown", keyPressed);
   document.addEventListener("keyup", keyReleased);
 
-  await precacheTextures();
+  precache();
 
   setInterval(mainLoop, 1000 / 50);
 };

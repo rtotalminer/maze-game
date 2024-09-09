@@ -64,6 +64,7 @@ var menuX = MAZE_WIDTH/2;
 var menuY = MAZE_HEIGHT/2;
 
 // Game Objects
+var canvas, ctx;
 var player;
 var gameMap;
 var menuRoom;

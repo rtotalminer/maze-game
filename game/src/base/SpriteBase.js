@@ -8,15 +8,7 @@ class SpriteBase {
     this.w = 32;
     this.h = 32;
 
-    // Offset for hitbox
     this.xOffset = offset;
-
-    // this.spriteSheet = new Image();
-    // this.spriteSheet.src = `./game/static/img/${this.filename}`; // Move string literals to config
-
-    // numOfImages++;
-    // this.spriteSheet.onload = loadImages;
-
     this.spritesheet = spritesheet;
 
     this.spriteWidth = this.spritesheet.cellWidth;
@@ -29,10 +21,9 @@ class SpriteBase {
   }
 
   draw() {
-    if (this.enableHitbox) {
+    if (this.enableHitbox)
       this.drawHitbox();
-    }
-    console.log()
+
     ctx.drawImage(
       this.spritesheet.spritesheet,
       this.srcX,
