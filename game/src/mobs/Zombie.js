@@ -3,31 +3,25 @@ class Zombie extends SpriteAnimated {
     name,
     x,
     y,
-    w,
-    h,
-    filename,
-    spriteRows,
-    spriteCols,
-    spriteDirections,
-    isExplore,
-    xOffset,
+    spritesheet,
     spritePosX,
     spritePosY,
+    offset,
+    totalFrames,
+    spriteDirections,
+    isExplore,
     npcName
   ) {
     super(
       name,
       x,
       y,
-      w,
-      h,
-      filename,
-      spriteRows,
-      spriteCols,
-      spriteDirections,
+      spritesheet,
       spritePosX,
       spritePosY,
-      xOffset
+      offset,
+      totalFrames,
+      spriteDirections
     );
 
     this.ox = x;

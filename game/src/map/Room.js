@@ -133,14 +133,19 @@ class Room {
     //     }
     // }
 
-    // let name;
-    // for (let i = 0; i < this.config.mobs.length; i++) {
-    //     file = "zombies_01.png";
-    //     x = BLOCK_WIDTH * this.config.mobs[i][1][0];
-    //     y = BLOCK_WIDTH * this.config.mobs[i][1][1];
-    //     name = this.config.mobs[i][0];
-    //     this.mobs.push(new Zombie(name, x, y, 32, 32, file, 3, 4, [3, 2, 0, 1], true, 0, 0, 0, null));
-    // }
+    let name;
+    for (let i = 0; i < this.config.mobs.length; i++) {
+        let mob = new Zombie(
+          this.config.mobs[i][0],
+          BLOCK_WIDTH * this.config.mobs[i][1][0],
+          BLOCK_WIDTH * this.config.mobs[i][1][1],
+          textures[1],
+          0, 0, 0, 3, [3, 2, 0, 1],
+      );
+      mob.isExplore = true;
+        this.mobs.push(mob);
+        // this.mobs.push(new Zombie(name, x, y, 32, 32, file, 3, 4, [3, 2, 0, 1], true, 0, 0, 0, null));
+    }
     
   }
 

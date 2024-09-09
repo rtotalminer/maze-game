@@ -34,6 +34,7 @@ function loadGame() {
 function precache() {
   textures = [
     new Spritesheet('texture_map.png', 64, 95),
+    new Spritesheet('zombies_01.png', 3, 4)
   ];
   numOfImages = textures.length; 
 }
