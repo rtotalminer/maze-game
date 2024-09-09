@@ -90,13 +90,13 @@ class Room {
   }
 
   compileFromConfig() {
-    let r; let file;
+    let r; let file; let wall; let floor;
     for (let i = 0; i < this.config.map.length; i++) {
         for (let j = 0; j < this.config.map[0].length; j++) {
             switch (this.config.map[i][j]) {
                 case 0:
                     r = Math.floor(Math.random() * 7);
-                    let wall = 
+                    wall = 
                       new SpriteBase(
                         "Wall",
                         BLOCK_WIDTH * [j],
@@ -108,7 +108,7 @@ class Room {
                     break
                   case 1:
                     r = Math.floor(Math.random() * 5);
-                    let floor = 
+                    floor = 
                       new SpriteBase(
                         "floor",
                         BLOCK_WIDTH * [j],

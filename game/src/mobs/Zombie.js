@@ -9,8 +9,7 @@ class Zombie extends SpriteAnimated {
     offset,
     totalFrames,
     spriteDirections,
-    isExplore,
-    npcName
+    isExplore
   ) {
     super(
       name,

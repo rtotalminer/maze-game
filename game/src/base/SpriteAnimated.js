@@ -39,6 +39,7 @@ class SpriteAnimated extends SpriteBase {
     }
 
     if (this.moveTo != "IDLE") {
+      this.static = false;
       if (this.moveTo != "IDLE_N"){
         this.currentFrame %= this.totalFrames;
         this.srcX = this.currentFrame * this.spriteWidth;

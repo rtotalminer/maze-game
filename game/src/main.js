@@ -48,7 +48,8 @@ function preload() {
 
   // game
   gameMap = new Array(
-    new Room(map['00']['map'], map['00']['items'], map['00']['mobs'], map['00']['npcs'])
+    new Room(map['00']['map'], map['00']['items'], map['00']['mobs'], map['00']['npcs']),
+    new Room(map['01']['map'], map['01']['items'], map['01']['mobs'], map['01']['npcs']),
   );
 }
 
@@ -66,10 +67,6 @@ window.onload = function () {
 
 function mainLoop() {
 
-
-  ctx.fillStyle = "rgba(0,0,0)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
   if (gameOver) {
     draw_image(ctx, "deathscreen", 0, 0, canvas.width, canvas.height);
     if (spaceBarPressed) {
@@ -81,6 +78,7 @@ function mainLoop() {
   }
 
   else if (showMenu) {
+
     menu(canvas, ctx);
   }
 

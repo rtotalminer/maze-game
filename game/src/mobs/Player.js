@@ -271,7 +271,7 @@ class Player extends SpriteAnimated {
               !wKeyPressed &&
               !sKeyPressed
           ) {
-            this.static = false;
+
               this.moveTo = "W";
               if (this.x + this.spriteWidth - borderMovement < 0) {
                   roomCount -= 1;
@@ -288,7 +288,7 @@ class Player extends SpriteAnimated {
               !wKeyPressed &&
               !sKeyPressed
           ) {
-            this.static = false;
+
               this.moveTo = "E";
               if (this.x - this.spriteWidth + borderMovement > MAZE_WIDTH) {
                   roomCount += 1;
@@ -305,7 +305,7 @@ class Player extends SpriteAnimated {
               !dKeyPressed &&
               !sKeyPressed
           ) {
-            this.static = false;
+
               this.moveTo = "N";
               if (this.y + this.spriteHeight - borderMovement < 0) {
                   roomCount -= 3;
@@ -322,7 +322,7 @@ class Player extends SpriteAnimated {
               !dKeyPressed &&
               !wKeyPressed
           ) {
-            this.static = false;
+
               this.moveTo = "S";
               if (this.y - this.spriteHeight + borderMovement > MAZE_HEIGHT) {
                   roomCount += 3;

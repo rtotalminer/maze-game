@@ -5,6 +5,7 @@ class MenuButton {
         this.y = y;
         this.text = text;
     }
+    
     draw(ctx) {
         colorRect(this.x-10, this.y-60, 220, 70, 'rgba(0,0,0)')
         drawText(ctx, this.text, this.x, this.y, 'rgba(225,225,225)', 'Dungeon', 60)
