@@ -26,25 +26,29 @@ function loadGame() {
   currentRoom = gameMap[roomCount];
 }
 
+
+
 function precache() {
+  _textures = ['texture_map.png', 'zombies_01.png', 'player.png'];
+  numOfImages = _textures.length; 
   textures = [
-    new Spritesheet('texture_map.png', 64, 95),
-    new Spritesheet('zombies_01.png', 3, 4),
-    new Spritesheet('player.png', 4, 4)
+    new Spritesheet(_textures[0], 64, 95),
+    new Spritesheet(_textures[1], 3, 4),
+    new Spritesheet(_textures[2], 4, 4)
   ];
-  numOfImages = textures.length; 
+
+}
+
+function postUpdate() {
+    downKeyPressedOnce = false;
+    upKeyPressedOnce = false;
+    spaceKeyPressedOnce = false;
 }
 
 function preload() {
-  // menu
-  menuPointer = new SpriteAnimated(
-      "Menu Pointer",
-      startButton.x-100,
-      startButton.y-68,
-      textures[0],
-      47, 0, 0, 5, [[0, 0], [0, 1], [0, 2], [0, 3]]   
-  );
-  menuRoom = new Room(map['menu']['map'], [], map['menu']['mobs'], []);
+
+  loadMenu()
+
 
   // game
   gameMap = new Array(
@@ -53,12 +57,18 @@ function preload() {
   );
 }
 
-window.onload = function () {
+window.onload = async function () {
   canvas = document.getElementById("game");
   ctx = canvas.getContext("2d");
 
   document.addEventListener("keydown", keyPressed);
   document.addEventListener("keyup", keyReleased);
+
+  canvas.addEventListener('mousemove', (event) => {
+    let rect = canvas.getBoundingClientRect();
+    mouseX = event.clientX - rect.left;
+    mouseY = event.clientY - rect.top;
+  });
 
   precache();
 
@@ -66,6 +76,7 @@ window.onload = function () {
 };
 
 function mainLoop() {
+
 
   if (gameOver) {
     draw_image(ctx, "deathscreen", 0, 0, canvas.width, canvas.height);
@@ -78,8 +89,11 @@ function mainLoop() {
   }
 
   else if (showMenu) {
+    updateMenu();
 
-    menu(canvas, ctx);
+    postUpdate();
+
+    drawMenu(ctx);
   }
 
   else if (escKeyPressedOnce) {

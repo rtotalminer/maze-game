@@ -35,6 +35,10 @@ var spaceBarPressed = false;
 var escKeyPressed = false;
 var iKeyPressed = false;
 
+// Mouse movement
+var mouseX;
+var mouseY;
+
 // Movement keys
 var wKeyPressed = false;
 var aKeyPressed = false;
@@ -62,6 +66,7 @@ var menuPointer;
 var menuRoom;
 var menuX = MAZE_WIDTH/2;
 var menuY = MAZE_HEIGHT/2;
+let menuAudio;
 
 // Game Objects
 var canvas, ctx;
@@ -124,7 +129,7 @@ const map = {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
       "items": [
-        ['Goldcoin', [1, 3]]
+        ['Goldcoin', [1, 8]]
       ],
       "mobs": [
         ],

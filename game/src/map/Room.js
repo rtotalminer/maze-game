@@ -121,17 +121,22 @@ class Room {
             }
         }
     }
-    // let x; let y;
-    // for (let i = 0 ; i < this.config.items.length; i++) {
-    //     switch (this.config.items[i][0]) {
-    //         case 'Goldcoin':
-    //             file = 'goldcoin.png'
-    //             x = BLOCK_WIDTH*this.config.items[i][1][0];
-    //             y = BLOCK_WIDTH*this.config.items[i][1][1];
-    //             this.items.push(new Goldcoin("Goldcoin", x, y, 32, 32, file, 1, 1, 0, 0, 0));
-    //             break
-    //     }
-    // }
+
+    let x; let y; let item;
+    for (let i = 0 ; i < this.config.items.length; i++) {
+        x = 7;
+        y = 0;
+        item = new BaseItem(
+          this.config.items[i][0],
+          BLOCK_WIDTH * this.config.items[i][1][0],
+          BLOCK_WIDTH * this.config.items[i][1][1],
+          textures[0],
+          x, y, 0, 1, [], 'game/static/audio/item_pickup.mp3'
+        );
+        this.items.push(item);
+        console.log(this.items);
+    }
+    
 
     let name;
     for (let i = 0; i < this.config.mobs.length; i++) {
@@ -142,10 +147,8 @@ class Room {
           textures[1],
           0, 0, 0, 3, [3, 2, 0, 1],
       );
-      console.log(mob.spritesheet.cellHeight)
       mob.isExplore = true;
         this.mobs.push(mob);
-        // this.mobs.push(new Zombie(name, x, y, 32, 32, file, 3, 4, [3, 2, 0, 1], true, 0, 0, 0, null));
     }
     
   }
@@ -366,8 +369,7 @@ class Room {
     return [x, y]
   }
 
-  // Destory's an item forever... "desTORY"
-  destoryItem(item) {
+  destroyItem(item) {
     this.items = this.items.filter((_item) => _item != item); 
   }
 

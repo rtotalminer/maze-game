@@ -1,81 +1,57 @@
 
-class MenuButton {
-    constructor(x, y, text) {
-        this.x = x;
-        this.y = y;
-        this.text = text;
-    }
-    
-    draw(ctx) {
-        colorRect(this.x-10, this.y-60, 220, 70, 'rgba(0,0,0)')
-        drawText(ctx, this.text, this.x, this.y, 'rgba(225,225,225)', 'Dungeon', 60)
-    }
+
+var menuSelectionCount = 0;
+var menuBackground;
+
+var menuPointer;
+var menuPointerInitY = (MAZE_HEIGHT/2.5) - 4;
+
+function loadMenu() {
+    menuPointer = new SpriteAnimated("Menu Pointer", MAZE_WIDTH/2 - 64, menuPointerInitY, textures[0], 47, 0, 0, 5, []);
+    menuPointer.w = 64;
+    menuPointer.h = 64;
+    menuBackground = new Room(map['menu']['map'], [], map['menu']['mobs'], []);
 }
 
+function updateMenu() {
+    menuBackground.update();
+    menuPointer.y = menuPointerInitY + (menuSelectionCount * 100);
 
-const startButton = new MenuButton(MAZE_WIDTH/2, MAZE_HEIGHT/2, 'Start')
-const mapButton = new MenuButton(MAZE_WIDTH/2, MAZE_HEIGHT/2 + 100, 'Map Maker')
-const settingsButton = new MenuButton(MAZE_WIDTH/2, MAZE_HEIGHT/2 + 200, 'Settings')
-
-var buttons = [startButton, mapButton, settingsButton];
-var count = 0;
-
-
-function menu(canvas, ctx) {
-
-    // change state
     if (downKeyPressedOnce) {
-        downKeyPressedOnce = false; // lazy
-        count += 1;
-        if (count > 2)  count = 0;
-        // if (selection == 1)
-        //     loadGame();
-        // showMenu = false;
+        menuSelectionCount += 1;
     }
     if (upKeyPressedOnce) {
-        upKeyPressedOnce = false; // lazy
-        count -= 1;
-        if (count < 0)  count = 2;
+        menuSelectionCount -= 1;
     }
     if (spaceKeyPressedOnce) {
-        spaceKeyPressedOnce = false;
-        if (selectedButton == startButton) {
-            loadGame()
+        if (menuSelectionCount == 0) {
+            loadGame();
             showMenu = false;
         }
     }
 
-    selectedButton = buttons[count]
+    if (menuSelectionCount > 2)  menuSelectionCount = 0;
+    if (menuSelectionCount < 0)  menuSelectionCount = 2;
 
-    menuRoom.update();
-    menuRoom.draw();
+}
 
+function drawMenu(ctx) {
+    menuBackground.draw();
+    menuPointer.draw();
 
     colorRect(65, 30, 420, 70, 'rgba(0,0,0)')
     drawText(ctx, 'Dungeon Crawler', 75, 100, 'rgba(225,225,225)', 'Dungeon', 80)
 
-
     colorRect(150-20, 150-35, 280, 40, 'rgba(0,0,0)')
     drawText(ctx, 'Made by SaintStudios', 150, 150, 'rgba(225,225,225)', 'Dungeon', 40)
 
-    file = 'goldcoin.png'
-    // new SpriteBase(
-    //     "Wall",
-    //     BLOCK_WIDTH * [j],
-    //     BLOCK_WIDTH * [i],
-    //     textures[0],
-    //     11, 20, 0
-    //   )
+    colorRect(MAZE_WIDTH/2, MAZE_HEIGHT/2.5, 220, 60, 'rgba(0,0,0)')
+    drawText(ctx, 'Play', 10 + MAZE_WIDTH/2, MAZE_HEIGHT/2.5 + 45, 'rgba(225,225,225)', 'Dungeon', 40)
 
+    colorRect(MAZE_WIDTH/2, MAZE_HEIGHT/2.5 + 100, 220, 60, 'rgba(0,0,0)')
+    drawText(ctx, 'Map Maker', 10 + MAZE_WIDTH/2, MAZE_HEIGHT/2.5 + 145, 'rgba(225,225,225)', 'Dungeon', 40)
 
-    menuPointer.y = startButton.x-70 + count*100
+    colorRect(MAZE_WIDTH/2, MAZE_HEIGHT/2.5 + 200, 220, 60, 'rgba(0,0,0)')
+    drawText(ctx, 'Settings', 10 + MAZE_WIDTH/2, MAZE_HEIGHT/2.5 + 245, 'rgba(225,225,225)', 'Dungeon', 40)
 
-    //coin.srcX += 32;
-    menuPointer.w = 84; menuPointer.h = 84;
-    menuPointer.draw();
-
-    startButton.draw(ctx);
-    mapButton.draw(ctx);
-    settingsButton.draw(ctx);
 }
-

@@ -53,7 +53,7 @@ class Player extends SpriteAnimated {
       this.maxInventory = 16;
       this.slotsPerRow = 4;
 
-      smartCollision(1, 2);
+      //smartCollision(1, 2);
 
   }
 
@@ -243,8 +243,11 @@ class Player extends SpriteAnimated {
       this.mobCollision = false;
 
       for (let k = 0; k < collisions.length; k++) {
-          if (collisions[k].col instanceof BaseItem || collisions[k].col instanceof Goldcoin) {
-              collisions[k].col.onPickUp(this, room)
+          if (collisions[k].col instanceof BaseItem) {
+              if (collisions[k].col.name == 'Goldcoin')  this.gd += 5;
+              if (collisions[k].col.name == 'Silvercoin')  this.gd += 1;
+              console.log(collisions[k].col)
+              collisions[k].col.onPickUp(room)
           }
           if (collisions[k].col instanceof RoomDoor) {
             collisions[k].col.unlockDoor(this, room)

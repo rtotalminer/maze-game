@@ -32,6 +32,7 @@ class SpriteAnimated extends SpriteBase {
     // timsed by sprite height or width. Wait we have an idle flag, could this work?
   }
 
+  // Maybe it needs it's own update method
   draw() {
     if (this.moveTo == 'IDLE' && !this.static) {
       this.currentFrame %= this.totalFrames;

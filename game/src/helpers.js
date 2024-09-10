@@ -29,6 +29,7 @@ function keyPressed(e) {
   }
   if (e.keyCode == SPACE_BAR) {
     spaceBarPressed = true;
+    spaceKeyPressedOnce = true;
   }
   if (e.keyCode == ESC_KEY) {
     escKeyPressed = true;
@@ -52,9 +53,6 @@ function keyPressed(e) {
   if (e.keyCode == ESC_KEY) {
     escKeyPressedOnce = !escKeyPressedOnce;
     paused = !paused;
-  }
-  if (e.keyCode == SPACE_BAR) {
-    spaceKeyPressedOnce = !spaceKeyPressedOnce;
   }
 
 }

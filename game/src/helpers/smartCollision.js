@@ -1,41 +1,29 @@
 
-
-class Rect {
-    constructor(x, y, w, h) {
-	this.x = x;
-	this.y = y;
-	this.w = w;
-	this.h = h;
-    }
-}
-
-
 class Collision
 {
     constructor(ent, col, dir, id)
-    {
-	this.ent = ent;
-	this.col = col;
-	this.dir = dir;
-	this.id = id;
+		{
+		this.ent = ent;
+		this.col = col;
+		this.dir = dir;
+		this.id = id;
     }
 
-    calcCollision()
-    {
-	switch (this.dir) {
-	case "top":
-	    this.ent.y = this.col.y + this.col.h;
-	    break;
-	case "bot":
-	    this.ent.y = this.col.y - this.ent.h;
-	    break;
-	case "left":
-	    this.ent.x = this.col.x + this.col.w - this.ent.xOffset;
-	    break;
-	case "right":
-	    this.ent.x = this.col.x - this.ent.w + this.ent.xOffset;
-	    break;	    
-	}
+    calcCollision() {
+		switch (this.dir) {
+		case "top":
+			this.ent.y = this.col.y + this.col.h;
+			break;
+		case "bot":
+			this.ent.y = this.col.y - this.ent.h;
+			break;
+		case "left":
+			this.ent.x = this.col.x + this.col.w - this.ent.xOffset;
+			break;
+		case "right":
+			this.ent.x = this.col.x - this.ent.w + this.ent.xOffset;
+			break;	    
+		}
     }
 	
 }
@@ -67,7 +55,7 @@ function smartCollision(ent, coldbs)
     
     let x0 = ent.x + ent.xOffset;
     let y0 = ent.y;
-    let w0 = ent.w - 2 * ent.xOffset;
+    let w0 = ent.w - (1/2 * ent.xOffset);
     let h0 = ent.h;
 
     let p = new Rect(x0, y0, w0, h0);

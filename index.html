@@ -41,6 +41,7 @@
     <img id="menu" hidden="hidden" src="./game/static/img/menu.png" />
 
     <!-- Source Code  -->
+    <script src="./game/src/math.js"></script>
     <script src="./game/src/settings.js"></script>
     <script src="./game/src/helpers.js"></script>
     <script src="./game/src/helpers/smartCollision.js"></script>
@@ -55,8 +56,6 @@
     <!-- Game Items  -->
     <script src="./game/src/items/RoomKey.js"></script>
     <script src="./game/src/items/QuestItem.js"></script>
-    <script src="./game/src/items/Goldcoin.js"></script>
-    <script src="./game/src/items/Silvercoin.js"></script>
 
     <!-- Entities  -->
     <script src="./game/src/mobs/Zombie.js"></script>
@@ -103,6 +102,9 @@
     </audio>
     <audio id="mumbling">
       <source src="./game/static/audio/mumbling.mp3" type="audio/ogg">
+    </audio>
+    <audio id="fireplace">
+      <source src="./game/static/audio/fireplace.mp3" type="audio/ogg">
     </audio>
 
     <button onclick="isDev = !isDev">Enable Developer Mode</button>
