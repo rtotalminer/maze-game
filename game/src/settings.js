@@ -46,7 +46,7 @@ var sKeyPressed = false;
 var dKeyPressed = false;
 
 var escKeyPressedOnce = false;
-var spaceKeyPressedOnce = false;
+var spaceBarPressedOnce = false;
 var downKeyPressedOnce = false;
 var upKeyPressedOnce = false;
 

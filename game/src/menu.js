@@ -23,7 +23,7 @@ function updateMenu() {
     if (upKeyPressedOnce) {
         menuSelectionCount -= 1;
     }
-    if (spaceKeyPressedOnce) {
+    if (spaceBarPressedOnce) {
         if (menuSelectionCount == 0) {
             loadGame();
             showMenu = false;
